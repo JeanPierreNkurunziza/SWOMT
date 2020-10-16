@@ -1,0 +1,145 @@
+﻿<Page x:Class="SWOMT.Views.SitePlannings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SWOMT.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1100"
+      Title="SitePlannings">
+
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" FontSize="25" 
+                   Background="AliceBlue" FontWeight="Bold"></Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Grid.Column="0">
+                <Label Name="listes" Content="Gestion des Sites" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="2"> 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="520"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Width="520">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"></RowDefinition>
+                    <RowDefinition Height="310"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="Black" BorderThickness="1,1,1,1" Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <DataGrid Grid.Row="0"  x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Addresse"  FontSize="15" Binding="{Binding Path=AdresseSite}"></DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="SitetextBox" Header="Site" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel >
+                                <Label Name="LabelId" Content="Identifiant" ></Label>
+                                <TextBox  Margin="70,2" Name="Id" Text="{Binding Path=IdSite}"  Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelNom" Content="Nom " ></Label>
+                                <TextBox  Margin="94,2" x:Name="Nom" Text="{Binding Path=NomSite}" Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelAdresseSite" Content="AdresseSite" ></Label>
+                                <TextBox Margin="64,2" x:Name="AdresseSite" Text="{Binding Path=AdresseSite}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+
+                            <WrapPanel>
+
+                                <Button   Name="AjouterSite" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="AjouterSite_Click"></Button>
+                                <Button  Name="modifierSite" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="ModifierSite_Click"></Button>
+                                <Button  Name="supprimerSite" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="SupprimerSite_Click"></Button>
+                                <Button  Name="mettreAjourSite" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjourSite_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+
+                <GroupBox x:Name="ModuleSitetextBox" Header="ModulePerSite" HorizontalAlignment="Center" Height="600" Margin="10,10,0,0" VerticalAlignment="Top" Width="700">
+                    <StackPanel Grid.Column="1">
+
+                        <WrapPanel >
+                            <Label Name="LabelIdSiteModule" Content="Identifiant" ></Label>
+                            <TextBox  Margin="70,2" Name="IdSiteModule" Text="{Binding Path=IdSiteModule}"  Width="250" IsEnabled="False" ></TextBox>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <Label Name="LabelIdSite" Content="Site" ></Label>
+                            <ComboBox  Margin="105,2" Name="IdSite" Text="{Binding Path=IdSite}"  Width="250"  SelectionChanged="IdSite_SelectionChanged" ></ComboBox>
+                        </WrapPanel>
+
+                        <WrapPanel >
+                            <Label Name="LabelIdModule" Content="Module" ></Label>
+                            <ComboBox  Margin="85,2" Name="IdModule" Text="{Binding Path=IdModule}"  Width="250" IsEnabled="False" SelectionChanged="IdModule_SelectionChanged" ></ComboBox>
+                        </WrapPanel>
+                       
+                        <!--<WrapPanel >
+                            <Label Name="LabelNomSiteModule" Content="Nom Module" ></Label>
+                            <TextBox  Margin="54,2" x:Name="NomModule" Text="{Binding Path=NomModule}" Width="250" IsEnabled="False" />
+                        </WrapPanel>
+                        <WrapPanel >
+                            <Label Name="LabelNomSite" Content="Nom Site" ></Label>
+                            <TextBox  Margin="75,2" x:Name="NomSite" Text="{Binding Path=NomSite}" Width="250" IsEnabled="False" />
+                        </WrapPanel>-->
+                        <WrapPanel >
+                            <Label Name="LabelDateDébut" Content="Date début" ></Label>
+                            <DatePicker  Margin="65,2" x:Name="DateDebutModule" Text="{Binding Path=DateDebutModule}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <Label Name="LabelDateFin" Content="Date fin" ></Label>
+                            <DatePicker  Margin="84,2" x:Name="DateFinModule" Text="{Binding Path=DateFinModule}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                        </WrapPanel>
+
+                        <WrapPanel>
+
+                            <Button   Name="ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
+                            <Button  Name="modifier" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="Modifier_Click"></Button>
+                            <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
+                            <Button  Name="mettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
+                        </WrapPanel>
+
+                        <DataGrid Name="ListModuleSite" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
+                            <DataGrid.Columns>
+                                <!--<DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="IdSite"  FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>-->
+                                <!--<DataGridTextColumn Header="IdModule"  FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>-->
+                                <!--<DataGridTextColumn Header="NomSite"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>-->
+                                <DataGridTextColumn Header="NomModule"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule}" ></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </StackPanel>
+                </GroupBox>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+   
+</Page>

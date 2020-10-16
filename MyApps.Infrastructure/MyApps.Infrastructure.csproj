@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D12A2E5-4CB1-47D1-B134-8665577D067A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyApps.Infrastructure</RootNamespace>
+    <AssemblyName>MyApps.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DB\Certificat.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Examan.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Formateur.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FormateurModule.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Formation.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Module.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ModuleInscription.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Participant.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Planning.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Presence.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Resultat.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Site.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SiteModule.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sp_helpdiagrams_Result.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sysdiagram.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TrainingDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TrainingDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TrainingDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DB\TrainingDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TrainingDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="DB\TrainingDB.edmx.diagram">
+      <DependentUpon>TrainingDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\TrainingDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TrainingDB.Context.cs</LastGenOutput>
+      <DependentUpon>TrainingDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="DB\TrainingDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TrainingDB.edmx</DependentUpon>
+      <LastGenOutput>TrainingDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

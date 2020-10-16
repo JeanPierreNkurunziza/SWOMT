@@ -1,0 +1,285 @@
+﻿<Page x:Class="SWOMT.Views.Inscriptions"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SWOMT.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1600"
+      Title="Inscriptions">
+
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" FontSize="25" 
+                   Background="AliceBlue" FontWeight="Bold"></Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Grid.Column="0">
+                <Label Name="listes" Content="Gestion des Inscriptions" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="520"></ColumnDefinition>
+                <ColumnDefinition Width="560"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Width="520">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="280"></RowDefinition>
+                    <RowDefinition Height="380"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="Black" BorderThickness="1,1,1,1" Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <GroupBox x:Name="ParticipantListBox" Header="La liste des Participants" HorizontalAlignment="Left" Height="280" Width="500" VerticalAlignment="Top" >
+
+                        <DataGrid Grid.Row="0" x:Name="ListParticipant" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListParticipant_MouseDoubleClick">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Téléphone"  FontSize="15" Binding="{Binding Path=TelParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Email"  FontSize="15" Binding="{Binding Path=EmailParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Secteur"  FontSize="15" Binding="{Binding Path=SecteurParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="District"  FontSize="15" Binding="{Binding Path=DistrictParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage}"></DataGridTextColumn>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Border>
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="ParticipantTextBox" Header="Inscrire un Participant" HorizontalAlignment="Left" Height="360" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel >
+                                <Label Name="LabelId" Content="Identifiant" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="70,2" Name="Id" Text="{Binding Path=IdParticipant}"  Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelNomParticipant" Content="Nom " ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="94,2" x:Name="Nom" MaxLength="49" Text="{Binding Path=NomParticipant}" Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDateNaissance" Content="Date de Naissance" ></Label>
+                                <DatePicker FontWeight="ExtraBold" Margin="26,2" x:Name="DateNaissance" Text="{Binding Path=DateNaissance}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelIdNational" Content="ID National" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="64,2" x:Name="IdNational" Text="{Binding Path=IdNational}"  Width="250"  IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelTelParticipant" Content="Télephone" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="70,2" x:Name="TelParticipant" MaxLength="12" Text="{Binding Path=TelParticipant}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelEmail" Content="Email" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="94,2" x:Name="EmailParticipant" MaxLength="90" Text="{Binding Path=EmailParticipant}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelSecteur" Content="Secteur" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="84,2" x:Name="SecteurParticipant" MaxLength="19" Text="{Binding Path=SecteurParticipant}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDistrict" Content="District" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="84,2" x:Name="DistrictParticipant" MaxLength="19" Text="{Binding Path=DistrictParticipant}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDateEncodage" Content="Date d'encodage" ></Label>
+                                <DatePicker FontWeight="ExtraBold" Margin="34,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="250"  IsEnabled="False" ></DatePicker>
+                            </WrapPanel>
+
+                            <WrapPanel>
+
+                                <Button   Name="AjouterParticipant" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="AjouterParticipant_Click"></Button>
+                                <Button  Name="modifierParticipant" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="ModifierParticipant_Click"></Button>
+                                <Button  Name="supprimerParticipant" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="SupprimerParticipant_Click"></Button>
+                                <Button  Name="mettreAjourParticipant" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjourParticipant_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="420"></ColumnDefinition>
+                        <ColumnDefinition Width="140"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox x:Name="ModuleSiteTextBox" Header="Inscrire un participant dans un module" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel  Visibility="Hidden">
+                                <Label Name="LabelIdModuleInscription" Content="Identifiant" ></Label>
+                                <TextBox Foreground="Black" Margin="80,2" Name="IdModuleInscription" Text="{Binding Path=IdModuleInscription}"  Width="200" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelIdSiteModule" Content="Nom Module" ></Label>
+                                <ComboBox  FontWeight="ExtraBold" Margin="64,2" Name="IdSiteModule"  Text="{Binding Path=IdSiteModule}"  Width="200" SelectionChanged="ComboBoxIdSiteModule_SelectionChanged" ></ComboBox>
+                            </WrapPanel>
+                            <WrapPanel  Visibility="Hidden">
+                                <Label Name="LabelNomModule" Content="Nom Module" ></Label>
+                                <TextBox  Margin="64,2" Name="NomModule" Text="{Binding Path=NomModule}"  Width="200" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelIdParticipant" Content="Nom Participant" ></Label>
+                                <ComboBox  FontWeight="ExtraBold" Margin="50,2" Name="IdParticipant" Text="{Binding Path=IdParticipant}"  Width="200" IsEnabled="False" SelectionChanged="ComboBoxIdParticipant_SelectionChanged"></ComboBox>
+                            </WrapPanel>
+
+                            <WrapPanel >
+                                <Label Name="LabelNom" Content="Id National" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="77,2" x:Name="NomParticipant" Text="{Binding Path=NomParticipant}" Width="200" IsEnabled="False"  />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDateInscription" Content="Date Inscription" ></Label>
+                                <DatePicker FontWeight="ExtraBold" Margin="50,2" x:Name="DateInscription" Text="{Binding Path=DateInscription}" Width="200" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelEstSurListeAttente" Content="EstSurListeAttente" ></Label>
+                                <ComboBox FontWeight="ExtraBold" Margin="40,2" x:Name="EstSurListeAttente" Text="{Binding Path=EstSurListeAttente}"  Width="200"  IsEnabled="False"  ></ComboBox>
+                            </WrapPanel>
+
+                            <WrapPanel>
+
+                                <Button   Name="ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
+                                <Button  Name="modifier" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="Modifier_Click"></Button>
+                                <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
+                                <Button  Name="mettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                        
+                    </GroupBox>
+                    <Grid Grid.Column="1"  Margin="0,0,0,0">
+                        <GroupBox x:Name="ModuleInfo" Header="Module Infos" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Height="310">
+
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Label Name="TotalInscription" Content="Total" FontSize="14"></Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox  Name="TotalParticipant" Text="{Binding TotalParticipant}" Margin="0,2"  Width="110" FontSize="10"  IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center" ></TextBox>
+                              
+                                </WrapPanel>
+                                <WrapPanel >
+                                    <Label Name="ListeAttente" Content="Attente" FontSize="12"></Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Name="TotalListeAttente" Margin="0,2" Text="{Binding TotalListAttente}"  Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+
+                                </WrapPanel>
+                                <WrapPanel >
+                                    <Label Name="labelSite" Content="Site" FontSize="12"></Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox  Name="NomSite" Text="{Binding NomSite}" Margin="0,2" Height="25" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Name="LabelDateDebut" Content="Date Début" FontSize="12"></Label>
+                               </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Name="DateDébut" Margin="0,2" Height="20" Text="{Binding DateDebut}" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                               </WrapPanel>
+                                <WrapPanel>
+                                    <Label Name="LabelDateFin" Content="Date Fin" FontSize="12"></Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Name="DateFin" Margin="0,2"  Height="20" Text="{Binding DateFin}" Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <GroupBox x:Name="ParticipantModuleTextBox2" Header="Les Participants inscrits par Module" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="550">
+                        <StackPanel Grid.Column="1">
+
+                            <DataGrid Name="ListElement" Height="260" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+                
+
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="330"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                <GroupBox x:Name="ListeModule" Header="Liste des Modules par Participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <StackPanel Grid.Column="0"> 
+                            <WrapPanel >
+                                <Label Name="LabelIdModule" Content="Id Participant" ></Label>
+                                <ComboBox FontWeight="ExtraBold" Margin="64,2" Name="IdParticipants" Text="{Binding Path=IdParticipant}"  Width="200"  SelectionChanged="ComboBoxModulesPerParticipant_SelectionChanged"></ComboBox>
+                            </WrapPanel>
+                            <!--<Border BorderBrush="Black" BorderThickness="1,1,1,1">-->
+                        <DataGrid Grid.Row="1" x:Name="ListSiteModule" ItemsSource="{Binding}" Height="240" AutoGenerateColumns="False" SelectionChanged="ListSiteModule_MouseDoubleClick">
+                        
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}" Visibility="Hidden"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                    <!--</Border>-->
+                
+                    </StackPanel>
+                </GroupBox>
+                </Grid>
+                <Grid Grid.Row="1">
+                <GroupBox x:Name="ListeAttenteBox" Header="Liste des participants inscrit sur liste d'Attente" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <StackPanel Grid.Column="1">
+                      
+                        <DataGrid Name="ListElementAttente" Height="250" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElementAttente_MouseDoubleClick" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}"  Visibility="Hidden"></DataGridTextColumn>
+                                <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
+                                <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </StackPanel>
+                </GroupBox>
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+   
+</Page>
