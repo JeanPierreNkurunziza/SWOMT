@@ -27,5 +27,19 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        public static List<ViewModels.ExamenViewModel> SearchByNameModule( string SearchNomModule)
+        {
+            List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();
+            //var GetListe = ExamenViewModelService.GetExamens();
+            var assets = from s in ExamenViewModelService.GetExamens()
+                         select s;
+            if (!String.IsNullOrEmpty(SearchNomModule))
+            {
+                assets = assets.Where(s => s.NomModule.ToUpper().Contains(SearchNomModule.ToUpper()));
+            }
+
+            return assets.ToList();
+            
+        }
     }
 }

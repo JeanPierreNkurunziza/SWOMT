@@ -22,13 +22,24 @@ namespace SWOMT.Views
     public partial class Certificats : Page
     {
         List<MyApps.Application.ViewModels.CertificatViewModel> liste = new List<MyApps.Application.ViewModels.CertificatViewModel>();
+        List<MyApps.Application.ViewModels.ParticipantViewModel> listeParticipant = new List<MyApps.Application.ViewModels.ParticipantViewModel>();
+        List<MyApps.Application.ViewModels.ResultatViewModel> ListeModulesEchoues = new List<MyApps.Application.ViewModels.ResultatViewModel>();
+        List<MyApps.Application.ViewModels.ResultatViewModel> ListeModulesReussis = new List<MyApps.Application.ViewModels.ResultatViewModel>();
+
 
         string enregistre;
+       
         public Certificats()
         {
             InitializeComponent();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
             PopulateAndBind(liste);
+            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
+            PopulateAndBindParticipant(listeParticipant);
+            ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
+            ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetResultats(); 
+            //PopulateAndBindRéussis(ListeResultats);
+            //PopulateAndBindParticipantFailed(ListeResultats);
 
         }
 
@@ -70,8 +81,9 @@ namespace SWOMT.Views
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
-            ClearFormValues();
-            ModeIsEnabledTrue();
+            
+            ModeIsEnabledFalse();
+            DateDelivrance.IsEnabled = true;
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une site
@@ -80,14 +92,14 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
-            Certificat element = new Certificat(); 
+            Certificat element = new Certificat();
             //Competence competence = new Competence();
 
-            //if (NomCompetence.Text == "")
-            //{
-            //    MessageBox.Show("Il faut saisir le nom de la competence");
-            //    return;
-            //}
+            if (IdCertificat.Text == "")
+            {
+                MessageBox.Show("Il faut saisir identifiant de certificat ");
+                return;
+            }
 
 
 
@@ -110,7 +122,7 @@ namespace SWOMT.Views
                 MyApps.Domain.Service.CertificatService.Update(element);
             }
 
-
+            ClearFormValues();
             ModeIsEnabledFalse();
             liste.Clear();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
@@ -131,7 +143,7 @@ namespace SWOMT.Views
                 return;
             }
             enregistre = "Modifier";
-            ModeIsEnabledTrue();
+            ModeIsEnabledFalse();
 
 
         }
@@ -143,7 +155,12 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            //tester si l'identifiant n'est pas null 
+            if (IdCertificat.Text == "")
+            {
+                MessageBox.Show("Il faut saisir identifiant de certificat ");
+                return;
+            }
 
             MyApps.Domain.Service.CertificatService.Delete(short.Parse(IdCertificat.Text));
 
@@ -177,5 +194,127 @@ namespace SWOMT.Views
             DateDelivrance.IsEnabled = false; 
 
         }
+        //************************************************************************************************************************************************
+        //************************************** LA LISTE DES PARTICIPANT PARTIE DE DROITE ***************************************************************
+
+        private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.ParticipantViewModel> listeCompetences)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListParticipant.DataContext = listeCompetences;
+
+        }
+        private void ListParticipant_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.ParticipantViewModel donnee)
+            {
+               
+                       
+             ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(
+                  MyApps.Domain.Service.ResultatService.GetIdInscription((short)(donnee.IdParticipant)));
+              PopulateAndBindRéussis(ListeModulesReussis);
+                TotalRéussi.Text = ListeModulesReussis.Count().ToString();
+
+                ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetListModulesEchoué(
+                    MyApps.Domain.Service.ResultatService.GetIdInscription((short)(donnee.IdParticipant)));
+             PopulateAndBindParticipantFailed(ListeModulesEchoues);
+                TotalEchoué.Text = ListeModulesEchoues.Count().ToString(); 
+
+                IdParticipant.Text = donnee.IdParticipant.ToString();
+            }
+
+           
+
+        }
+        private void Rechercher_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+                listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
+                PopulateAndBindParticipant(listeParticipant);
+                return;
+
+            }
+
+            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(listeParticipant);
+        }
+        private void ReSetList_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercher.Text = "";
+            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(listeParticipant);
+        }
+
+        //************************************************************************************************************************************
+        //************************************* Partie à gauche : les liste des participant réussis et échoués********************************
+
+      
+        
+        private void PopulateAndBindRéussis(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListParticipantRéussi.DataContext = listeItems;
+        }
+
+        /// <summary>
+        /// binding la liste des participant echoués
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListParticipantFailed.DataContext = listeItems;
+        }
+        private void ListParticipantRéussi_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (ListParticipantRéussi.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
+            {
+                if (donnee.IdExamen == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                 
+                }
+              
+                NomParticipant.Text = donnee.NomParticipant.ToString();
+          
+            }
+
+
+        }
+
+        private void ListParticipantFailed_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (ListParticipantFailed.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
+            {
+                if (donnee.IdExamen == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                 
+                }
+               
+            }
+          
+        }
+        private void ComboBoxModulesPerParticipant_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //code pour faire une rechercher dans la liste des participants réussis 
+
+        }
+
     }
 }

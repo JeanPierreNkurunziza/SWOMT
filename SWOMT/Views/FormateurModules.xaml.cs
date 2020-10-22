@@ -27,8 +27,10 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.FormateurModuleViewModel> liste2 = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
         List<MyApps.Application.ViewModels.FormateurViewModel> listeFormateur = new List<MyApps.Application.ViewModels.FormateurViewModel>();
         List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
+        List<MyApps.Application.ViewModels.FormationViewModel> listeFormation = new List<MyApps.Application.ViewModels.FormationViewModel>(); 
         int idModuleSelected=0; 
-        int idFormateurSelected;  
+        int idFormateurSelected;
+        int idFormationSelected;
         string enregistre;
         public FormateurModules()
         {
@@ -36,11 +38,18 @@ namespace SWOMT.Views
             liste= MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
+            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetFormatuerModules();
+           
             
             this.selectedNomModule();
             this.selectedNomFormateur();
+            this.selectedNomFormation();
 
-            PopulateAndBindFormateurs(listeFormateur); 
+            PopulateAndBindFormateurs(listeFormateur);
+            PopulateAndBindModule(listeModule);
+           // PopulateAndBind(liste);
+            
 
         }
 
@@ -141,6 +150,7 @@ namespace SWOMT.Views
                 TelFormateur.Text = donnee.TelFormateur.ToString();
                 EmailFormateur.Text = donnee.EmailFormateur.ToString();
                 DateEncodage.Text = donnee.DateEncodage.ToShortTimeString();
+                IdFormateur.SelectedItem = donnee.NomFormateur.ToString();
 
             }
         }
@@ -224,6 +234,7 @@ namespace SWOMT.Views
             IdModule.SelectedValue = "";
             VersionModule.Text = "";
             ModeIsEnabledFalse();
+            ClearFormValues();
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une formation
@@ -300,14 +311,18 @@ namespace SWOMT.Views
         
         }
 
+        //*****************************************************************************************************************************
+        //**************************************** gestion des formateurs**************************************************************
+        //*****************************************************************************************************************************
+
         private void IdFormateur_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (IdFormateur.SelectedIndex == -1)
-            //{
-            //    MessageBox.Show("Selectionner l'identifiant du formateur");
-            //    return;
-            //}
-          
+            if (IdFormateur.SelectedIndex == -1)
+            {
+                MessageBox.Show("Selectionner l'identifiant du formateur");
+                return;
+            }
+
             string nomFormateurSelected = IdFormateur.SelectedValue.ToString();
             
             foreach (var formateur in listeFormateur)
@@ -361,6 +376,10 @@ namespace SWOMT.Views
                     idModuleSelected = module.IdModule;
                 }
             }
+            liste2.Clear();
+            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
+            ModulesBinding(liste2);
+           
         }
 
         private void AjouterFormateur_Click(object sender, RoutedEventArgs e)
@@ -449,6 +468,7 @@ namespace SWOMT.Views
             ModeIsEnabledFalseFormateur();
           
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+            ClearFormValuesFormateur();
             PopulateAndBindFormateurs(listeFormateur);
             MessageBox.Show("Reload the pages to validate the modifications");
 
@@ -482,6 +502,258 @@ namespace SWOMT.Views
             EmailFormateur.IsEnabled = false;
             DateEncodage.IsEnabled = false;
 
+        }
+
+        //*********************************************************************************************************************
+        //**************************** Gestion des modules*********************************************************************
+        //*********************************************************************************************************************
+        /// <summary>
+        /// biding la liste de modules
+        /// </summary>
+        /// <param name="listeModules"></param>
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElementModule.DataContext = listeItems;
+        }
+
+        private List<MyApps.Application.ViewModels.FormationViewModel> selectedNomFormation()
+        {
+            //var listeView = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+
+            foreach (var formateur in listeFormation)
+            {
+                IdFormation.Items.Add(formateur.NomFormation); 
+
+            }
+
+            return listeFormation; 
+        }
+        private void IdFormation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IdFormation.SelectedItem == null)
+            {
+                //MessageBox.Show("Please select the name of the module");
+                return;
+                //IdModule.SelectedValue = "";
+            }
+            string nomFormationSelected = IdFormation.SelectedValue.ToString();
+            foreach (var formation in listeFormation)
+            {
+                if (formation.NomFormation == nomFormationSelected)
+                {
+                    idFormationSelected = formation.IdFormation; 
+                }
+            }
+        }
+
+        /// <summary>
+        /// afffichage apres la selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListElementModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
+            {
+                Id.Text = donnee.IdModule.ToString();
+                IdFormation.Text = donnee.NomFormation.ToString();
+                NomModule.Text = donnee.NomModule.ToString();
+               // NomFormation.Text = donnee.NomFormation.ToString();
+                CreditModule.Text = donnee.CreditModule.ToString();
+                NombrePrévu.Text = donnee.NombrePrévu.ToString();
+                IdModule.SelectedItem = donnee.NomModule.ToString();
+            }
+            if (enregistre != "Ajouter")
+            {
+                IdFormateur.SelectedValue = "";
+            }
+           
+        }
+
+        private void AjouterModule_Click(object sender, RoutedEventArgs e)
+        {
+            enregistre = "Ajouter";
+            ClearFormValuesModule();
+            ModeIsEnabledTrueModule();
+        }
+        /// <summary>
+        /// méthode pour mettre à jour et ajouter  une site
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MettreAjourModule_Click(object sender, RoutedEventArgs e)
+        {
+            Module element = new Module();
+            //Competence competence = new Competence();
+
+            if (Id.Text == "")
+            {
+                MessageBox.Show("Il faut saisir identifiant ");
+                return;
+            }
+            if (!int.TryParse(CreditModule.Text, out int nbr))
+            {
+                MessageBox.Show("Format du nombre  est incorrect SVP !");
+                return;
+            }
+            if (!int.TryParse(NombrePrévu.Text, out int nbrPrevu))
+            {
+                MessageBox.Show("Format du nombre est incorrect SVP !");
+                return;
+            }
+
+            if (enregistre == "Ajouter")
+            {
+
+                //element.IdModule = short.Parse(IdModule.Text);
+                element.IdFormation = (short)(idFormationSelected);
+                element.NomModule = NomModule.Text;
+                element.CreditModule = short.Parse(CreditModule.Text);
+                element.NombrPrévu = short.Parse(NombrePrévu.Text);
+
+                MyApps.Domain.Service.ModuleService.Create(element);
+
+            }
+
+            if (enregistre == "Modifier")
+            {
+
+                //element.IdModule = short.Parse(IdModule.Text);
+                element.IdFormation = (short)(idFormationSelected);
+                element.NomModule = NomModule.Text;
+                element.CreditModule = short.Parse(CreditModule.Text);
+                element.NombrPrévu = short.Parse(NombrePrévu.Text);
+
+                MyApps.Domain.Service.ModuleService.Update(element);
+            }
+
+            ModeIsEnabledFalseModule();
+            listeModule.Clear();
+            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+            PopulateAndBind(listeModule);
+            ClearFormValuesModule();
+
+        }
+        /// <summary>
+        /// méthode pour liberer le schamps à modifier une formation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModifierModule_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (Id.Text == "")
+            {
+                MessageBox.Show("Entrer la formation à modifier");
+                return;
+            }
+            enregistre = "Modifier";
+            ModeIsEnabledTrueModule();
+
+        }
+
+        /// <summary>
+        /// méthode pour supprimer une  competence
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupprimerModule_Click(object sender, RoutedEventArgs e)
+        {
+            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            if (idModule.Text=="")
+            {
+                MessageBox.Show("Séléctionner un élement à supprimer");
+                return;
+            }
+            MyApps.Domain.Service.ModuleService.Delete(short.Parse(IdModule.Text));
+
+            ClearFormValuesModule();
+            listeModule.Clear();
+            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+            PopulateAndBind(listeModule);
+
+        }
+        private void ClearFormValuesModule()
+        {
+            Id.Text = "";
+            IdFormation.SelectedValue = "";
+            NomModule.Text = "";
+           // NomFormation.Text = "";
+            CreditModule.Text = "";
+            NombrePrévu.Text = "";
+
+        }
+        private void ModeIsEnabledTrueModule()
+        {
+            Id.IsEnabled = false;
+            IdFormation.IsEnabled = true;
+            NomModule.IsEnabled = true;
+           // NomFormation.IsEnabled = true;
+            CreditModule.IsEnabled = true;
+            NombrePrévu.IsEnabled = true;
+
+        }
+        private void ModeIsEnabledFalseModule()
+        {
+            Id.IsEnabled = false;
+            IdFormation.IsEnabled = false;
+            NomModule.IsEnabled = false;
+           // NomFormation.IsEnabled = false;
+            CreditModule.IsEnabled = false;
+            NombrePrévu.IsEnabled = false;
+
+        }
+
+        //****************************************************************************************************************
+        //*************************** les méthodes de recherches *********************************************************
+        //****************************************************************************************************************
+        private void Rechercher_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+
+                listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+                PopulateAndBindFormateurs(listeFormateur);
+                return;
+
+            }
+
+            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.SearchFormateurByName(NomRechercher.Text);
+            PopulateAndBindFormateurs(listeFormateur);
+        }
+        private void ReSetList_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercher.Text = "";
+            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.SearchFormateurByName(NomRechercher.Text);
+            PopulateAndBindFormateurs(listeFormateur); 
+        }
+        private void RechercherModule_Click(object sender, RoutedEventArgs e) 
+        {
+
+            if (NomRechercherModule.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+
+                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+                PopulateAndBindModule(listeModule);
+                return;
+
+            }
+
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
+        }
+        private void ReSetListModule_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercherModule.Text = "";
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
         }
     }
 }

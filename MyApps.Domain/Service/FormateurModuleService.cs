@@ -13,23 +13,14 @@ namespace MyApps.Domain.Service
     {
         public static void Create(FormateurModule formateurModule)
         {
-            try
-            {
+           
                 using (TrainingDBEntities db = new TrainingDBEntities())
                 {
 
                     db.FormateurModules.Add(formateurModule);
                     db.SaveChanges();
                 }
-            }
-            catch (Exception e)
-            {
-                if (CheckIfItemsExists(formateurModule.IdFormateur, formateurModule.IdModule))
-                {
-                    Environment.Exit(-1); 
-                }
-            }
-            
+                       
         }
 
         public static void Delete(int idFormateur, int idModule)
@@ -103,15 +94,15 @@ namespace MyApps.Domain.Service
             }
         }
 
-        // méthode qui ne fonctionne pas !!!!! à vérifier pour l'utiliser dans la classe de xmal
-        public static bool CheckIfItemsExists(int idFormateur, int idModule)
+        public static List<FormateurModule> GetListFormateurPerModules(int IdModule) 
         {
-            using(TrainingDBEntities db= new TrainingDBEntities())
+            using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var items = db.FormateurModules.Where((a => a.IdFormateur == idFormateur && a.IdModule == idModule));
-                return true;
+                var formateurModule = db.FormateurModules.Where(a => a.IdModule == IdModule).ToList(); 
+                return formateurModule;
             }
-           
         }
+
+
     }
 }

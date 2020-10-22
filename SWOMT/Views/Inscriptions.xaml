@@ -38,9 +38,17 @@
                     <RowDefinition Height="280"></RowDefinition>
                     <RowDefinition Height="380"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="Black" BorderThickness="1,1,1,1" Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
-                    <GroupBox x:Name="ParticipantListBox" Header="La liste des Participants" HorizontalAlignment="Left" Height="280" Width="500" VerticalAlignment="Top" >
+                <Border   Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="270" Width="500" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste de participants"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
+                                <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
 
+                            </StackPanel>
+                        </GroupBox.Header>
                         <DataGrid Grid.Row="0" x:Name="ListParticipant" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListParticipant_MouseDoubleClick">
                             <DataGrid.Columns >
                                 <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden"></DataGridTextColumn>
@@ -60,7 +68,7 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="ParticipantTextBox" Header="Inscrire un Participant" HorizontalAlignment="Left" Height="360" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="ParticipantTextBox" Header="Inscrire un Participant" HorizontalAlignment="Left" Height="350" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
@@ -131,7 +139,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdSiteModule" Content="Nom Module" ></Label>
-                                <ComboBox  FontWeight="ExtraBold" Margin="64,2" Name="IdSiteModule"  Text="{Binding Path=IdSiteModule}"  Width="200" SelectionChanged="ComboBoxIdSiteModule_SelectionChanged" ></ComboBox>
+                                <ComboBox  FontWeight="DemiBold" Margin="64,2" Name="IdSiteModule"  Text="{Binding Path=IdSiteModule}"  Width="200" SelectionChanged="ComboBoxIdSiteModule_SelectionChanged" ></ComboBox>
                             </WrapPanel>
                             <WrapPanel  Visibility="Hidden">
                                 <Label Name="LabelNomModule" Content="Nom Module" ></Label>
@@ -237,7 +245,7 @@
                     <StackPanel Grid.Column="0"> 
                             <WrapPanel >
                                 <Label Name="LabelIdModule" Content="Id Participant" ></Label>
-                                <ComboBox FontWeight="ExtraBold" Margin="64,2" Name="IdParticipants" Text="{Binding Path=IdParticipant}"  Width="200"  SelectionChanged="ComboBoxModulesPerParticipant_SelectionChanged"></ComboBox>
+                                <ComboBox FontWeight="Medium" Margin="64,2" Name="IdParticipants" Text="{Binding Path=IdParticipant}"  Width="200"  SelectionChanged="ComboBoxModulesPerParticipant_SelectionChanged"></ComboBox>
                             </WrapPanel>
                             <!--<Border BorderBrush="Black" BorderThickness="1,1,1,1">-->
                         <DataGrid Grid.Row="1" x:Name="ListSiteModule" ItemsSource="{Binding}" Height="240" AutoGenerateColumns="False" SelectionChanged="ListSiteModule_MouseDoubleClick">

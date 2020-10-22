@@ -29,5 +29,26 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+
+        public static List<ViewModels.ModuleViewModel> SearchModuleByName(string searchString)
+        {
+            List<ViewModels.ModuleViewModel> Liste = new List<ViewModels.ModuleViewModel>();
+            var GetListe = ModuleService.SearchMethodByName(searchString);
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.ModuleViewModel vm = new ViewModels.ModuleViewModel()
+                {
+                    IdModule = itemList.IdModule,
+                    IdFormation = itemList.IdFormation,
+                    NomModule = itemList.NomModule,
+                    NomFormation = ModuleService.GetNomFormation(itemList.IdFormation),
+                    CreditModule = itemList.CreditModule,
+                    NombrePrévu = itemList.NombrPrévu
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
     }
 }

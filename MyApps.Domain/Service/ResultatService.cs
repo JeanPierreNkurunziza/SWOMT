@@ -80,6 +80,16 @@ namespace MyApps.Domain.Service
 
             }
         }
+        public static int GetParIdParticipant(int? IdInscription)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var idInscription = db.ModuleInscriptions.Find(IdInscription);
+                var GetName = db.Participants.Find(idInscription.IdParticipant);
+                return GetName.IdParticipant;
+
+            }
+        }
         public static List<Resultat> GetListParticipantRéussi(int IdExamen)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -89,12 +99,54 @@ namespace MyApps.Domain.Service
                 return moduleParticipant;
             }
         }
-        public static List<Resultat> GetListParticipantEchoué(int IdExamen)
+        public static List<Resultat> GetListParticipantEchoué(int IdExamen) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
                 var moduleParticipant = db.Resultats.Where(a => a.IdExamen == IdExamen && a.ParticipantRéussi == false).ToList();
                 return moduleParticipant;
+            }
+        }
+        public static List<Resultat> GetListModuleEchoué(int IdModuleInscription)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == IdModuleInscription && a.ParticipantRéussi == false).ToList();
+                return moduleParticipant;
+            }
+        }
+        public static List<Resultat> GetListModuleRéussis(int IdModuleInscription)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == IdModuleInscription && a.ParticipantRéussi == true).ToList();
+                return moduleParticipant;
+
+            }
+        }
+        public static int GetIdInscription(int? Idparticipant)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                int idmoduleInscription=0;
+                
+                var total = from participant in db.Participants
+                            join mod in db.ModuleInscriptions
+                              on participant.IdParticipant equals mod.IdParticipant
+                            join resultat in db.Resultats
+                              on mod.IdModuleInscription equals resultat.IdModuleInscription
+                            where participant.IdParticipant == Idparticipant 
+
+                            select new { resultat.IdModuleInscription, resultat.IdResultat };
+
+                foreach (var totalcomp in total)
+                {
+
+                    idmoduleInscription = totalcomp.IdModuleInscription;
+                }
+                return idmoduleInscription;
+
             }
         }
     }

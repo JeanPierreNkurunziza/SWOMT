@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SWOMT.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1100"
+      d:DesignHeight="720" d:DesignWidth="1600"
       Title="FormateurModules">
 
     <Grid >
@@ -28,19 +28,32 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="550"></ColumnDefinition>
+                <!--<ColumnDefinition Width="550"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>-->
+                <ColumnDefinition Width="520"></ColumnDefinition>
+                <ColumnDefinition Width="500"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Width="550">
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
                     <RowDefinition Height="300"></RowDefinition>
-                    <RowDefinition Height="310"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="Black" BorderThickness="1,1,1,1" Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                <Border  Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <GroupBox x:Name="FormateurListBox"  HorizontalAlignment="Left" Height="300" Width="500" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste des Formateurs"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
+                                <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
+
+                            </StackPanel>
+                        </GroupBox.Header>
                     <DataGrid Grid.Row="0"  x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
                         <DataGrid.Columns >
-                            <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
+                            <DataGridTextColumn Visibility="Hidden" Header="Id"  FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
                             <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormateur}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Domaine"  FontSize="15" Binding="{Binding Path=Domaine}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Télephone"  FontSize="15" Binding="{Binding Path=TelFormateur}"></DataGridTextColumn>
@@ -48,35 +61,36 @@
                             <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    </GroupBox>
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="FormateurtextBox" Header="Formateur" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="FormateurtextBox" Header="Formateur" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
                                 <Label Name="LabelIdSite" Content="Identifiant" ></Label>
-                                <TextBox  Margin="70,2" Name="Id" Text="{Binding Path=IdFormateur}"  Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox FontWeight="ExtraBold" Margin="70,2" Name="Id" Text="{Binding Path=IdFormateur}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelNom" Content="Nom " ></Label>
-                                <TextBox  Margin="90,2" x:Name="NomFormateur" Text="{Binding Path=NomFormateur}" Width="255" IsEnabled="False" MaxLength="50" />
+                                <TextBox FontWeight="ExtraBold" Margin="90,2" x:Name="NomFormateur" Text="{Binding Path=NomFormateur}" Width="255" IsEnabled="False" MaxLength="50" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDomaine" Content="Domaine " ></Label>
-                                <TextBox  Margin="70,2" x:Name="Domaine" Text="{Binding Path=Domaine}" Width="255" IsEnabled="False" MaxLength="20" />
+                                <TextBox FontWeight="ExtraBold" Margin="70,2" x:Name="Domaine" Text="{Binding Path=Domaine}" Width="255" IsEnabled="False" MaxLength="20" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelTelephone" Content="TelFormateur " ></Label>
-                                <TextBox  Margin="50,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
+                                <TextBox FontWeight="ExtraBold" Margin="50,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelEmail" Content="Email " ></Label>
-                                <TextBox  Margin="90,2" x:Name="EmailFormateur" Text="{Binding Path=EmailFormateur}" Width="255" IsEnabled="False" MaxLength="50"/>
+                                <TextBox FontWeight="ExtraBold" Margin="90,2" x:Name="EmailFormateur" Text="{Binding Path=EmailFormateur}" Width="255" IsEnabled="False" MaxLength="50"/>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateEncodage" Content="Date d'encodage" ></Label>
-                                <DatePicker  Margin="34,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="250"  IsEnabled="False" ></DatePicker>
+                                <DatePicker FontWeight="ExtraBold" Margin="34,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="250"  IsEnabled="False" ></DatePicker>
                             </WrapPanel>
                             <WrapPanel>
 
@@ -91,22 +105,26 @@
                 </Grid>
             </Grid>
             <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                <GroupBox x:Name="ModuleFormateurtextBox" Header="ModuleFormateur" HorizontalAlignment="Center" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
+                        <StackPanel Grid.Column="0">
 
-                <GroupBox x:Name="ModuleFormateurtextBox" Header="ModuleFormateur" HorizontalAlignment="Center" Height="600" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
-                    <StackPanel Grid.Column="1">
-
-                        <WrapPanel >
+                            <WrapPanel >
                             <Label Name="LabelIdFormateur" Content="Formateur" ></Label>
-                            <ComboBox  Margin="80,2" Name="IdFormateur" SelectedValue="{Binding Path=IdFormateur, Mode=OneWayToSource, ValidatesOnDataErrors=true}"  Width="250"  SelectionChanged="IdFormateur_SelectionChanged" ></ComboBox>
+                                <ComboBox FontWeight="ExtraBold" Margin="60,2" Name="IdFormateur" SelectedValue="{Binding Path=IdFormateur, Mode=OneWayToSource, ValidatesOnDataErrors=true}"  Width="250"  SelectionChanged="IdFormateur_SelectionChanged" ></ComboBox>
                         </WrapPanel>
                         <WrapPanel Margin="0,20,0,0">
                             <Label Name="LabelIdModule" Content="Nom Module" ></Label>
-                            <ComboBox  Margin="70,2" Name="IdModule" Text="{Binding Path=IdModule}"  Width="250" IsEnabled="False" SelectionChanged="IdModule_SelectionChanged" ></ComboBox>
+                                <ComboBox FontWeight="ExtraBold" Margin="40,2" Name="IdModule" SelectedValue="{Binding Path=IdModule}"  Width="250"  SelectionChanged="IdModule_SelectionChanged" ></ComboBox>
                         </WrapPanel>
 
                         <WrapPanel Margin="0,20,0,0">
                             <Label Name="LabelModuleVersion" Content="Module Version" ></Label>
-                            <DatePicker Margin="54,2" x:Name="VersionModule" Text="{Binding Path=VersionModule}" Width="255" IsEnabled="False" />
+                                <DatePicker Margin="34,2" x:Name="VersionModule" Text="{Binding Path=VersionModule}" Width="250" FontWeight="ExtraBold" IsEnabled="False" />
                         </WrapPanel>
 
                         <WrapPanel>
@@ -116,20 +134,98 @@
                             <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
                             <Button  Name="mettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
                         </WrapPanel>
-
+                        </StackPanel>
+                </GroupBox>
+                </Grid>
+                <Grid Grid.Row="1">
+                <GroupBox x:Name="FormateurModule" Header="La liste des éléments assignés d'un élément séléctionné" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="490" Height="290">
+                    <StackPanel Grid.Column="1">
                         <DataGrid Name="ListModule" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModule_MouseDoubleClick" >
+
                             <DataGrid.Columns>
 
-                                <DataGridTextColumn Header="Id" Width="50" Binding="{Binding Path=IdModule}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="NomModule" Width="200" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Visibility="Hidden" Header="Id" Width="50" Binding="{Binding Path=IdModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="NomFormateur" Width="200" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="NomModule" Width="150" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="VersionModule" Width="200" Binding="{Binding Path=VersionModule}"></DataGridTextColumn>
 
                             </DataGrid.Columns>
                         </DataGrid>
-
                     </StackPanel>
                 </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="310"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border   Margin="10,10,0,0"  HorizontalAlignment="Left">
+                    <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="300" Width="490" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste de Module"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercherModule" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="RechercherModule" Content="Rechercher" Click="RechercherModule_Click"></Button>
+                                <Button   Name="ReSetModule" Content="SetList" Click="ReSetListModule_Click"></Button>
 
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <DataGrid Grid.Row="0" x:Name="ListElementModule" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElementModule_MouseDoubleClick">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"  FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Visibility="Hidden" Header="IdFormation"  FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Formation"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Credit Module"  FontSize="15" Binding="{Binding Path=CreditModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nombre Prévu"  FontSize="15" Binding="{Binding Path=NombrePrévu}"></DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid> 
+                    </GroupBox>
+                </Border>
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="ParticipantTextBox" Header="Souscrire un Module" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel >
+                                <Label Name="LabelModule" Content="Identifiant" ></Label>
+                                <TextBox  Margin="70,2" Name="idModule" Text="{Binding Path=IdModule}"  Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelIdFormation" Content="Id Formation" ></Label>
+                                <ComboBox  Margin="56,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" SelectionChanged="IdFormation_SelectionChanged"/>
+                            </WrapPanel>
+
+                            <WrapPanel >
+                                <Label Name="LabelNomModule" Content="Nom " ></Label>
+                                <TextBox  Margin="92,2" x:Name="NomModule" Text="{Binding Path=NomModule}" Width="250" IsEnabled="False" MaxLength="40"/>
+                            </WrapPanel>
+                            <!--<WrapPanel >
+                                <Label Name="LabelFormation" Content="Nom Formation" ></Label>
+                                <TextBox  Margin="40,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
+                            </WrapPanel>-->
+                            <WrapPanel >
+                                <Label Name="LabelCreditModule" Content="Credit Module" ></Label>
+                                <TextBox  Margin="48,2" x:Name="CreditModule" Text="{Binding Path=CreditModule}"  Width="250"  IsEnabled="False" MaxLength="4"  />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelNombrePreévu" Content="Nombre Prévu" ></Label>
+                                <TextBox  Margin="49,2" x:Name="NombrePrévu" Text="{Binding Path=NombrePrévu}"  Width="250"  IsEnabled="False" MaxLength="2" />
+                            </WrapPanel>
+
+                            <WrapPanel>
+
+                                <Button   Name="AjouterModule" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="AjouterModule_Click"></Button>
+                                <Button  Name="modifierModule" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="ModifierModule_Click"></Button>
+                                <Button  Name="supprimerModule" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="SupprimerModule_Click"></Button>
+                                <Button  Name="mettreAjourModule" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjourModule_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
             </Grid>
 
         </Grid>

@@ -93,7 +93,7 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdParticipant == IdParticipant).ToList();
+                var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdParticipant == IdParticipant ).ToList();
                 return moduleParticipant;
             }
         }

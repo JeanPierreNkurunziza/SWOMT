@@ -34,7 +34,7 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var module = db.Modules.Include(a => a.Formation);
+                var module = db.Modules.Include(a => a.Formation).OrderBy(a=>a.NomModule);
                 return module.ToList();
             }
         }
@@ -66,6 +66,21 @@ namespace MyApps.Domain.Service
                 return GetName.NomFormation; 
 
             }
+        }
+        public static List<Module> SearchMethodByName(string searchString)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var assets = from s in db.Modules
+                             select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper()));
+                }
+
+                return assets.ToList();
+            }
+
         }
     }
 }

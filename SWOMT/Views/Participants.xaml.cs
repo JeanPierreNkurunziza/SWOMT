@@ -205,5 +205,20 @@ namespace SWOMT.Views
             DistrictParticipant.IsEnabled = false;
             DateEncodage.IsEnabled = false;
         }
+        private void Rechercher_Click(object sender, RoutedEventArgs e) 
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+                liste = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
+                PopulateAndBind(liste);
+                return;
+                
+            }
+          
+            liste = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBind(liste);
+        }
     }
 }

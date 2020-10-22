@@ -59,5 +59,21 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        public static List<Participant> SearchParticipantByName(string searchString)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var assets = from s in db.Participants 
+                             select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    assets = assets.Where(s => s.NomParticipant.ToUpper().Contains(searchString.ToUpper())); 
+                }
+
+                return assets.ToList();
+            }
+
+        }
+      
     }
 }

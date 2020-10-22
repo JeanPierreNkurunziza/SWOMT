@@ -64,6 +64,10 @@ namespace SWOMT.Views
             ListParticipantRéussi.DataContext = listeItems;
         }
 
+        /// <summary>
+        /// binding la liste des participant echoués
+        /// </summary>
+        /// <param name="listeItems"></param>
         private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
         {
             Binding monBinding = new Binding
@@ -85,17 +89,7 @@ namespace SWOMT.Views
         /// the method to fill in the combobox the liste items for selection 
         /// </summary>
         /// <returns></returns>
-        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
-        {
-
-            foreach (var module in listeModule)
-            {
-
-                IdSite.Items.Add(module.NomModule + " : " + module.IdSiteModule);
-            }
-
-            return listeModule;
-        }
+        
         private List<MyApps.Application.ViewModels.ExamenViewModel> SelectedNomModuleExamenPlanned()
         {
 
@@ -118,8 +112,15 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListElement_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
+            
             if (ListElement.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
+                if (donnee.IdSiteModule == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
                 //IdResultat.Text = donnee.IdResultat.ToString();
                 //IdExamen.Text = donnee.IdExamen.ToString();
                 IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
@@ -136,8 +137,19 @@ namespace SWOMT.Views
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
+            if (enregistre == "Ajouter")
+            {
+                MessageBox.Show("Veuillez selectionner une participant dans la liste de participants pour ajouter des points");
+                
+            }
+            
             ClearFormValues();
             ModeIsEnabledTrue();
+            IdModuleInscription.IsEnabled = false;
+            NomModule.IsEnabled = false;
+            NomParticipant.IsEnabled = false;
+            ParticipantRéussi.IsEnabled = false;
+
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une site
@@ -160,7 +172,7 @@ namespace SWOMT.Views
                 return;
             }
 
-
+           
 
             if (enregistre == "Ajouter")
             {
@@ -169,8 +181,26 @@ namespace SWOMT.Views
                 element.IdExamen = short.Parse(IdExamens.Text);
                 element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
                 element.Points = short.Parse(Points.Text);
+               
                 element.EstPresent = bool.Parse(EstPresent.Text);
-                element.ParticipantRéussi = bool.Parse(ParticipantRéussi.Text);
+                    if (element.Points >= 50)
+                    {
+                        element.ParticipantRéussi = true;
+                    }
+                    else
+                    {
+                    element.ParticipantRéussi = false;
+                    }
+               
+                foreach (var donne in MyApps.Application.Services.ResultatsVieModelService.GetResultats())
+                {
+                    //avoid the duplicate datas in the liste of results 
+                    if ((element.IdExamen == donne.IdExamen) && (element.IdModuleInscription == donne.IdModuleInscription)) // if already the items exist then rejects
+                    {
+                        MessageBox.Show("les données existé déjà ! dans la base de données");
+                        return;
+                    }
+                }
                 MyApps.Domain.Service.ResultatService.Create(element); 
 
             }
@@ -178,7 +208,7 @@ namespace SWOMT.Views
             if (enregistre == "Modifier")
             {
 
-                //element.IdSiteModule = short.Parse(IdSiteModule.Text); 
+                element.IdResultat = short.Parse(IdResultat.Text);  
                 element.IdExamen = short.Parse(IdExamens.Text);
                 element.IdModuleInscription = short.Parse(IdModuleInscription.Text); 
                 element.Points = short.Parse(Points.Text);
@@ -192,8 +222,8 @@ namespace SWOMT.Views
             ModeIsEnabledFalse();
             ClearFormValues();
             
-            //liste.Clear();
-            //liste = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
+            listeExamen.Clear();
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens(); 
             //PopulateAndBind(liste);
 
             //Participant réussi dans un module 
@@ -222,8 +252,13 @@ namespace SWOMT.Views
                 return;
             }
             enregistre = "Modifier";
+          
+            //ClearFormValues();
             ModeIsEnabledTrue();
-
+            IdModuleInscription.IsEnabled = false;
+            NomModule.IsEnabled = false;
+            NomParticipant.IsEnabled = false;
+            ParticipantRéussi.IsEnabled = false;
 
         }
 
@@ -234,14 +269,27 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
-
+            //le code pour signaler la presence de l'id on doit d'abord faire une vérification
+            if (IdResultat.Text == "")
+            {
+                MessageBox.Show("Please select the the items in the list to delete");
+                return;
+            }
             MyApps.Domain.Service.ResultatService.Delete(short.Parse(IdResultat.Text));
-
-            ClearFormValues();
+            //Participant réussi dans un module 
             liste.Clear();
-            liste = MyApps.Application.Services.ResultatsVieModelService.GetResultats(); 
+            liste = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantRéussi(short.Parse(IdExamens.Text));
+            TotalRéussi.Text = liste.Count().ToString();
             PopulateAndBind(liste);
+
+            // Participant échoué dans un module
+            listParticipantFailed.Clear();
+            listParticipantFailed = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantEchoué(short.Parse(IdExamens.Text));
+            TotalEchoué.Text = listParticipantFailed.Count().ToString();
+            PopulateAndBindParticipantFailed(listParticipantFailed);
+            PopulateAndBind(liste);
+            ClearFormValues();
+            ModeIsEnabledFalse();
 
         }
         private void ClearFormValues()
@@ -295,6 +343,44 @@ namespace SWOMT.Views
             };
             ListExamen.DataContext = listeItems;
         }
+        /// <summary>
+        /// la méthode qui passe les élement de la liste dans la combobox idsite 
+        /// </summary>
+        /// <returns></returns>
+        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
+        {
+
+            foreach (var module in listeModule)
+            {
+
+                IdSite.Items.Add(module.NomModule + " : " + module.IdSiteModule);
+            }
+
+            return listeModule;
+        }
+        /// <summary>
+        /// méthode de manipuler le combobox de IdSide dans la partie Examen de gauche 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboxBoxIdSiteModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IdSite.SelectedItem == null)
+            {
+                return;
+            }
+            string nomModuleSelected = IdSite.SelectedValue.ToString();
+
+            foreach (var module in listeModule) 
+            {
+                if (nomModuleSelected == module.NomModule + " : " + module.IdSiteModule) 
+                {
+                    idSiteModuleSelected = module.IdSiteModule;
+               
+                }
+            }
+
+        }
 
         /// <summary>
         /// afffichage apres la selection
@@ -303,14 +389,36 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListExamen_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
+            
             if (ListExamen.SelectedItem is MyApps.Application.ViewModels.ExamenViewModel donnee)
             {
+                //pour eviter le système de cracher quant on selectionne le vide
+                if (donnee.IdSiteModule == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+
                 IdExamen.Text = donnee.IdExamen.ToString();
                 IdSite.Text = donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString() ; 
                 NomModule.Text = donnee.NomModule.ToString();
                 DateExamen.Text = donnee.DateExamen.ToString();
+                IdSiteModule.Text= donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString() + " : "+ donnee.DateExamen.ToString();
 
             }
+            ////Participant réussi dans un module 
+            //liste.Clear();
+            //liste = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantRéussi(short.Parse(IdExamen.Text));
+            //TotalRéussi.Text = liste.Count().ToString();
+            //PopulateAndBind(liste);
+
+            //// Participant échoué dans un module
+            //listParticipantFailed.Clear();
+            //listParticipantFailed = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantEchoué(short.Parse(IdExamen.Text));
+            //TotalEchoué.Text = listParticipantFailed.Count().ToString();
+            //PopulateAndBindParticipantFailed(listParticipantFailed);
+            //PopulateAndBind(liste);
         }
 
         private void AjouterExamen_Click(object sender, RoutedEventArgs e)
@@ -340,7 +448,12 @@ namespace SWOMT.Views
                 MessageBox.Show("You have to put the date of the examen");
                 return;
             }
-
+            DateTime dateExamen;
+            if (!DateTime.TryParse(DateExamen.Text, out dateExamen))
+            {
+                MessageBox.Show("Format du date est incorrect SVP !");
+                return;
+            }
             if (enregistre == "Ajouter")
             {
 
@@ -364,7 +477,7 @@ namespace SWOMT.Views
             if (enregistre == "Modifier")
             {
 
-                //element.IdExamen = short.Parse(IdExamen.Text);
+                element.IdExamen = short.Parse(IdExamen.Text);
                 element.IdSiteModule = (short)(idSiteModuleSelected);
 
                 element.DateExamen = DateTime.Parse(DateExamen.Text).Date;
@@ -376,8 +489,8 @@ namespace SWOMT.Views
             listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
             PopulateAndBindExamen(listeExamen);
             ClearFormValuesExamen();
-            ModeIsEnabledFalseExamen();            
-
+            ModeIsEnabledFalseExamen();
+           
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une formation
@@ -456,16 +569,32 @@ namespace SWOMT.Views
 
         }
 
+        //*******************************************************************************************************************************
+        //     la partie de code pour le manipuler les liste des participants et leurs points
+        //********************************************************************************************************************************
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBoxModulesPerParticipant_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //code pour faire une rechercher dans la liste des participants réussis 
 
         }
 
         private void ListParticipantRéussi_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
+            
             if (ListParticipantRéussi.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
             {
-               // IdResultat.Text = donnee.IdResultat.ToString();
+                if (donnee.IdExamen == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+                IdResultat.Text = donnee.IdResultat.ToString();
                 IdExamen.Text = donnee.IdExamen.ToString();
                 IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
                 NomModule.Text = donnee.NomModule.ToString();
@@ -474,34 +603,37 @@ namespace SWOMT.Views
                 EstPresent.Text = donnee.EstPresent.ToString();
                 ParticipantRéussi.Text = donnee.ParticipantRéussi.ToString();
             }
+           
         }
 
         private void ListParticipantFailed_MouseDoubleClick(object sender, SelectionChangedEventArgs e) 
         {
-
-        }
-
-        private void ComboxBoxIdSiteModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (IdSite.SelectedItem == null)
+            
+            if (ListParticipantFailed.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
             {
+                if (donnee.IdExamen == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+                IdResultat.Text = donnee.IdResultat.ToString();
+                IdExamen.Text = donnee.IdExamen.ToString();
+                IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
+                NomModule.Text = donnee.NomModule.ToString();
+                NomParticipant.Text = donnee.NomParticipant.ToString();
+                Points.Text = donnee.Points.ToString();
+                EstPresent.Text = donnee.EstPresent.ToString();
+                ParticipantRéussi.Text = donnee.ParticipantRéussi.ToString();
+            }
+            if (IdResultat.Text == "" && IdExamen.Text == "" && IdModuleInscription.Text == "" && NomParticipant.Text == "")
+            {
+                MessageBox.Show("Séléctionner un élément dans la liste");
                 return;
             }
-            string nomModuleSelected = IdSite.SelectedValue.ToString(); 
-
-            foreach (var module in listeExamen) 
-            {
-                if (nomModuleSelected == module.NomModule + " : " + module.IdSiteModule + " : " + module.DateExamen)
-                {
-                    idSiteModuleSelected = module.IdSiteModule;
-                    //NomSite.Text = module.NomSite;
-                    //DateDébut.Text = module.DateDebutModule.ToString();
-                    //DateFin.Text = module.DateFinModule.ToString();
-                    
-                }
-            }
-            
         }
+
+        
 
         private void ComboBoxPerticipantPerModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -569,6 +701,41 @@ namespace SWOMT.Views
             listParticipantFailed= MyApps.Application.Services.ResultatsVieModelService.GetListParticipantEchoué(short.Parse(IdExamens.Text));
             TotalEchoué.Text = listParticipantFailed.Count().ToString();
             PopulateAndBindParticipantFailed(listParticipantFailed);
+        }
+
+        private void Points_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            if (!int.TryParse(Points.Text, out int nombrelimit))
+            {
+                MessageBox.Show("Saisissez des nombres !  Pas plus de 2"); 
+                Points.Text = "";
+            }
+        }
+
+        // Méthode pour faire une rechercher dans la liste des examens
+        //***************************************************************************************************************
+        private void Rechercher_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+                
+                listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
+                PopulateAndBindExamen(listeExamen);
+                return;
+
+            }
+
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameModule(NomRechercher.Text); 
+            PopulateAndBindExamen(listeExamen); 
+        }
+        private void ReSetList_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercher.Text = "";
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameModule(NomRechercher.Text);
+            PopulateAndBindExamen(listeExamen);
         }
     }
 }

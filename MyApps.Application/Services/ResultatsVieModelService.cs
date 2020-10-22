@@ -77,5 +77,50 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        public static List<ViewModels.ResultatViewModel> GetListModulesEchoué(int idModuleInscription)  
+        {
+            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+            var GetListe = ResultatService.GetListModuleEchoué(idModuleInscription); 
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
+                {
+                    IdResultat = itemList.IdResultat,
+                    IdExamen = itemList.IdExamen,
+                    IdModuleInscription = itemList.IdModuleInscription,
+                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
+                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
+                    Points = itemList.Points,
+                    EstPresent = itemList.EstPresent,
+                    ParticipantRéussi = itemList.ParticipantRéussi
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+        public static List<ViewModels.ResultatViewModel> GetListModulesRéussis(int idModuleInscription) 
+        {
+            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+            var GetListe = ResultatService.GetListModuleRéussis(idModuleInscription);   
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
+                {
+                    IdResultat = itemList.IdResultat,
+                    IdExamen = itemList.IdExamen,
+                    IdModuleInscription = itemList.IdModuleInscription,
+                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
+                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
+                    Points = itemList.Points,
+                    EstPresent = itemList.EstPresent,
+                    ParticipantRéussi = itemList.ParticipantRéussi
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+
     }
 }

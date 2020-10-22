@@ -28,10 +28,20 @@
         </Grid>
         <Grid Grid.Row="2">
 
+            <WrapPanel >
+                <Label Name="LabelRechercher" Content="Rechercher Nom" ></Label>
+                <TextBox FontWeight="ExtraBold" Margin="64,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="200" ></TextBox>
+            
+            </WrapPanel>
+            <WrapPanel >
 
+                <Button   Name="Rechercher" Content="Rechercher" Width="150" Margin="200,40,20,20" Click="Rechercher_Click" FontSize="18"></Button>
+
+            </WrapPanel>
             <Grid Grid.Column="0" Width="700">
                 <Border BorderBrush="Black" BorderThickness="1,1,1,1">
                     <DataGrid Grid.Row="1" x:Name="ListParticipant" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListParticipant_MouseDoubleClick">
+                        
                         <DataGrid.Columns >
                             <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
                             <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>

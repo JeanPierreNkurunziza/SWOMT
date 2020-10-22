@@ -47,7 +47,7 @@ namespace SWOMT.Views
             listeModule = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
             //PopulateAndBindSiteModule(listeModule);
 
-            this.SelectedNomModule();
+            this.SelectedNomModule(); 
             this.SelectedNomParticipant();
             this.SelectedNomParticipantsGetModules(); 
 
@@ -99,13 +99,13 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
         {
             
-            foreach (var module in listeModule)
+            foreach (var module in listeModule.OrderBy(a => a.NomModule))
             {
                 
                 IdSiteModule.Items.Add(module.NomModule + " : "+ module.IdSiteModule); 
             }
 
-            return listeModule;
+            return listeModule; 
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID
@@ -114,9 +114,9 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.ParticipantViewModel> SelectedNomParticipant()
         {
 
-            foreach (var participant in listeParticipant)
+            foreach (var participant in listeParticipant.OrderBy(a => a.NomParticipant))
             {
-                IdParticipant.Items.Add(participant.NomParticipant);
+                IdParticipant.Items.Add(participant.NomParticipant + " : " + participant.IdNational.ToString());
             }
 
             return listeParticipant;
@@ -135,22 +135,21 @@ namespace SWOMT.Views
 
             if (ListElement.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
-                try {
-                    IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
+                if (donnee.IdSiteModule == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+                IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
                     IdSiteModule.Text = donnee.NomModule.ToString() +" : "+donnee.IdSiteModule.ToString();
-                    IdParticipant.Text = donnee.NomParticipant.ToString();
+                    IdParticipant.Text = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
                     NomModule.Text = donnee.NomModule.ToString();
                     // NomParticipant.Text = MyApps.Domain.Service.InscriptionService.GetIdNational(donnee.IdParticipant).ToString();
                     DateInscription.Text = donnee.DateInscription.ToString();
                     EstSurListeAttente.Text = donnee.EstSurListeAttente.ToString();
-                    IdParticipants.SelectedItem = donnee.NomParticipant.ToString();
+                    IdParticipants.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
 
-                }
-                catch(Exception ex)
-                    {
-                    MessageBox.Show("A handled exception just occurred: " + ex.Message, "Exception Sample", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                    }
             }
             
             
@@ -159,23 +158,21 @@ namespace SWOMT.Views
         {
             if (ListElementAttente.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
-                try
+                if (donnee.IdSiteModule == 0)
                 {
-                    IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+
+                IdModuleInscription.Text = donnee.IdModuleInscription.ToString();
                     IdSiteModule.Text = donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString();
-                    IdParticipant.Text = donnee.NomParticipant.ToString();
+                    IdParticipant.Text = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
                     NomModule.Text = donnee.NomModule.ToString();
                     // NomParticipant.Text = MyApps.Domain.Service.InscriptionService.GetIdNational(donnee.IdParticipant).ToString();
                     DateInscription.Text = donnee.DateInscription.ToString();
                     EstSurListeAttente.Text = donnee.EstSurListeAttente.ToString();
-                    IdParticipants.SelectedItem = donnee.NomParticipant.ToString();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("A handled exception just occurred: " + ex.Message, "Exception Sample", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                    IdParticipants.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
 
             }
             //listeModulePerParticipant.Clear();
@@ -244,8 +241,17 @@ namespace SWOMT.Views
                 element.IdSiteModule = (short)(idModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);  
                 element.DateInscription = DateTime.Parse(DateInscription.Text).Date; 
-                element.EstSurListeAttente = bool.Parse(EstSurListeAttente.Text); 
-              
+                element.EstSurListeAttente = bool.Parse(EstSurListeAttente.Text);
+                foreach (var donne in MyApps.Application.Services.InscriptionViewModelService.GetInscriptions())
+                {
+                    //avoid the duplicate datas in the liste of sites 
+                    if ((element.IdSiteModule == donne.IdSiteModule) && (element.IdParticipant == donne.IdParticipant)) // if already the items exist then rejects
+                    {
+                        MessageBox.Show("les données existé déjà ! dans la base de données");
+                        return;
+                    }
+                }
+
                 MyApps.Domain.Service.InscriptionService.Create(element); 
 
             }
@@ -391,7 +397,7 @@ namespace SWOMT.Views
             string nomParticipantSelected = IdParticipant.SelectedValue.ToString();
             foreach (var participant in listeParticipant)
             {
-                if (participant.NomParticipant == nomParticipantSelected)
+                if ( nomParticipantSelected == participant.NomParticipant + " : " + participant.IdNational)
                 {
                     idParticipantSelected = participant.IdParticipant;
                     NomParticipant.Text = participant.IdNational.ToString();
@@ -450,8 +456,12 @@ namespace SWOMT.Views
         {
             if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.ParticipantViewModel donnee)
             {
-                try 
-                { 
+                if (donnee.IdParticipant == 0) 
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
                 Id.Text = donnee.IdParticipant.ToString();
                 Nom.Text = donnee.NomParticipant.ToString();
                 DateNaissance.Text = donnee.DateNaissance.ToString();
@@ -461,13 +471,12 @@ namespace SWOMT.Views
                 SecteurParticipant.Text = donnee.SecteurParticipant.ToString();
                 DistrictParticipant.Text = donnee.DistrictParticipant.ToString();
                 DateEncodage.Text = donnee.DateEncodage.ToShortDateString();
-                IdParticipants.SelectedItem = donnee.NomParticipant.ToString();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("A handled exception just occurred: " + ex.Message, "Exception Sample", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+               
+                IdParticipants.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
+                   
+                IdParticipant.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
+                NomParticipant.Text = donnee.IdNational.ToString();
+
             }
 
             //IdParticipants.SelectedItem = donnee.NomParticipant.ToString();
@@ -604,6 +613,27 @@ namespace SWOMT.Views
             PopulateAndBindParticipant(listeParticipant);
             ClearFormValuesParticipant();
         }
+        private void Rechercher_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+                listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
+                PopulateAndBindParticipant(listeParticipant);
+                return;
+
+            }
+
+            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(listeParticipant);
+        }
+        private void ReSetList_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercher.Text = ""; 
+            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(listeParticipant); 
+        }
         private void ClearFormValuesParticipant()
         {
             Id.Text = "";
@@ -653,9 +683,9 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.ParticipantViewModel> SelectedNomParticipantsGetModules()
         {
 
-            foreach (var participant in listeParticipant)
+            foreach (var participant in listeParticipant.OrderBy(a => a.NomParticipant))
             {
-                IdParticipants.Items.Add(participant.NomParticipant);
+                IdParticipants.Items.Add(participant.NomParticipant + " : " + participant.IdNational);
             }
 
             return listeParticipant;
@@ -685,7 +715,7 @@ namespace SWOMT.Views
             string nomParticipantSelected = IdParticipants.SelectedValue.ToString(); 
             foreach (var participant in listeParticipant)
             {
-                if (participant.NomParticipant == nomParticipantSelected)
+                if (nomParticipantSelected == participant.NomParticipant + " : " + participant.IdNational)
                 {
                     idParticipantSelected = participant.IdParticipant;
                    // NomParticipant.Text = participant.IdNational.ToString();
@@ -696,5 +726,7 @@ namespace SWOMT.Views
             listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
             PopulateAndBindModulePerParticipant(listeModulePerParticipant);
         }
+
+       
     }
 }

@@ -23,6 +23,7 @@ namespace SWOMT
         public TableauDeBord()
         {
             InitializeComponent();
+           // this.WindowState = WindowState.Maximized; 
         }
 
 
