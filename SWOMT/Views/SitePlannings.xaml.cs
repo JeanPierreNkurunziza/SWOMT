@@ -36,6 +36,7 @@ namespace SWOMT.Views
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
             listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites(); 
             PopulateAndBindSites(listeSite);
+            PopulateAndBindModule(listeModule);
             this.SelectedNomModule();
             this.SelectedNomSite();
 
@@ -308,6 +309,7 @@ namespace SWOMT.Views
                     idModuleSelected = module.IdModule;
                 }
             }
+            
         }
 
         private void IdSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -473,6 +475,80 @@ namespace SWOMT.Views
             Nom.IsEnabled = false;
             AdresseSite.IsEnabled = false;
 
+        }
+
+        //******************************************************************************************************************************
+        //***************************************** la gestion des modules et site par module*******************************************
+        //******************************************************************************************************************************
+        /// <summary>
+        /// biding la liste de modules
+        /// </summary>
+        /// <param name="listeModules"></param>
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElementModule.DataContext = listeItems;
+        }
+        private void PopulateAndBindSitePerModule(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListSitePerModule.DataContext = listeItems;
+        }
+
+
+        /// <summary>
+        /// afffichage apres la selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListElementModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
+            {
+                Id.Text = donnee.IdModule.ToString();
+                //IdFormation.Text = donnee.NomFormation.ToString();
+                //NomModule.Text = donnee.NomModule.ToString();
+                //// NomFormation.Text = donnee.NomFormation.ToString();
+                //CreditModule.Text = donnee.CreditModule.ToString();
+                //NombrePrévu.Text = donnee.NombrePrévu.ToString();
+                IdModule.SelectedItem = donnee.NomModule.ToString();
+            }
+            //if (enregistre != "Ajouter")
+            //{
+            //    IdFormateur.SelectedValue = "";
+            //}
+            liste.Clear();
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePerModule((short)(idModuleSelected));
+            PopulateAndBindSitePerModule(liste); 
+
+        }
+        private void RechercherModule_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercherModule.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+
+                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+                PopulateAndBindModule(listeModule);
+                return;
+
+            }
+
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
+        }
+        private void ReSetListModule_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercherModule.Text = "";
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
         }
     }
 }

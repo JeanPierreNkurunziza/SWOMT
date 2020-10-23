@@ -84,5 +84,14 @@ namespace MyApps.Domain.Service
                 return moduleSite;
             }
         }
+
+        public static List<SiteModule> GetListSitePerModule(int IdModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.IdModule == IdModule).ToList();
+                return moduleSite;
+            }
+        }
     }
 }
