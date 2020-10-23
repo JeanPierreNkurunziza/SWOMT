@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyApps.Application.Services
 {
-   public class SitePlanningViewModelService
+    public class SitePlanningViewModelService
     {
         public static List<ViewModels.SitePlanningViewModel> GetSitePlanning()
         {
@@ -76,5 +76,20 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
-    }
+        public static List<ViewModels.SitePlanningViewModel> SearchMethodByName(string searchString)
+        {
+            List<ViewModels.SitePlanningViewModel> Liste = new List<ViewModels.SitePlanningViewModel>();
+            var GetListe = GetSitePlanning();
+            var assets = from s in GetListe
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper()) || s.DateDebutModule.ToString().Contains(searchString.ToString()));
+            }
+
+            return assets.ToList();
+        }
+
+    } 
+    
 }

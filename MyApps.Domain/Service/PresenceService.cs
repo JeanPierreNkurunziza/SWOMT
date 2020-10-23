@@ -56,13 +56,15 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-        public static string GetNomModule(int? IdModule)
+        public static string GetNomModule(int? IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
 
-                var GetName = db.Modules.Find(IdModule);
-                return GetName.NomModule;
+                var GetIdSiteModule = db.SiteModules.Find(IdSiteModule);
+                var idmodule = GetIdSiteModule.IdModule;
+                var nomModule = db.Modules.Find(idmodule);
+                return nomModule.NomModule;
 
             }
         }
@@ -74,6 +76,24 @@ namespace MyApps.Domain.Service
                 var GetName = db.Participants.Find(IdParticipant);
                 return GetName.NomParticipant;
 
+            }
+        }
+        public static List<Presence> GetListParticipantPresentPerModule(int IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+               
+                var moduleParticipant = db.Presences.Where(a => a.IdSiteModule == IdSiteModule && a.EstPresent == true).ToList();
+                return moduleParticipant;
+            }
+        }
+        public static List<Presence> GetListParticipantAbsentPerModule(int IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var moduleParticipant = db.Presences.Where(a => a.IdSiteModule == IdSiteModule && a.EstPresent == false).ToList(); 
+                return moduleParticipant;
             }
         }
     }
