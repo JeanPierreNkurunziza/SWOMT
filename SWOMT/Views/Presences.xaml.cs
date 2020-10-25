@@ -43,8 +43,8 @@ namespace SWOMT.Views
             
             PopulateAndBindModule(listeModulePlanning); 
             this.SelectedNomModule();
-            EstPresent.Items.Add("False");
             EstPresent.Items.Add("True");
+            EstPresent.Items.Add("False"); 
 
         }
 
@@ -95,8 +95,8 @@ namespace SWOMT.Views
             if (ListParticipantPresent.SelectedItem is MyApps.Application.ViewModels.PresenceViewModel donnee)
             {
                 IdPresence.Text = donnee.IdPresence.ToString();
-                IdSiteModule.Text = donnee.NomParticipant.ToString();
-                IdParticipant.Text = donnee.NomParticipant.ToString();
+                IdSiteModule.Text = donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString();
+                IdParticipant.Text = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
                 //NomModule.Text = donnee.NomModule.ToString();
                 //NomParticipant.Text = donnee.NomParticipant.ToString();
                 DateHeureDePresence.Text = donnee.DateHeureDePresence.ToString();
@@ -104,13 +104,18 @@ namespace SWOMT.Views
 
             }
         }
+        /// <summary>
+        /// les données à modifier en cas de modification dans la liste de participants Absent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListParticipantAbsent_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
             if (ListParticipantAbsent.SelectedItem is MyApps.Application.ViewModels.PresenceViewModel donnee)
             {
                 IdPresence.Text = donnee.IdPresence.ToString();
-                IdSiteModule.Text = donnee.NomModule.ToString();
-                IdParticipant.Text = donnee.NomParticipant.ToString();
+                IdSiteModule.Text = donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString();
+                IdParticipant.Text = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
                 //NomModule.Text = donnee.NomModule.ToString();
                 //NomParticipant.Text = donnee.NomParticipant.ToString();
                 DateHeureDePresence.Text = donnee.DateHeureDePresence.ToString();
@@ -118,7 +123,11 @@ namespace SWOMT.Views
 
             }
         }
-
+        /// <summary>
+        /// en cas de vouloir ajouter un élément dans la liste des presences 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
@@ -169,39 +178,28 @@ namespace SWOMT.Views
                 element.IdParticipant = (short)(idParticipantSelected);
                 element.DateHeureDePresence = DateTime.Parse(DateHeureDePresence.Text).Date;
                 element.EstPresent = bool.Parse(EstPresent.Text);
+                //code pour éviter des doublons dans les presences et respecter la date de début et date de fin de modules
                 foreach (var donne in MyApps.Application.Services.PresenceViewModelService.GetPresences())
                 {
                     //avoid the duplicate datas in the liste of sites 
-                    if ((element.IdSiteModule == donne.IdSiteModule) && (element.IdParticipant == donne.IdParticipant) && (element.DateHeureDePresence== donne.DateHeureDePresence)) // if already the items exist then rejects
+                    if ((element.IdSiteModule == donne.IdSiteModule) && ( element.IdParticipant== donne.IdParticipant) && (element.DateHeureDePresence== donne.DateHeureDePresence)) // if already the items exist then rejects
                     {
                         MessageBox.Show("les données existé déjà ! dans la base de données");
                         return;
                     }
-
+                    if (element.IdSiteModule == donne.IdSiteModule)
+                        {
+                        if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text)) && (element.DateHeureDePresence >= DateTime.Parse(DateDébut.Text)))
+                        {
+                            MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) + 
+                                " et la date de Fin : " + DateTime.Parse(DateFin.Text));
+                            return;
+                        }
+                    
+                        }
+                    
                 }
-                if (IdSiteModule.SelectedItem == null)
-                {
-                    return;
-                }
-                string nomModuleSelected = IdSiteModule.SelectedValue.ToString();
-
-                foreach (var module in listeModulePlanning)
-                {
-                    //if (nomModuleSelected == module.NomModule + " : " + module.IdSiteModule)
-                    //{
-                    //    idSiteModuleSelected = module.IdSiteModule;
-                    //    //NomSite.Text = module.NomSite;
-                    //    //DateDébut.Text = module.DateDebutModule.ToString();
-                    //    //DateFin.Text = module.DateFinModule.ToString();
-                       
-                    //}
-                    if (((short)(idSiteModuleSelected) == module.IdSiteModule) && (element.DateHeureDePresence >= module.DateDebutModule) && (element.DateHeureDePresence <= module.DateFinModule)) // if already the items exist then rejects
-                   
-                    {
-                        MessageBox.Show("date is not right" + module.DateDebutModule.ToString() + " : " + module.DateFinModule.ToString());
-                        return;
-                    }
-                }
+              
                 MyApps.Domain.Service.PresenceService.Create(element);
 
             }
@@ -209,11 +207,31 @@ namespace SWOMT.Views
             if (enregistre == "Modifier")
             {
 
-                //element.IdModuleInscription = short.Parse(IdModuleInscription.Text); 
+                element.IdPresence = short.Parse(IdPresence.Text);  
                 element.IdSiteModule = (short)(idSiteModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);
                 element.DateHeureDePresence = DateTime.Parse(DateHeureDePresence.Text).Date;
                 element.EstPresent = bool.Parse(EstPresent.Text);
+                foreach (var donne in MyApps.Application.Services.PresenceViewModelService.GetPresences())
+                {
+                    //avoid the duplicate datas in the liste of sites 
+                    if ((element.IdSiteModule == donne.IdSiteModule) && (element.IdParticipant == donne.IdParticipant) && (element.DateHeureDePresence == donne.DateHeureDePresence)) // if already the items exist then rejects
+                    {
+                        MessageBox.Show("les données existé déjà ! dans la base de données");
+                        return;
+                    }
+                    if (element.IdSiteModule == donne.IdSiteModule)
+                    {
+                        if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text)) && (element.DateHeureDePresence >= DateTime.Parse(DateDébut.Text)))
+                        {
+                            MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) +
+                                " et la date de Fin : " + DateTime.Parse(DateFin.Text));
+                            return;
+                        }
+
+                    }
+
+                }
 
                 MyApps.Domain.Service.PresenceService.Update(element);
             }
@@ -249,12 +267,7 @@ namespace SWOMT.Views
                 MessageBox.Show("Entrer la formation à modifier");
                 return;
             }
-            enregistre = "Modifier";
-            enregistre = "Ajouter";
-            DateHeureDePresence.Text = "";
-            EstPresent.Text = "";
-            //ClearFormValues();
-            //ModeIsEnabledTrue();
+            enregistre = "Modifier";          
             DateHeureDePresence.IsEnabled = true;
             EstPresent.IsEnabled = true;
 
@@ -378,7 +391,7 @@ namespace SWOMT.Views
             ////EstSurListeAttente.IsEnabled = false;
 
             listeInscription = MyApps.Application.Services.InscriptionViewModelService.GetParticipantPerModule((short)(idSiteModuleSelected));
-            TotalParticipant.Text = listeInscription.Count().ToString();
+            //TotalParticipant.Text = listeInscription.Count().ToString();
             PopulateAndBindListeInscription(listeInscription);
 
             ////Participants Present sur la liste de presence par module  
@@ -501,6 +514,80 @@ namespace SWOMT.Views
                    // NomParticipant.Text = participant.IdNational.ToString();
                 }
             }
+        }
+        //*****************************************************************************************************************************
+        //**************************************** code pour faire une rechercher dans la  liste des presences*************************
+
+        private void Rechercher_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+
+                liste = MyApps.Application.Services.PresenceViewModelService.GetListParticipantPresentPerModule((short)(idSiteModuleSelected));
+                //    TotalRéussi.Text = liste.Count().ToString();
+                PopulateAndBindParticipantPresent(liste);
+                listeParticipantAbsent = MyApps.Application.Services.PresenceViewModelService.GetListParticipantAbsentPerModule((short)(idSiteModuleSelected));
+                //    TotalEchoué.Text = listeParticipantAbsent.Count().ToString();
+                PopulateAndBindParticipantAbsent(listeParticipantAbsent);
+                return;
+                
+
+            }
+            liste = this.SearchMethodByNameListPresent(NomRechercher.Text);
+            TotalRéussi.Text = liste.Count().ToString();
+            PopulateAndBindParticipantPresent(liste);
+            listeParticipantAbsent = this.SearchMethodByNameListAbsent(NomRechercher.Text);
+            TotalEchoué.Text = listeParticipantAbsent.Count().ToString();
+            PopulateAndBindParticipantAbsent(listeParticipantAbsent); 
+        }
+        private void ReSetList_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercher.Text = "";
+            liste = MyApps.Application.Services.PresenceViewModelService.GetListParticipantPresentPerModule((short)(idSiteModuleSelected));
+            //    TotalRéussi.Text = liste.Count().ToString();
+            PopulateAndBindParticipantPresent(liste);
+            listeParticipantAbsent = MyApps.Application.Services.PresenceViewModelService.GetListParticipantAbsentPerModule((short)(idSiteModuleSelected));
+            //    TotalEchoué.Text = listeParticipantAbsent.Count().ToString();
+            PopulateAndBindParticipantAbsent(listeParticipantAbsent);
+        }
+
+        /// <summary>
+        /// Methode pour faire une recherche dans la liste 
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        private List<MyApps.Application.ViewModels.PresenceViewModel> SearchMethodByNameListPresent(string searchString)
+        {
+            List<MyApps.Application.ViewModels.PresenceViewModel> Liste = new List<MyApps.Application.ViewModels.PresenceViewModel>();
+            var GetListe = MyApps.Application.Services.PresenceViewModelService.GetListParticipantPresentPerModule((short)(idSiteModuleSelected)); 
+            var assets = from s in GetListe
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                assets = assets.Where(s => s.NomParticipant.ToUpper().Contains(searchString.ToUpper()) || s.DateHeureDePresence.ToString().Contains(searchString.ToString()));
+            }
+
+            return assets.ToList();
+        }
+        /// <summary>
+        /// trouver la liste des participants absent et faire une recherche par nom participant ou date de presence 
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns>Liste trié</returns>
+        private List<MyApps.Application.ViewModels.PresenceViewModel> SearchMethodByNameListAbsent(string searchString)
+        {
+            List<MyApps.Application.ViewModels.PresenceViewModel> Liste = new List<MyApps.Application.ViewModels.PresenceViewModel>();
+            var GetListe = MyApps.Application.Services.PresenceViewModelService.GetListParticipantAbsentPerModule((short)(idSiteModuleSelected));
+            var assets = from s in GetListe
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                assets = assets.Where(s => s.NomParticipant.ToUpper().Contains(searchString.ToUpper()) || s.DateHeureDePresence.ToString().Contains(searchString.ToString()));
+            }
+
+            return assets.ToList();
         }
     }
 }

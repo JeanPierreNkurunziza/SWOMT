@@ -41,7 +41,7 @@
                     <RowDefinition Height="230"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border   HorizontalAlignment="Left">
-                <GroupBox x:Name="Site" Header="La liste des éléments assignés d'un élément séléctionné" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500" Height="390">
+                <GroupBox x:Name="Site" Header="La liste des Sites" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500" Height="390">
                     <StackPanel Grid.Column="1">
                     <DataGrid Grid.Row="0"  x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
                         <DataGrid.Columns >
@@ -63,7 +63,7 @@
                                 <Label Name="LabelId" Content="Identifiant" ></Label>
                                 <TextBox  Margin="70,2" FontWeight="ExtraBold" Name="Id" Text="{Binding Path=IdSite}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
-                            <WrapPanel >
+                            <WrapPanel > 
                                 <Label Name="LabelNom" Content="Nom " ></Label>
                                 <TextBox  Margin="94,2" FontWeight="ExtraBold" x:Name="Nom" Text="{Binding Path=NomSite}" Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>

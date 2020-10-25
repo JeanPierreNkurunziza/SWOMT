@@ -289,6 +289,7 @@ namespace SWOMT.Views
                 Id.Text = donnee.IdSite.ToString();
                 Nom.Text = donnee.NomSite.ToString();
                 AdresseSite.Text = donnee.AdresseSite.ToString();
+                IdSite.SelectedItem = donnee.NomSite.ToString(); 
 
             }
         }

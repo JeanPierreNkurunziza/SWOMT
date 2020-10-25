@@ -223,6 +223,7 @@ namespace SWOMT.Views
                 TotalEchoué.Text = ListeModulesEchoues.Count().ToString(); 
 
                 IdParticipant.Text = donnee.IdParticipant.ToString();
+                NomParticipant.Text = donnee.NomParticipant.ToString();
             }
 
            

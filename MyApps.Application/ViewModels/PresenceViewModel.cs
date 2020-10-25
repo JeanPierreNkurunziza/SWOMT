@@ -15,6 +15,9 @@ namespace MyApps.Application.ViewModels
         public string NomParticipant { get; set; }  
         public DateTime DateHeureDePresence { get; set; }
         public bool EstPresent { get; set; }
-        
+        public DateTime? DateDebutModule { get; set; }
+        public DateTime? DateDeFinModule { get; set; }
+        public Nullable<long> IdNational { get; set; } 
+
     }
 }

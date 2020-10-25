@@ -68,6 +68,28 @@ namespace MyApps.Domain.Service
 
             }
         }
+        public static DateTime? GetDateDebut(int? IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var GetIdSiteModule = db.SiteModules.Find(IdSiteModule);
+              
+                return GetIdSiteModule.DateDebutModule;
+
+            }
+        }
+        public static DateTime? GetDateFin(int? IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var GetIdSiteModule = db.SiteModules.Find(IdSiteModule);
+
+                return GetIdSiteModule.DateFinModule;
+
+            }
+        }
         public static string GetNomParticipant(int? IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -75,6 +97,16 @@ namespace MyApps.Domain.Service
 
                 var GetName = db.Participants.Find(IdParticipant);
                 return GetName.NomParticipant;
+
+            }
+        }
+        public static long? GetIdNational(int? IdParticipant)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var GetName = db.Participants.Find(IdParticipant);
+                return GetName.IdNational; 
 
             }
         }
