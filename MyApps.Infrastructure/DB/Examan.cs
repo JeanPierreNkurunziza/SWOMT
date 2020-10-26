@@ -24,8 +24,8 @@ namespace MyApps.Infrastructure.DB
         public int IdSiteModule { get; set; }
         public System.DateTime DateExamen { get; set; }
     
+        public virtual SiteModule SiteModule { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resultat> Resultats { get; set; }
-        public virtual SiteModule SiteModule { get; set; }
     }
 }

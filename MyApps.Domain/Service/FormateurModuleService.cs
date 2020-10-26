@@ -23,11 +23,11 @@ namespace MyApps.Domain.Service
                        
         }
 
-        public static void Delete(int idFormateur, int idModule)
+        public static void Delete(int idFormateurModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var formateurModule = db.FormateurModules.Find(idFormateur, idModule);
+                var formateurModule = db.FormateurModules.Find(idFormateurModule); 
                 if(formateurModule != null)
                 {
                     db.FormateurModules.Remove(formateurModule);
@@ -84,6 +84,7 @@ namespace MyApps.Domain.Service
 
             }
         }
+
 
         public static List<FormateurModule> GetListModulesPerFormateur(int IdFormateur)
         { 

@@ -17,9 +17,9 @@ namespace MyApps.Application.Services
             {
                 ViewModels.FormateurModuleViewModel vm = new ViewModels.FormateurModuleViewModel()
                 {
+                    IdFormateurModule=itemList.IdFormateurModule,
                     IdFormateur = itemList.IdFormateur,
                     IdModule = itemList.IdModule,
-
                     NomModule = FormateurModuleService.GetNomModule(itemList.IdModule),
                     NomFormateur = FormateurModuleService.GetNomFormateur(itemList.IdFormateur),
                     VersionModule = itemList.VersionModule,              
@@ -39,7 +39,7 @@ namespace MyApps.Application.Services
             {
                 ViewModels.FormateurModuleViewModel vm = new ViewModels.FormateurModuleViewModel()
                 {
-
+                    IdFormateurModule = itemList.IdFormateurModule,
                     IdFormateur = itemList.IdFormateur,
                     IdModule = itemList.IdModule,
 
@@ -62,7 +62,7 @@ namespace MyApps.Application.Services
             {
                 ViewModels.FormateurModuleViewModel vm = new ViewModels.FormateurModuleViewModel()
                 {
-
+                    IdFormateurModule = itemList.IdFormateurModule,
                     IdFormateur = itemList.IdFormateur,
                     IdModule = itemList.IdModule,
 

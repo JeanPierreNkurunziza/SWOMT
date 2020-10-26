@@ -167,7 +167,7 @@ namespace SWOMT.Views
                 MessageBox.Show("Please select the name of trainer");
                 return;
             }
-            
+            IdFormateurModule.IsEnabled = false;
             IdFormateur.IsEnabled = true;   
             IdModule.IsEnabled=false;     
             VersionModule.IsEnabled = false;
@@ -218,7 +218,7 @@ namespace SWOMT.Views
 
             if (enregistre == "Modifier")
             {
-
+                element.IdFormateurModule = short.Parse(IdFormateurModule.Text);
                 element.IdFormateur = (short)(idFormateurSelected);
                 element.IdModule = (short)(idModuleSelected);
              
@@ -264,23 +264,22 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
-            FormateurModule element = new FormateurModule();
-            element.IdFormateur = (short)(idFormateurSelected);
-            element.IdModule = (short)(idModuleSelected);
+            
             //le code pour signaler la presence de l'id dans la table Inscription on doit d'abord faire une vérification
-            if (IdFormateur.SelectedIndex == -1) 
+            if (IdFormateurModule.Text== "") 
             {
-                MessageBox.Show("Please select the trainer to delete");
+                MessageBox.Show("Séléctionnner l' élément à supprimer ");
                 return;
             }
-            MyApps.Domain.Service.FormateurModuleService.Delete(element.IdFormateur , element.IdModule);
-
+            MyApps.Domain.Service.FormateurModuleService.Delete(short.Parse(IdFormateurModule.Text));
+            
             IdFormateur.IsEnabled = true;
             IdModule.SelectedValue = "";
             VersionModule.Text = "";
             liste2.Clear();
             liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected));
             ModulesBinding(liste2);
+            IdFormateurModule.Text = "";
             IdFormateur.SelectedItem = "";
             IdModule.SelectedValue = "";
             VersionModule.Text = "";

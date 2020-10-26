@@ -75,10 +75,19 @@ namespace MyApps.Domain.Service
                              select s;
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper()));
+                    assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper())); 
                 }
 
                 return assets.ToList();
+            }
+
+        }
+        public static List<Module> GetModulePerFormation(int IdFormation)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var module = db.Modules.Where(a=>a.IdFormation==IdFormation).ToList();
+                return module;
             }
 
         }

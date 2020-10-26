@@ -33,13 +33,12 @@ namespace SWOMT.Views
         {
             InitializeComponent();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
-            PopulateAndBind(liste);
+         
             listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
             PopulateAndBindParticipant(listeParticipant);
             ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
             ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetResultats(); 
-            //PopulateAndBindRéussis(ListeResultats);
-            //PopulateAndBindParticipantFailed(ListeResultats);
+           
 
         }
 
@@ -76,6 +75,7 @@ namespace SWOMT.Views
                 DateDelivrance.Text = donnee.DateDelivrance.ToString();
 
             }
+           
         }
 
         private void Ajouter_Click(object sender, RoutedEventArgs e)
@@ -83,6 +83,9 @@ namespace SWOMT.Views
             enregistre = "Ajouter";
             
             ModeIsEnabledFalse();
+            
+            NomParticipant.Text = "";
+            DateDelivrance.Text = "";
             DateDelivrance.IsEnabled = true;
         }
         /// <summary>
@@ -95,12 +98,22 @@ namespace SWOMT.Views
             Certificat element = new Certificat();
             //Competence competence = new Competence();
 
-            if (IdCertificat.Text == "")
+            if (IdParticipant.Text == "")
             {
                 MessageBox.Show("Il faut saisir identifiant de certificat ");
                 return;
             }
+            if (NomParticipant.Text == "")
+            {
+                MessageBox.Show("Il faut séléctionner un participant récu dans un module ");
+                return;
+            }
 
+            if (DateDelivrance.Text=="")
+            {
+                MessageBox.Show("Il faut saisir la date de délivrance");
+                return;
+            }
 
 
             if (enregistre == "Ajouter")
@@ -121,12 +134,13 @@ namespace SWOMT.Views
 
                 MyApps.Domain.Service.CertificatService.Update(element);
             }
-
-            ClearFormValues();
-            ModeIsEnabledFalse();
             liste.Clear();
-            liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
+            liste = MyApps.Application.Services.CertificatViewModelService.GetCertificatsPerParticipant(short.Parse(IdParticipant.Text));
+            NbrCertificatRécu.Text = liste.Count().ToString();
             PopulateAndBind(liste);
+            DateDelivrance.Text = ""; 
+            ModeIsEnabledFalse();
+           
 
         }
         /// <summary>
@@ -166,7 +180,8 @@ namespace SWOMT.Views
 
             ClearFormValues();
             liste.Clear();
-            liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
+            liste = MyApps.Application.Services.CertificatViewModelService.GetCertificatsPerParticipant(short.Parse(IdParticipant.Text));
+            NbrCertificatRécu.Text = liste.Count().ToString();
             PopulateAndBind(liste);
 
         }
@@ -224,6 +239,10 @@ namespace SWOMT.Views
 
                 IdParticipant.Text = donnee.IdParticipant.ToString();
                 NomParticipant.Text = donnee.NomParticipant.ToString();
+                liste.Clear();
+                liste = MyApps.Application.Services.CertificatViewModelService.GetCertificatsPerParticipant(short.Parse(IdParticipant.Text));
+                NbrCertificatRécu.Text = liste.Count().ToString();
+                PopulateAndBind(liste);
             }
 
            
@@ -290,6 +309,7 @@ namespace SWOMT.Views
                 }
               
                 NomParticipant.Text = donnee.NomParticipant.ToString();
+                
           
             }
 

@@ -13,6 +13,15 @@
           <Property Name="IdParticipant" Type="int" Nullable="false" />
           <Property Name="DateDelivrance" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="IdEvenement" />
+          </Key>
+          <Property Name="IdEvenement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFormateur" Type="int" Nullable="false" />
+          <Property Name="Evenement" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateOfEVent" Type="datetime" />
+        </EntityType>
         <EntityType Name="Examen">
           <Key>
             <PropertyRef Name="IdExamen" />
@@ -34,9 +43,9 @@
         </EntityType>
         <EntityType Name="FormateurModule">
           <Key>
-            <PropertyRef Name="IdFormateur" />
-            <PropertyRef Name="IdModule" />
+            <PropertyRef Name="IdFormateurModule" />
           </Key>
+          <Property Name="IdFormateurModule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdFormateur" Type="int" Nullable="false" />
           <Property Name="IdModule" Type="int" Nullable="false" />
           <Property Name="VersionModule" Type="date" />
@@ -129,6 +138,7 @@
           <Property Name="IdSite" Type="int" Nullable="false" />
           <Property Name="DateDebutModule" Type="datetime" />
           <Property Name="DateFinModule" Type="datetime" />
+          <Property Name="IdFormateurModule" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -140,6 +150,15 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MotDePasse" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserRole" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <Association Name="Fk_Certificat_Participant">
           <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
           <End Role="Certificat" Type="Self.Certificat" Multiplicity="*" />
@@ -149,6 +168,18 @@
             </Principal>
             <Dependent Role="Certificat">
               <PropertyRef Name="IdParticipant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Evenement_Formateur">
+          <End Role="Formateur" Type="Self.Formateur" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formateur">
+              <PropertyRef Name="IdFormateur" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="IdFormateur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -284,6 +315,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_SiteModule_FormateurModule">
+          <End Role="FormateurModule" Type="Self.FormateurModule" Multiplicity="0..1" />
+          <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormateurModule">
+              <PropertyRef Name="IdFormateurModule" />
+            </Principal>
+            <Dependent Role="SiteModule">
+              <PropertyRef Name="IdFormateurModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_SiteModule_Module">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="*" />
@@ -341,6 +384,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="TrainingDBModelStoreContainer">
           <EntitySet Name="Certificat" EntityType="Self.Certificat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Examen" EntityType="Self.Examen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Formateur" EntityType="Self.Formateur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormateurModule" EntityType="Self.FormateurModule" Schema="dbo" store:Type="Tables" />
@@ -354,9 +398,14 @@
           <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteModule" EntityType="Self.SiteModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="Fk_Certificat_Participant" Association="Self.Fk_Certificat_Participant">
             <End Role="Participant" EntitySet="Participant" />
             <End Role="Certificat" EntitySet="Certificat" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Evenement_Formateur" Association="Self.Fk_Evenement_Formateur">
+            <End Role="Formateur" EntitySet="Formateur" />
+            <End Role="Evenement" EntitySet="Evenement" />
           </AssociationSet>
           <AssociationSet Name="Fk_Examen_SiteModule" Association="Self.Fk_Examen_SiteModule">
             <End Role="SiteModule" EntitySet="SiteModule" />
@@ -402,6 +451,10 @@
             <End Role="ModuleInscription" EntitySet="ModuleInscription" />
             <End Role="Resultats" EntitySet="Resultats" />
           </AssociationSet>
+          <AssociationSet Name="Fk_SiteModule_FormateurModule" Association="Self.Fk_SiteModule_FormateurModule">
+            <End Role="FormateurModule" EntitySet="FormateurModule" />
+            <End Role="SiteModule" EntitySet="SiteModule" />
+          </AssociationSet>
           <AssociationSet Name="Fk_SiteModule_Module" Association="Self.Fk_SiteModule_Module">
             <End Role="Module" EntitySet="Module" />
             <End Role="SiteModule" EntitySet="SiteModule" />
@@ -424,6 +477,16 @@
           <Property Name="DateDelivrance" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Participant" Relationship="Self.Fk_Certificat_Participant" FromRole="Certificat" ToRole="Participant" />
         </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="IdEvenement" />
+          </Key>
+          <Property Name="IdEvenement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFormateur" Type="Int32" Nullable="false" />
+          <Property Name="Evenement1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Formateur" Relationship="Self.Fk_Evenement_Formateur" FromRole="Evenement" ToRole="Formateur" />
+          <Property Name="DateOfEVent" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Examan">
           <Key>
             <PropertyRef Name="IdExamen" />
@@ -431,8 +494,8 @@
           <Property Name="IdExamen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdSiteModule" Type="Int32" Nullable="false" />
           <Property Name="DateExamen" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SiteModule" Relationship="Self.Fk_Examen_SiteModule" FromRole="Examen" ToRole="SiteModule" />
           <NavigationProperty Name="Resultats" Relationship="Self.Fk_Resultats_Examen" FromRole="Examen" ToRole="Resultats" />
-          <NavigationProperty Name="SiteModule" Relationship="TrainingDBModel.Fk_Examen_SiteModule" FromRole="Examan" ToRole="SiteModule" />
         </EntityType>
         <EntityType Name="Formateur">
           <Key>
@@ -444,18 +507,20 @@
           <Property Name="TélFormateur" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="EmailFormateur" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DateEncodage" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Evenements" Relationship="Self.Fk_Evenement_Formateur" FromRole="Formateur" ToRole="Evenement" />
           <NavigationProperty Name="FormateurModules" Relationship="Self.Fk_FormateurModule_Formateur" FromRole="Formateur" ToRole="FormateurModule" />
         </EntityType>
         <EntityType Name="FormateurModule">
           <Key>
-            <PropertyRef Name="IdFormateur" />
-            <PropertyRef Name="IdModule" />
+            <PropertyRef Name="IdFormateurModule" />
           </Key>
+          <Property Name="IdFormateurModule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdFormateur" Type="Int32" Nullable="false" />
           <Property Name="IdModule" Type="Int32" Nullable="false" />
           <Property Name="VersionModule" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Formateur" Relationship="Self.Fk_FormateurModule_Formateur" FromRole="FormateurModule" ToRole="Formateur" />
           <NavigationProperty Name="Module" Relationship="Self.Fk_FormateurModule_Module" FromRole="FormateurModule" ToRole="Module" />
+          <NavigationProperty Name="SiteModules" Relationship="Self.Fk_SiteModule_FormateurModule" FromRole="FormateurModule" ToRole="SiteModule" />
         </EntityType>
         <EntityType Name="Formation">
           <Key>
@@ -485,13 +550,13 @@
             <PropertyRef Name="IdModuleInscription" />
           </Key>
           <Property Name="IdModuleInscription" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSiteModule" Type="Int32" Nullable="false" />
           <Property Name="IdParticipant" Type="Int32" Nullable="false" />
           <Property Name="DateInscription" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EstSurListeAttente" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Participant" Relationship="Self.Fk_ModuleInscription_Participant" FromRole="ModuleInscription" ToRole="Participant" />
+          <NavigationProperty Name="SiteModule" Relationship="Self.Fk_ModuleInscription_SiteModule" FromRole="ModuleInscription" ToRole="SiteModule" />
           <NavigationProperty Name="Resultats" Relationship="Self.Fk_Resultats_IdModuleInscription" FromRole="ModuleInscription" ToRole="Resultats" />
-          <Property Name="IdSiteModule" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SiteModule" Relationship="TrainingDBModel.Fk_ModuleInscription_SiteModule" FromRole="ModuleInscription" ToRole="SiteModule" />
         </EntityType>
         <EntityType Name="Participant">
           <Key>
@@ -529,7 +594,7 @@
           <Property Name="DateHeureDePresence" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EstPresent" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Participant" Relationship="Self.Fk_Presence_Participant" FromRole="Presence" ToRole="Participant" />
-          <NavigationProperty Name="SiteModule" Relationship="TrainingDBModel.Fk_Presence_SiteModule" FromRole="Presence" ToRole="SiteModule" />
+          <NavigationProperty Name="SiteModule" Relationship="Self.Fk_Presence_SiteModule" FromRole="Presence" ToRole="SiteModule" />
         </EntityType>
         <EntityType Name="Resultat">
           <Key>
@@ -562,11 +627,13 @@
           <Property Name="IdSite" Type="Int32" Nullable="false" />
           <Property Name="DateDebutModule" Type="DateTime" Precision="3" />
           <Property Name="DateFinModule" Type="DateTime" Precision="3" />
+          <Property Name="IdFormateurModule" Type="Int32" />
+          <NavigationProperty Name="Examen" Relationship="Self.Fk_Examen_SiteModule" FromRole="SiteModule" ToRole="Examen" />
+          <NavigationProperty Name="FormateurModule" Relationship="Self.Fk_SiteModule_FormateurModule" FromRole="SiteModule" ToRole="FormateurModule" />
           <NavigationProperty Name="Module" Relationship="Self.Fk_SiteModule_Module" FromRole="SiteModule" ToRole="Module" />
+          <NavigationProperty Name="ModuleInscriptions" Relationship="Self.Fk_ModuleInscription_SiteModule" FromRole="SiteModule" ToRole="ModuleInscription" />
+          <NavigationProperty Name="Presences" Relationship="Self.Fk_Presence_SiteModule" FromRole="SiteModule" ToRole="Presence" />
           <NavigationProperty Name="Site" Relationship="Self.Fk_SiteModule_Site" FromRole="SiteModule" ToRole="Site" />
-          <NavigationProperty Name="ModuleInscriptions" Relationship="TrainingDBModel.Fk_ModuleInscription_SiteModule" FromRole="SiteModule" ToRole="ModuleInscription" />
-          <NavigationProperty Name="Examen" Relationship="TrainingDBModel.Fk_Examen_SiteModule" FromRole="SiteModule" ToRole="Examan" />
-          <NavigationProperty Name="Presences" Relationship="TrainingDBModel.Fk_Presence_SiteModule" FromRole="SiteModule" ToRole="Presence" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -578,6 +645,15 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MotDePasse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserRole" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <Association Name="Fk_Certificat_Participant">
           <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
           <End Role="Certificat" Type="Self.Certificat" Multiplicity="*" />
@@ -587,6 +663,30 @@
             </Principal>
             <Dependent Role="Certificat">
               <PropertyRef Name="IdParticipant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Evenement_Formateur">
+          <End Role="Formateur" Type="Self.Formateur" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formateur">
+              <PropertyRef Name="IdFormateur" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="IdFormateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Examen_SiteModule">
+          <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="1" />
+          <End Role="Examen" Type="Self.Examan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteModule">
+              <PropertyRef Name="IdSiteModule" />
+            </Principal>
+            <Dependent Role="Examen">
+              <PropertyRef Name="IdSiteModule" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -623,6 +723,18 @@
             </Principal>
             <Dependent Role="FormateurModule">
               <PropertyRef Name="IdModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_SiteModule_FormateurModule">
+          <End Role="FormateurModule" Type="Self.FormateurModule" Multiplicity="0..1" />
+          <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormateurModule">
+              <PropertyRef Name="IdFormateurModule" />
+            </Principal>
+            <Dependent Role="SiteModule">
+              <PropertyRef Name="IdFormateurModule" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -674,6 +786,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_ModuleInscription_SiteModule">
+          <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="1" />
+          <End Role="ModuleInscription" Type="Self.ModuleInscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteModule">
+              <PropertyRef Name="IdSiteModule" />
+            </Principal>
+            <Dependent Role="ModuleInscription">
+              <PropertyRef Name="IdSiteModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_Resultats_IdModuleInscription">
           <End Role="ModuleInscription" Type="Self.ModuleInscription" Multiplicity="1" />
           <End Role="Resultats" Type="Self.Resultat" Multiplicity="*" />
@@ -698,6 +822,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_Presence_SiteModule">
+          <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="1" />
+          <End Role="Presence" Type="Self.Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteModule">
+              <PropertyRef Name="IdSiteModule" />
+            </Principal>
+            <Dependent Role="Presence">
+              <PropertyRef Name="IdSiteModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_SiteModule_Site">
           <End Role="Site" Type="Self.Site" Multiplicity="1" />
           <End Role="SiteModule" Type="Self.SiteModule" Multiplicity="*" />
@@ -712,6 +848,7 @@
         </Association>
         <EntityContainer Name="TrainingDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Certificats" EntityType="Self.Certificat" />
+          <EntitySet Name="Evenements" EntityType="Self.Evenement" />
           <EntitySet Name="Examen" EntityType="Self.Examan" />
           <EntitySet Name="Formateurs" EntityType="Self.Formateur" />
           <EntitySet Name="FormateurModules" EntityType="Self.FormateurModule" />
@@ -725,9 +862,18 @@
           <EntitySet Name="Sites" EntityType="Self.Site" />
           <EntitySet Name="SiteModules" EntityType="Self.SiteModule" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
           <AssociationSet Name="Fk_Certificat_Participant" Association="Self.Fk_Certificat_Participant">
             <End Role="Participant" EntitySet="Participants" />
             <End Role="Certificat" EntitySet="Certificats" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Evenement_Formateur" Association="Self.Fk_Evenement_Formateur">
+            <End Role="Formateur" EntitySet="Formateurs" />
+            <End Role="Evenement" EntitySet="Evenements" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Examen_SiteModule" Association="Self.Fk_Examen_SiteModule">
+            <End Role="SiteModule" EntitySet="SiteModules" />
+            <End Role="Examen" EntitySet="Examen" />
           </AssociationSet>
           <AssociationSet Name="Fk_Resultats_Examen" Association="Self.Fk_Resultats_Examen">
             <End Role="Examen" EntitySet="Examen" />
@@ -740,6 +886,10 @@
           <AssociationSet Name="Fk_FormateurModule_Module" Association="Self.Fk_FormateurModule_Module">
             <End Role="Module" EntitySet="Modules" />
             <End Role="FormateurModule" EntitySet="FormateurModules" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_SiteModule_FormateurModule" Association="Self.Fk_SiteModule_FormateurModule">
+            <End Role="FormateurModule" EntitySet="FormateurModules" />
+            <End Role="SiteModule" EntitySet="SiteModules" />
           </AssociationSet>
           <AssociationSet Name="Fk_Module_Formation" Association="Self.Fk_Module_Formation">
             <End Role="Formation" EntitySet="Formations" />
@@ -757,12 +907,20 @@
             <End Role="Participant" EntitySet="Participants" />
             <End Role="ModuleInscription" EntitySet="ModuleInscriptions" />
           </AssociationSet>
+          <AssociationSet Name="Fk_ModuleInscription_SiteModule" Association="Self.Fk_ModuleInscription_SiteModule">
+            <End Role="SiteModule" EntitySet="SiteModules" />
+            <End Role="ModuleInscription" EntitySet="ModuleInscriptions" />
+          </AssociationSet>
           <AssociationSet Name="Fk_Resultats_IdModuleInscription" Association="Self.Fk_Resultats_IdModuleInscription">
             <End Role="ModuleInscription" EntitySet="ModuleInscriptions" />
             <End Role="Resultats" EntitySet="Resultats" />
           </AssociationSet>
           <AssociationSet Name="Fk_Presence_Participant" Association="Self.Fk_Presence_Participant">
             <End Role="Participant" EntitySet="Participants" />
+            <End Role="Presence" EntitySet="Presences" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Presence_SiteModule" Association="Self.Fk_Presence_SiteModule">
+            <End Role="SiteModule" EntitySet="SiteModules" />
             <End Role="Presence" EntitySet="Presences" />
           </AssociationSet>
           <AssociationSet Name="Fk_SiteModule_Site" Association="Self.Fk_SiteModule_Site">
@@ -799,18 +957,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <AssociationSet Name="Fk_ModuleInscription_SiteModule" Association="TrainingDBModel.Fk_ModuleInscription_SiteModule">
-            <End Role="SiteModule" EntitySet="SiteModules" />
-            <End Role="ModuleInscription" EntitySet="ModuleInscriptions" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_Examen_SiteModule" Association="TrainingDBModel.Fk_Examen_SiteModule">
-            <End Role="SiteModule" EntitySet="SiteModules" />
-            <End Role="Examan" EntitySet="Examen" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_Presence_SiteModule" Association="TrainingDBModel.Fk_Presence_SiteModule">
-            <End Role="SiteModule" EntitySet="SiteModules" />
-            <End Role="Presence" EntitySet="Presences" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -823,42 +969,6 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <Association Name="Fk_ModuleInscription_SiteModule">
-          <End Type="TrainingDBModel.SiteModule" Role="SiteModule" Multiplicity="1" />
-          <End Type="TrainingDBModel.ModuleInscription" Role="ModuleInscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SiteModule">
-              <PropertyRef Name="IdSiteModule" />
-            </Principal>
-            <Dependent Role="ModuleInscription">
-              <PropertyRef Name="IdSiteModule" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_Examen_SiteModule">
-          <End Type="TrainingDBModel.SiteModule" Role="SiteModule" Multiplicity="1" />
-          <End Type="TrainingDBModel.Examan" Role="Examan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SiteModule">
-              <PropertyRef Name="IdSiteModule" />
-            </Principal>
-            <Dependent Role="Examan">
-              <PropertyRef Name="IdSiteModule" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_Presence_SiteModule">
-          <End Type="TrainingDBModel.SiteModule" Role="SiteModule" Multiplicity="1" />
-          <End Type="TrainingDBModel.Presence" Role="Presence" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SiteModule">
-              <PropertyRef Name="IdSiteModule" />
-            </Principal>
-            <Dependent Role="Presence">
-              <PropertyRef Name="IdSiteModule" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -874,11 +984,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Evenements">
+            <EntityTypeMapping TypeName="TrainingDBModel.Evenement">
+              <MappingFragment StoreEntitySet="Evenement">
+                <ScalarProperty Name="DateOfEVent" ColumnName="DateOfEVent" />
+                <ScalarProperty Name="IdEvenement" ColumnName="IdEvenement" />
+                <ScalarProperty Name="IdFormateur" ColumnName="IdFormateur" />
+                <ScalarProperty Name="Evenement1" ColumnName="Evenement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Examen">
             <EntityTypeMapping TypeName="TrainingDBModel.Examan">
               <MappingFragment StoreEntitySet="Examen">
-                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="IdExamen" ColumnName="IdExamen" />
+                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="DateExamen" ColumnName="DateExamen" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -898,6 +1018,7 @@
           <EntitySetMapping Name="FormateurModules">
             <EntityTypeMapping TypeName="TrainingDBModel.FormateurModule">
               <MappingFragment StoreEntitySet="FormateurModule">
+                <ScalarProperty Name="IdFormateurModule" ColumnName="IdFormateurModule" />
                 <ScalarProperty Name="IdFormateur" ColumnName="IdFormateur" />
                 <ScalarProperty Name="IdModule" ColumnName="IdModule" />
                 <ScalarProperty Name="VersionModule" ColumnName="VersionModule" />
@@ -927,8 +1048,8 @@
           <EntitySetMapping Name="ModuleInscriptions">
             <EntityTypeMapping TypeName="TrainingDBModel.ModuleInscription">
               <MappingFragment StoreEntitySet="ModuleInscription">
-                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="IdModuleInscription" ColumnName="IdModuleInscription" />
+                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="IdParticipant" ColumnName="IdParticipant" />
                 <ScalarProperty Name="DateInscription" ColumnName="DateInscription" />
                 <ScalarProperty Name="EstSurListeAttente" ColumnName="EstSurListeAttente" />
@@ -962,9 +1083,9 @@
           <EntitySetMapping Name="Presences">
             <EntityTypeMapping TypeName="TrainingDBModel.Presence">
               <MappingFragment StoreEntitySet="Presence">
-                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="IdPresence" ColumnName="IdPresence" />
                 <ScalarProperty Name="IdParticipant" ColumnName="IdParticipant" />
+                <ScalarProperty Name="IdSiteModule" ColumnName="IdSiteModule" />
                 <ScalarProperty Name="DateHeureDePresence" ColumnName="DateHeureDePresence" />
                 <ScalarProperty Name="EstPresent" ColumnName="EstPresent" />
               </MappingFragment>
@@ -999,6 +1120,7 @@
                 <ScalarProperty Name="IdSite" ColumnName="IdSite" />
                 <ScalarProperty Name="DateDebutModule" ColumnName="DateDebutModule" />
                 <ScalarProperty Name="DateFinModule" ColumnName="DateFinModule" />
+                <ScalarProperty Name="IdFormateurModule" ColumnName="IdFormateurModule" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1010,6 +1132,16 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="TrainingDBModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

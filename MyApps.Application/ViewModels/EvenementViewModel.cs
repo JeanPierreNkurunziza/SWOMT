@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyApps.Application.ViewModels
 {
-   public class FormateurModuleViewModel
+    public class EvenementViewModel
     {
-        public int IdFormateurModule { get; set; }  
+        public int IdEvenement { get; set; }
         public int IdFormateur { get; set; }
-        public int IdModule { get; set; }
-        public string NomModule { get; set; }
+        public string Evenement1 { get; set; }
+        public Nullable<DateTime> DateOfEvent { get; set; }
         public string NomFormateur { get; set; } 
-        public DateTime? VersionModule { get; set; }  
     }
 }

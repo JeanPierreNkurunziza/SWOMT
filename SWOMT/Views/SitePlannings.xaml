@@ -123,6 +123,10 @@
                             <Label Name="LabelDateFin" Content="Date fin" ></Label>
                             <DatePicker FontWeight="ExtraBold" Margin="65,2" x:Name="DateFinModule" Text="{Binding Path=DateFinModule}"  Width="250"  IsEnabled="False"  ></DatePicker>
                         </WrapPanel>
+                        <WrapPanel >
+                            <Label Name="LabelNomFormateur" Content="Formateur" ></Label>
+                                <ComboBox FontWeight="ExtraBold" Margin="48,2" x:Name="IdFormateurModule" Text="{Binding Path=IdFormateurModule}" Width="250" IsEnabled="False" SelectionChanged="IdFormateurModule_SelectionChanged"/>
+                        </WrapPanel>
 
                         <WrapPanel>
 
@@ -136,17 +140,19 @@
                 </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="SiteModule" Header="La liste des Modules par Site" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="490" Height="290">
+                    <GroupBox x:Name="SiteModule" Header="La liste des Modules par Site" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="490" Height="310">
                         <StackPanel Grid.Column="1">
                             <DataGrid Name="ListModuleSite" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="IdSite"  FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>-->
-                                    <!--<DataGridTextColumn Header="IdModule"  FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>-->
-                                    <!--<DataGridTextColumn Header="NomSite"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>-->
+                                    <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="NomSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="NomModule"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="idForma" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormateurModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Formateur"  FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -184,7 +190,7 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="ParticipantTextBox" Header="Liste des Site par Module" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
+                    <GroupBox x:Name="ParticipantTextBox" Header="Liste des Site par Module" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
                         <StackPanel Grid.Column="1">
                             <DataGrid Name="ListSitePerModule" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
                                 <DataGrid.Columns>
@@ -195,6 +201,7 @@
                                     <DataGridTextColumn Header="NomModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Formateur"  FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>

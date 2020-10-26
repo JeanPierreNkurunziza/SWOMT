@@ -24,8 +24,8 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var certificat = db.Modules.Find(id);
-                db.Modules.Remove(certificat);
+                var certificat = db.Certificats.Find(id);
+                db.Certificats.Remove(certificat);
                 db.SaveChanges();
             }
         }
@@ -35,6 +35,14 @@ namespace MyApps.Domain.Service
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
                 var certificat = db.Certificats.Include(a => a.Participant);
+                return certificat.ToList();
+            }
+        }
+        public static List<Certificat> GetListPerParticipant(int IdParticipant)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var certificat = db.Certificats.Where(a=>a.IdParticipant==IdParticipant);
                 return certificat.ToList();
             }
         }
@@ -67,5 +75,6 @@ namespace MyApps.Domain.Service
 
             }
         }
+        
     }
 }

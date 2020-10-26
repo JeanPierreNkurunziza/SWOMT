@@ -28,6 +28,7 @@ namespace MyApps.Infrastructure.DB
         }
     
         public virtual DbSet<Certificat> Certificats { get; set; }
+        public virtual DbSet<Evenement> Evenements { get; set; }
         public virtual DbSet<Examan> Examen { get; set; }
         public virtual DbSet<Formateur> Formateurs { get; set; }
         public virtual DbSet<FormateurModule> FormateurModules { get; set; }
@@ -41,6 +42,7 @@ namespace MyApps.Infrastructure.DB
         public virtual DbSet<Site> Sites { get; set; }
         public virtual DbSet<SiteModule> SiteModules { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

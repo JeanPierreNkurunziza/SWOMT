@@ -76,6 +76,18 @@ namespace MyApps.Domain.Service
 
             }
         }
+        public static string GetNomFormateur(int? IdFormateurModule) 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var GetIdFormateurModule = db.FormateurModules.Find(IdFormateurModule);
+                var IdFormateur = GetIdFormateurModule.IdFormateur;  
+                var nomFormateur = db.Formateurs.Find(IdFormateur);
+                return nomFormateur.NomFormateur; 
+
+            }
+        }
         public static List<SiteModule> GetListModulesPerSite(int IdSite)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -93,6 +105,22 @@ namespace MyApps.Domain.Service
                 return moduleSite;
             }
         }
-        
+        public static List<SiteModule> GetListModuleEncours()
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.DateFinModule >= DateTime.Now && a.DateDebutModule <=DateTime.Now).ToList();
+                return moduleSite;
+            }
+        }
+        public static List<SiteModule> GetListModulePlanifies() 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.DateDebutModule >= DateTime.Now).ToList();
+                return moduleSite;
+            }
+        }
+
     }
 }

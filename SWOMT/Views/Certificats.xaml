@@ -127,6 +127,13 @@
                                     <TextBox Name="TotalEchoué" Margin="0,2" Text="{Binding TotalEchoué}"  Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
 
                                 </WrapPanel>
+                                <WrapPanel >
+                                    <Label Name="NbrTotal" Content="Nbr Récus" FontSize="12"></Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Name="NbrCertificatRécu" Margin="0,2" Text="{Binding NbrCertificatRécu}"  Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+
+                                </WrapPanel>
 
                             </StackPanel>
                         </GroupBox>

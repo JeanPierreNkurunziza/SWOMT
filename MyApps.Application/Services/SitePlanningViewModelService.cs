@@ -23,7 +23,10 @@ namespace MyApps.Application.Services
                     IdModule = itemList.IdModule,
                     NomModule = SitePlanningService.GetNomModule(itemList.IdModule),
                     DateDebutModule = itemList.DateDebutModule,
-                    DateFinModule = itemList.DateFinModule
+                    DateFinModule = itemList.DateFinModule,
+                    IdFormateurModule = itemList.IdFormateurModule,
+                    NomFormateur=SitePlanningService.GetNomFormateur(itemList.IdFormateurModule) 
+                    
                 };
                 Liste.Add(vm);
             }
@@ -45,7 +48,9 @@ namespace MyApps.Application.Services
                     IdModule = itemList.IdModule,
                     NomModule = SitePlanningService.GetNomModule(itemList.IdModule),
                     DateDebutModule = itemList.DateDebutModule,
-                    DateFinModule = itemList.DateFinModule
+                    DateFinModule = itemList.DateFinModule,
+                    IdFormateurModule = itemList.IdFormateurModule,
+                    NomFormateur = SitePlanningService.GetNomFormateur(itemList.IdFormateurModule)
 
                 };
                 Liste.Add(vm);
@@ -68,7 +73,9 @@ namespace MyApps.Application.Services
                     IdModule = itemList.IdModule,
                     NomModule = SitePlanningService.GetNomModule(itemList.IdModule),
                     DateDebutModule = itemList.DateDebutModule,
-                    DateFinModule = itemList.DateFinModule
+                    DateFinModule = itemList.DateFinModule,
+                    IdFormateurModule = itemList.IdFormateurModule,
+                    NomFormateur = SitePlanningService.GetNomFormateur(itemList.IdFormateurModule)
 
                 };
                 Liste.Add(vm);
@@ -88,6 +95,54 @@ namespace MyApps.Application.Services
             }
 
             return assets.ToList();
+        }
+        public static List<ViewModels.SitePlanningViewModel> GetListModuleEncours()
+        {
+            List<ViewModels.SitePlanningViewModel> Liste = new List<ViewModels.SitePlanningViewModel>();
+            var GetListe = SitePlanningService.GetListModuleEncours();
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.SitePlanningViewModel vm = new ViewModels.SitePlanningViewModel()
+                {
+                    IdSiteModule = itemList.IdSiteModule,
+                    IdSite = itemList.IdSite,
+                    NomSite = SitePlanningService.GetNomSite(itemList.IdSite),
+                    IdModule = itemList.IdModule,
+                    NomModule = SitePlanningService.GetNomModule(itemList.IdModule),
+                    DateDebutModule = itemList.DateDebutModule,
+                    DateFinModule = itemList.DateFinModule,
+                    IdFormateurModule = itemList.IdFormateurModule,
+                    NomFormateur = SitePlanningService.GetNomFormateur(itemList.IdFormateurModule)
+
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+        public static List<ViewModels.SitePlanningViewModel> GetListeModulesPlanifiesProchainement()
+        {
+            List<ViewModels.SitePlanningViewModel> Liste = new List<ViewModels.SitePlanningViewModel>();
+            var GetListe = SitePlanningService.GetListModulePlanifies();
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.SitePlanningViewModel vm = new ViewModels.SitePlanningViewModel()
+                {
+                    IdSiteModule = itemList.IdSiteModule,
+                    IdSite = itemList.IdSite,
+                    NomSite = SitePlanningService.GetNomSite(itemList.IdSite),
+                    IdModule = itemList.IdModule,
+                    NomModule = SitePlanningService.GetNomModule(itemList.IdModule),
+                    DateDebutModule = itemList.DateDebutModule,
+                    DateFinModule = itemList.DateFinModule,
+                    IdFormateurModule = itemList.IdFormateurModule,
+                    NomFormateur = SitePlanningService.GetNomFormateur(itemList.IdFormateurModule)
+
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
         }
 
     } 

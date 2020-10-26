@@ -113,7 +113,11 @@
                 <GroupBox x:Name="ModuleFormateurtextBox" Header="ModuleFormateur" HorizontalAlignment="Center" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
                         <StackPanel Grid.Column="0">
 
-                            <WrapPanel >
+                        <WrapPanel >
+                                <Label Name="LabelIdFormateurModule" Content="Identifiant" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="60,2" Name="IdFormateurModule" Text="{Binding Path=IdFormateurModule}"  Width="250"  IsEnabled="False"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel >
                             <Label Name="LabelIdFormateur" Content="Formateur" ></Label>
                                 <ComboBox FontWeight="ExtraBold" Margin="60,2" Name="IdFormateur" SelectedValue="{Binding Path=IdFormateur, Mode=OneWayToSource, ValidatesOnDataErrors=true}"  Width="250"  SelectionChanged="IdFormateur_SelectionChanged" ></ComboBox>
                         </WrapPanel>
@@ -143,7 +147,7 @@
                         <DataGrid Name="ListModule" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModule_MouseDoubleClick" >
 
                             <DataGrid.Columns>
-
+                                <DataGridTextColumn Visibility="Hidden" Header="IdFormateurModule" Width="50" Binding="{Binding Path=IdFormateurModule}"></DataGridTextColumn>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id" Width="50" Binding="{Binding Path=IdModule}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="NomFormateur" Width="200" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="NomModule" Width="150" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>

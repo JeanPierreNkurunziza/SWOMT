@@ -55,5 +55,21 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        public static List<Formation> SearchMethodByName(string searchString)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var assets = from s in db.Formations
+                             select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    assets = assets.Where(s => s.NomFormation.ToUpper().Contains(searchString.ToUpper())
+                                            && s.Description.ToUpper().Contains(searchString.ToUpper())); 
+                }
+
+                return assets.ToList();
+            }
+
+        }
     }
 }

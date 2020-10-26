@@ -17,8 +17,8 @@ namespace MyApps.Infrastructure.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SiteModule()
         {
-            this.ModuleInscriptions = new HashSet<ModuleInscription>();
             this.Examen = new HashSet<Examan>();
+            this.ModuleInscriptions = new HashSet<ModuleInscription>();
             this.Presences = new HashSet<Presence>();
         }
     
@@ -27,14 +27,16 @@ namespace MyApps.Infrastructure.DB
         public int IdSite { get; set; }
         public Nullable<System.DateTime> DateDebutModule { get; set; }
         public Nullable<System.DateTime> DateFinModule { get; set; }
+        public Nullable<int> IdFormateurModule { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Examan> Examen { get; set; }
+        public virtual FormateurModule FormateurModule { get; set; }
         public virtual Module Module { get; set; }
-        public virtual Site Site { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModuleInscription> ModuleInscriptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Examan> Examen { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Presence> Presences { get; set; }
+        public virtual Site Site { get; set; }
     }
 }

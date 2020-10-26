@@ -63,7 +63,7 @@ namespace MyApps.Domain.Service
                 
                 var IdExamen = db.Examen.Find(idExamen);                
                 var GetIdSiteModule = db.Modules.Find(IdExamen.IdSiteModule);  
-               // return GetName.NomModule;
+               
                 var GetName = db.SiteModules.Find(GetIdSiteModule.IdModule);
                 var GetNomModule = db.Modules.Find(GetName.IdModule);
                 return GetNomModule.NomModule;

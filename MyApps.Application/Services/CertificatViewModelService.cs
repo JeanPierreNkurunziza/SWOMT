@@ -27,5 +27,24 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+
+        public static List<ViewModels.CertificatViewModel> GetCertificatsPerParticipant( int IdParticipant)
+        {
+            List<ViewModels.CertificatViewModel> Liste = new List<ViewModels.CertificatViewModel>();
+            var GetListe = CertificatService.GetListPerParticipant(IdParticipant); 
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.CertificatViewModel vm = new ViewModels.CertificatViewModel()
+                {
+                    IdCertificat = itemList.IdCertificat,
+                    IdParticipant = itemList.IdParticipant,
+                    NomParticipant = CertificatService.GetNomParticipant(itemList.IdParticipant),
+                    DateDelivrance = itemList.DateDelivrance,
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
     }
 }

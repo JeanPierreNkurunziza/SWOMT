@@ -14,6 +14,8 @@ namespace MyApps.Application.ViewModels
         public int IdModule { get; set; }
         public string NomModule { get; set; }  
         public DateTime? DateDebutModule { get; set; }
-        public DateTime? DateFinModule { get; set; }  
+        public DateTime? DateFinModule { get; set; }
+        public Nullable<int> IdFormateurModule { get; set; }
+        public string NomFormateur { get; set; }  
     }
 }

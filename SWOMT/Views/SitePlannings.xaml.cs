@@ -25,16 +25,21 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.SitePlanningViewModel> clearListe = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
         List<MyApps.Application.ViewModels.SiteViewModel> listeSite = new List<MyApps.Application.ViewModels.SiteViewModel>();
+        List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeFormateurModule = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
+
 
         int idSiteSelected;
         int idModuleSelected = 0;
+        int idFormateurModuleSelected;
         string enregistre;
+        
         public SitePlannings()
         {
             InitializeComponent(); 
             liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites(); 
+            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
+            listeFormateurModule = MyApps.Application.Services.FormateurModuleViewModelService.GetFormatuerModules();
             PopulateAndBindSites(listeSite);
             PopulateAndBindModule(listeModule);
             this.SelectedNomModule();
@@ -112,6 +117,7 @@ namespace SWOMT.Views
                 //NomSite.Text = donnee.NomSite.ToString();
                 DateDebutModule.Text = donnee.DateDebutModule.ToString();
                 DateFinModule.Text = donnee.DateFinModule.ToString();
+                IdFormateurModule.SelectedItem = donnee.NomFormateur.ToString() + " : " + donnee.IdFormateurModule.ToString();  
 
             }
         }
@@ -143,6 +149,7 @@ namespace SWOMT.Views
             //NomModule.Text = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.IsEnabled = true;
 
             ModeIsEnabledTrue();
         }
@@ -171,6 +178,7 @@ namespace SWOMT.Views
                
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text).Date;
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Create(element);
 
@@ -184,6 +192,7 @@ namespace SWOMT.Views
                 element.IdModule = (short)(idModuleSelected);              
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text);
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Update(element);
             }
@@ -196,6 +205,7 @@ namespace SWOMT.Views
             IdModule.SelectedValue = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.SelectedValue = "";
             ModeIsEnabledFalse();
         }
         /// <summary>
@@ -213,6 +223,7 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             ModeIsEnabledTrue();
+            IdFormateurModule.IsEnabled = true;
 
 
         }
@@ -245,6 +256,7 @@ namespace SWOMT.Views
             IdModule.SelectedValue = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.Text = "";
         }
         private void ClearFormValues()
         {
@@ -310,7 +322,12 @@ namespace SWOMT.Views
                     idModuleSelected = module.IdModule;
                 }
             }
-            
+           
+            foreach (var module in MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected)))
+            {
+                IdFormateurModule.Items.Add(module.NomFormateur + " : " + module.IdFormateurModule); 
+            }
+
         }
 
         private void IdSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -550,6 +567,28 @@ namespace SWOMT.Views
             NomRechercherModule.Text = "";
             listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModule);
+        }
+        /// <summary>
+        /// Combobox pour séléctionner le nom de formateur par module 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IdFormateurModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IdFormateurModule.SelectedItem == null)
+            {
+                return;
+            }
+            string nomFormateurModuleSelected = IdFormateurModule.SelectedValue.ToString();
+
+            foreach (var module in MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected))) 
+            {
+                if (nomFormateurModuleSelected == module.NomFormateur + " : " + module.IdFormateurModule) 
+                {
+                    idFormateurModuleSelected = module.IdFormateurModule; 
+                    
+                }
+            }
         }
     }
 }

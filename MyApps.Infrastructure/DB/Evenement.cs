@@ -12,22 +12,13 @@ namespace MyApps.Infrastructure.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class FormateurModule
+    public partial class Evenement
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FormateurModule()
-        {
-            this.SiteModules = new HashSet<SiteModule>();
-        }
-    
-        public int IdFormateurModule { get; set; }
+        public int IdEvenement { get; set; }
         public int IdFormateur { get; set; }
-        public int IdModule { get; set; }
-        public Nullable<System.DateTime> VersionModule { get; set; }
+        public string Evenement1 { get; set; }
+        public Nullable<System.DateTime> DateOfEVent { get; set; }
     
         public virtual Formateur Formateur { get; set; }
-        public virtual Module Module { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SiteModule> SiteModules { get; set; }
     }
 }
