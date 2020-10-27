@@ -9,7 +9,7 @@ namespace MyApps.Application.Services
 {
    public class UserViewModelService
     {
-        public static List<ViewModels.UserViewModel> GetExamens()
+        public static List<ViewModels.UserViewModel> GetUsers()
         {
             List<ViewModels.UserViewModel> Liste = new List<ViewModels.UserViewModel>();
             var GetListe = UserService.GetAll();

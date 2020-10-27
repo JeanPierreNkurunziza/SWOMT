@@ -19,24 +19,25 @@
         <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Button Content="Accueil" MinWidth="50" Margin="10,2,0,1.2" Click="GestionSite" Height="Auto"/>
             <Button Content="Gestion de Site Planning" MinWidth="50" Margin="15,0,0,0" Click="GestionSiteModule"/>
-             <Button Content="Gestion Formateur et Module" MinWidth="50" Margin="15,0,0,0" Click="GestionFormateurModule"/>
-             <Button Content=" Gestion des Inscriptions" MinWidth="50" Margin="15,0,0,0" Click="GestionInscription"/>
-             <Button Content="Gestion des Presences" MinWidth="50" Margin="15,0,0,0" Click="GestionDePresence"/>
-             <Button Content="Gestion des Résultats et examens" MinWidth="50" Margin="15,0,0,0" Click="GestionRésultat"/>
-             <Button Content="Gestion des Certificats" MinWidth="50" Margin="15,0,0,0" Click="GestionCertificat"/>
+            <Button Content="Gestion Formateur et Module" MinWidth="50" Margin="15,0,0,0" Click="GestionFormateurModule"/>
+            <Button Content=" Gestion des Inscriptions" MinWidth="50" Margin="15,0,0,0" Click="GestionInscription"/>
+            <Button Content="Gestion des Presences" MinWidth="50" Margin="15,0,0,0" Click="GestionDePresence"/>
+            <Button Content="Gestion des Résultats et examens" MinWidth="50" Margin="15,0,0,0" Click="GestionRésultat"/>
+            <Button Content="Gestion des Certificats" MinWidth="50" Margin="15,0,0,0" Click="GestionCertificat"/>
+            <Button Content="Gestion des Users" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
             <!--<Button Content="Participant" Visibility="Hidden" MinWidth="50" Click="GestionParticipants"/>-->
             <!--<Button Content="Formation" MinWidth="50" Margin="10,0,0,0" Click="GestionFormation"/>-->
-           
+
             <Button Content="Planning Formation" MinWidth="70" Margin="10,0,0,0" Click="PlanningFormation"/>
             <!--<Button Content="Formateur" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionFormateur"/>-->
-           
+
             <!--<Button Content="Examen" Visibility="Hidden"  MinWidth="50" Margin="10,2,0,0" Click="GestionExamen" VerticalAlignment="Top"/>
-            <Button Content="Module" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionModule"/>--> 
-            
+            <Button Content="Module" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionModule"/>-->
+
         </StackPanel>
-        
+
         <Frame x:Name="Main" Margin="0,35,0,0"/>
-        
-        
+
+
     </Grid>
 </Window>

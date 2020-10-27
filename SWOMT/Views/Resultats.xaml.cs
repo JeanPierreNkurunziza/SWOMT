@@ -27,9 +27,12 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.SitePlanningViewModel> listeModule = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         List<MyApps.Application.ViewModels.InscriptionViewModel> listeInscription = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
         List<MyApps.Application.ViewModels.InscriptionViewModel> clearListe = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
+        List<MyApps.Application.ViewModels.FormateurViewModel> ListeFormateur = new List<MyApps.Application.ViewModels.FormateurViewModel>();
+
 
         string enregistre;
         int idSiteModuleSelected;
+        int idFormateurSelected;
         public Resultats() 
         {
             InitializeComponent();
@@ -37,10 +40,12 @@ namespace SWOMT.Views
             listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
             listeModule = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
             listParticipantFailed = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
+            ListeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             
             PopulateAndBindExamen(listeExamen);
             this.SelectedNomModule();
             this.SelectedNomModuleExamenPlanned();
+            this.SelectedNomFormateur();
 
             EstPresent.Items.Add("True");
             EstPresent.Items.Add("False");
@@ -736,6 +741,58 @@ namespace SWOMT.Views
             NomRechercher.Text = "";
             listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameModule(NomRechercher.Text);
             PopulateAndBindExamen(listeExamen);
+        }
+
+
+        //*********************************************************************************************************************************
+        //********************************************* Code pour post un évenement par un formateur***************************************
+        private List<MyApps.Application.ViewModels.FormateurViewModel> SelectedNomFormateur()
+        {
+
+            foreach (var formateur in ListeFormateur)
+            {
+
+                IdFormateur.Items.Add(formateur.NomFormateur); 
+            }
+
+            return ListeFormateur; 
+        }
+        private void Event_Click(object sender, RoutedEventArgs e)
+        {
+            Evenement element = new Evenement();
+
+            if (Evenement1.Text == "")
+            {
+                MessageBox.Show("Veuillez écrire un message pour publier");
+            }
+            if (IdFormateur.Text == "")
+            {
+                MessageBox.Show("Veuillez sélectionner votre nom ");
+            }
+            element.Evenement1 = Evenement1.Text;
+            element.DateOfEVent = DateTime.Now;
+            element.IdFormateur = (short)(idFormateurSelected);
+            MyApps.Domain.Service.EvenementService.Create(element);
+            Evenement1.Text = "";
+            IdFormateur.Text = "";
+        }
+
+        private void ComboBoxIdFormateur_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IdFormateur.SelectedItem == null)
+            {
+                return;
+            }
+            string nomFormateurSelected = IdFormateur.SelectedValue.ToString();
+
+            foreach (var module in ListeFormateur)
+            {
+                if (nomFormateurSelected == module.NomFormateur)
+                {
+                    idFormateurSelected = module.IdFormateur;
+
+                }
+            }
         }
     }
 }

@@ -76,7 +76,7 @@
                         <ColumnDefinition Width="420"></ColumnDefinition>
                         <ColumnDefinition Width="140"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="ModuleSiteTextBox" Header="Les points des participants par module" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <GroupBox x:Name="ModuleSiteTextBox" Header="Encoder les présences des participants par module" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="0"> 
 
                             <WrapPanel >

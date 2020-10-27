@@ -127,5 +127,9 @@ namespace SWOMT
         {
             Main.Content = new FormateurModules();
         }
+        private void GestionUsers(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Utilisateur();
+        }
     }
 }

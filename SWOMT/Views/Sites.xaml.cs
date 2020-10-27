@@ -24,6 +24,7 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.SitePlanningViewModel> listeEncours = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         List<MyApps.Application.ViewModels.SitePlanningViewModel> listePlanifies = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         List<MyApps.Application.ViewModels.PlanningViewModel> listeFormation = new List<MyApps.Application.ViewModels.PlanningViewModel>();
+        List<MyApps.Application.ViewModels.EvenementViewModel> listeEvenement = new List<MyApps.Application.ViewModels.EvenementViewModel>();
 
 
         public Sites() 
@@ -32,9 +33,11 @@ namespace SWOMT.Views
             listeEncours = MyApps.Application.Services.SitePlanningViewModelService.GetListModuleEncours();
             listePlanifies = MyApps.Application.Services.SitePlanningViewModelService.GetListeModulesPlanifiesProchainement();
             listeFormation = MyApps.Application.Services.PlanningsFormation.GetPlanningFormation();
+            listeEvenement=MyApps.Application.Services.EvenementViewModelService.GetEvenements();
             PopulateAndBindListEncours(listeEncours);
             PopulateAndBindFormationsPlanifié(listeFormation);
-            PopulateAndBindListPlanifié(listePlanifies); 
+            PopulateAndBindListPlanifié(listePlanifies);
+            PopulateAndBindEvenement(listeEvenement); 
         }
 
 
@@ -82,6 +85,13 @@ namespace SWOMT.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
+        private void PopulateAndBindEvenement(List<MyApps.Application.ViewModels.EvenementViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListEvenement.DataContext = listeItems;
+        }
     }
 }

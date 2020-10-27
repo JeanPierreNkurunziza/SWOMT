@@ -21,9 +21,30 @@
                    Background="AliceBlue" FontWeight="ExtraBold" Foreground="Black"></Label> 
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Gestion des Resultats" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="720"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel Grid.Column="0">
+                  
+                        <Label Name="listes" Content="Gestion des Resultats" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                       
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel Grid.Column="1">
+                    <WrapPanel>
+                        <Label Name="Evenement" FontSize="28" FontWeight="Bold" Content="Event"></Label>
+                        <TextBox Background="White"  FontWeight="ExtraBold" Margin="10,2" Name="Evenement1" Text="{Binding Path=Evenement1}"  Width="450"  ></TextBox>
+                        <ComboBox  FontWeight="ExtraBold" Margin="10,2" Name="IdFormateur" Text="{Binding Path=IdFormateur}"  Width="160" SelectionChanged="ComboBoxIdFormateur_SelectionChanged"></ComboBox>
+                        
+                        <Button   Name="EvenementToPost" Content="Publier" Click="Event_Click"></Button>
+                     
+                    </WrapPanel>
+
+                </StackPanel>
+            </Grid>
 
         </Grid>
         <Grid Grid.Row="2">
@@ -43,7 +64,7 @@
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="La liste des examens"></Label>
-                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="100" TextAlignment="Center"></TextBox>
                                 <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
                                 <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
 
