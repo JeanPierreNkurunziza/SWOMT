@@ -67,5 +67,18 @@ namespace MyApps.Domain.Service
 
             }
         }
+        public static List<Planning> GetListOfPlanningFormationWithinAcademicYear() 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                DateTime nextYear = DateTime.Now.AddYears(+1);
+                DateTime currentYear =new  DateTime();
+                
+                //var siteplanning = db.SiteModules.Find(IdSiteModule);
+                // var idSiteModule = siteplanning.IdSiteModule;
+                var moduleParticipant = db.Plannings.Where(a =>a.DateFormation.Year==currentYear.Year || a.DateFormation <= nextYear).OrderByDescending(a => a.DateFormation);
+                return moduleParticipant.ToList();
+            }
+        }
     }
 }

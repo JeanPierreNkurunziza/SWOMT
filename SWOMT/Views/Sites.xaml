@@ -22,7 +22,16 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                <WrapPanel>
+                    <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" Margin="450,0,50,0" ></Label>
+
+                    <Button Visibility="Collapsed"  Name="UpDatePassord" HorizontalAlignment="Right" Content="Valider" Width="90" Margin="0,0,10,0"  FontSize="18" Click="UpDatePassword_Click"></Button>
+                    <PasswordBox Visibility="Collapsed" Margin="0,10,10,10" x:Name="password" Width="170" Background="#545d6a" MaxLength="20" FontSize="18" Foreground="White" PasswordChar="*"></PasswordBox>
+                    <Button x:Name="Valider"  Width="220" Click="ValiderInscription_Click" Content="Changer Mot de Passe" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+
+                </WrapPanel>
+               
+
             </StackPanel>
 
         </Grid>
@@ -35,39 +44,44 @@
 
             <Grid Grid.Column="0" Width="520">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="350"></RowDefinition>
-                    <RowDefinition Height="290"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <GroupBox x:Name="FormationsListBox" Margin="10,10,0,0" Header="Formation Planifiées" HorizontalAlignment="Left" Height="330" Width="510" VerticalAlignment="Top" >
+                <GroupBox x:Name="FormationsListBox" Margin="10,10,0,0" Header="Formation Planifiées" HorizontalAlignment="Left"  Width="510" VerticalAlignment="Top" >
+
+
+                    <DataGrid Name="ListFormation"  ItemsSource="{Binding}" AutoGenerateColumns="False" Height="260">
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="IdFormationPlanning" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="ExamenTextBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="510">
+                        <GroupBox.Header>
+                            <StackPanel  Orientation="Horizontal">
                         
-                      
-                        <DataGrid Name="ListFormation"  ItemsSource="{Binding}" AutoGenerateColumns="False" >
-                            <DataGrid.Columns >
-                                <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="IdFormationPlanning" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
-               
-                <Grid Grid.Row="1" >
-
-                    <GroupBox x:Name="ExamenTextBox" Header="Actualités" HorizontalAlignment="Left" Height="280" Margin="10,10,0,0" VerticalAlignment="Top" Width="510">
-                        <StackPanel Grid.Column="0" >
-
-                            <DataGrid Name="ListEvenement"  ItemsSource="{Binding}" AutoGenerateColumns="False"  >
+                             <Label Content="Actualités"></Label>
+                             <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="350,0,0,0"  FontSize="10" Click="Supprimer_Click"></Button>
+                            </StackPanel>
+                        </GroupBox.Header>
+                            <DataGrid Name="ListEvenement"  ItemsSource="{Binding}" AutoGenerateColumns="False"  Height="240" SelectionChanged="Evenement_SelectinChanged">
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="IdEvenement" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdEvenement}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdFormateur" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Formateur" FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Evenement" Foreground="Red" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Evenement" Foreground="SpringGreen" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date" FontSize="15" Binding="{Binding Path=DateOfEvent}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </StackPanel>
+                       
                     </GroupBox>
                 </Grid>
             </Grid>
@@ -75,33 +89,36 @@
 
 
 
-                <GroupBox x:Name="ModuleSiteTextBox" Height="630"  FontSize="50"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="340">
+                <!--<GroupBox x:Name="ModuleSiteTextBox" Height="630"  FontSize="50"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="340">-->
                     <StackPanel>
-                        <Label  HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Frontiers" />
-                    <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Adventures" />
-                    <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Great" />
-                    <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Lakes " />
+                        <!--<Label  HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Frontiers" />
+                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Adventures" />
+                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Great" />
+                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Lakes " />
                         <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content=" - " />
                         <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content=" Experiantial" />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Learning" />
+                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Learning" />-->
+                        <Image Name="imgConnection" Width="340" Height="630" HorizontalAlignment="Left" Source="/Views/Image/frontiers2.png" Margin="0,0,-8,-5">
+
+                        </Image>
                     </StackPanel>
-                </GroupBox>
-                    
+               <!--// </GroupBox>-->
+
             </Grid>
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="370"></RowDefinition>
-                    <RowDefinition Height="300"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <GroupBox x:Name="ListeModule" Header="Liste des Modules en cours" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="570">
                         <StackPanel Grid.Column="0">
-                            <DataGrid Name="ListModuleEncours"  Height="310" ItemsSource="{Binding}" AutoGenerateColumns="False"  >
+                            <DataGrid Name="ListModuleEncours"  Height="260" ItemsSource="{Binding}" AutoGenerateColumns="False"  >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdSite" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="NomSite" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule , StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule , StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>
@@ -115,12 +132,12 @@
                 <Grid Grid.Row="1">
                     <GroupBox x:Name="ListeAttenteBox" Header="Liste des prochains Modules prévus"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="570">
                         <StackPanel Grid.Column="1">
-                            <DataGrid Name="ListModulePlanifies" Height="210" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid Name="ListModulePlanifies" Height="255" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>-->
+                                    <DataGridTextColumn Header="Code"  FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
+                                    <!--<DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>-->
+                                    <DataGridTextColumn Header="NomSite"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule , StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule , StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>

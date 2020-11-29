@@ -10,7 +10,7 @@ namespace MyApps.Application.ViewModels
     {
         public int IdUser { get; set; }
         public string UserName { get; set; }
-        public string MotDepasse { get; set; }
+        public string MotDePasse { get; set; } 
         public string UserRole { get; set; }  
 
     }

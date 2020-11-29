@@ -19,8 +19,9 @@ namespace MyApps.Application.Services
                 {
                     IdExamen = itemList.IdExamen,
                     IdSiteModule = itemList.IdSiteModule,
-                    NomModule = ExamenService.GetNomModule(itemList.IdSiteModule),  
+                    NomModule = ExamenService.GetNomModule(itemList.IdSiteModule),
                     DateExamen = itemList.DateExamen,
+                    NomFormateur = MyApps.Domain.Service.ExamenService.GetNomFormateur(itemList.IdSiteModule)
                 };
                 Liste.Add(vm);
             }
@@ -35,11 +36,26 @@ namespace MyApps.Application.Services
                          select s;
             if (!String.IsNullOrEmpty(SearchNomModule))
             {
-                assets = assets.Where(s => s.NomModule.ToUpper().Contains(SearchNomModule.ToUpper()));
+                assets = assets.Where(s => s.NomModule.ToUpper().Contains(SearchNomModule.ToUpper()) || s.NomFormateur.ToUpper().Contains(SearchNomModule.ToUpper()));
             }
 
             return assets.ToList();
             
         }
+        public static List<ViewModels.ExamenViewModel> SearchByNameNomFormateur(string SearchNomFormateur)
+        {
+            List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();
+            //var GetListe = ExamenViewModelService.GetExamens();
+            var assets = from s in ExamenViewModelService.GetExamens()
+                         select s;
+            if (!String.IsNullOrEmpty(SearchNomFormateur)) 
+            {
+                assets = assets.Where(s => s.NomFormateur.ToUpper().Contains(SearchNomFormateur.ToUpper()));
+            }
+
+            return assets.ToList();
+
+        }
+
     }
 }

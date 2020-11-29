@@ -116,6 +116,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TrainingDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\UserRole.cs">
+      <DependentUpon>TrainingDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Utilisateur.cs">
       <DependentUpon>TrainingDB.tt</DependentUpon>
     </Compile>

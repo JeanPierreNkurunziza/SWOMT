@@ -150,6 +150,13 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="IdUserRole" />
+          </Key>
+          <Property Name="IdUserRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserRoleName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Utilisateur">
           <Key>
             <PropertyRef Name="IdUser" />
@@ -351,6 +358,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="F_GetPostSalt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
+        <Function Name="F_GetPreSalt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -376,10 +385,25 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_LoginUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="MotDePasse" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="MotDePasse" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserRole" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UpDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="int" Mode="In" />
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="MotDePasse" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserRole" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="TrainingDBModelStoreContainer">
@@ -398,6 +422,7 @@
           <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteModule" EntityType="Self.SiteModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="Fk_Certificat_Participant" Association="Self.Fk_Certificat_Participant">
             <End Role="Participant" EntitySet="Participant" />
@@ -957,6 +982,22 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="UserRoles" EntityType="TrainingDBModel.UserRole" />
+          <FunctionImport Name="SP_LoginUser" ReturnType="Collection(String)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="MotDePasse" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RegisterUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="MotDePasse" Mode="In" Type="String" />
+            <Parameter Name="UserRole" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpDate">
+            <Parameter Name="IdUser" Mode="In" Type="Int32" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="MotDePasse" Mode="In" Type="String" />
+            <Parameter Name="UserRole" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -969,6 +1010,13 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="IdUserRole" />
+          </Key>
+          <Property Name="IdUserRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserRoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1169,6 +1217,17 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TrainingDBModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TrainingDBModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="TrainingDBModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="UserRoleName" ColumnName="UserRoleName" />
+                <ScalarProperty Name="IdUserRole" ColumnName="IdUserRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_LoginUser" FunctionName="TrainingDBModel.Store.SP_LoginUser" />
+          <FunctionImportMapping FunctionImportName="SP_RegisterUser" FunctionName="TrainingDBModel.Store.SP_RegisterUser" />
+          <FunctionImportMapping FunctionImportName="SP_UpDate" FunctionName="TrainingDBModel.Store.SP_UpDate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

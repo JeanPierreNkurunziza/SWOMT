@@ -18,7 +18,7 @@
         <Grid Grid.Row="0">
             <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center" FontSize="25" 
-                   Background="AliceBlue" FontWeight="Bold"></Label>
+                   Background="AliceBlue" FontWeight="Bold" Foreground="Black"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
@@ -35,15 +35,15 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Width="520">
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="410"></RowDefinition>
                     <RowDefinition Height="230"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border   HorizontalAlignment="Left">
-                <GroupBox x:Name="Site" Header="La liste des Sites" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500" Height="390">
-                    <StackPanel Grid.Column="1">
-                    <DataGrid Grid.Row="0"  x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
+
+                <GroupBox x:Name="Site" Header="La liste des Sites" Width="500" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="400">
+                    <StackPanel Grid.Column="0">
+                        <DataGrid Grid.Row="0" Width="500" x:Name="ListElement" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
                         <DataGrid.Columns >
                             <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
                             <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
@@ -53,10 +53,10 @@
                     </DataGrid>
                     </StackPanel>
                 </GroupBox>
-                </Border>
+            
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="SitetextBox" Header="Site" HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="SitetextBox" Header="Site" HorizontalAlignment="Left" Height="220" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
@@ -65,11 +65,11 @@
                             </WrapPanel>
                             <WrapPanel > 
                                 <Label Name="LabelNom" Content="Nom " ></Label>
-                                <TextBox  Margin="94,2" FontWeight="ExtraBold" x:Name="Nom" Text="{Binding Path=NomSite}" Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox  Margin="94,2" FontWeight="ExtraBold" x:Name="Nom" Text="{Binding Path=NomSite}" Width="250" IsEnabled="False" MaxLength="30" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelAdresseSite" Content="AdresseSite" ></Label>
-                                <TextBox Margin="64,2" FontWeight="ExtraBold" x:Name="AdresseSite" Text="{Binding Path=AdresseSite}"  Width="250"  IsEnabled="False"  ></TextBox>
+                                <TextBox Margin="64,2" FontWeight="ExtraBold" x:Name="AdresseSite" Text="{Binding Path=AdresseSite}"  Width="250"  IsEnabled="False" MaxLength="30" ></TextBox>
                             </WrapPanel>
 
                             <WrapPanel>
@@ -162,7 +162,7 @@
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="320"></RowDefinition>
-                    <RowDefinition Height="310"></RowDefinition>
+                    <RowDefinition Height="320"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border   Margin="10,10,0,0"  HorizontalAlignment="Left">
                     <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="300" Width="490" VerticalAlignment="Top" >
@@ -190,9 +190,9 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="ParticipantTextBox" Header="Liste des Site par Module" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
+                    <GroupBox x:Name="ParticipantTextBox" Header="Liste des Site par Module" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
                         <StackPanel Grid.Column="1">
-                            <DataGrid Name="ListSitePerModule" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
+                            <DataGrid Name="ListSitePerModule" ItemsSource="{Binding}"  Height="300" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn  Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>

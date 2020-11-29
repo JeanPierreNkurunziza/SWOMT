@@ -19,7 +19,7 @@ namespace MyApps.Application.Services
                 {
                     IdUser = itemList.IdUser,
                     UserName = itemList.UserName,
-                    MotDepasse = itemList.MotDePasse,
+                    MotDePasse = itemList.MotDePasse,
                     UserRole = itemList.UserRole 
                 };
                 Liste.Add(vm);

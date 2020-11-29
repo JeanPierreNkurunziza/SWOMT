@@ -43,6 +43,7 @@ namespace MyApps.Infrastructure.DB
         public virtual DbSet<SiteModule> SiteModules { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -145,6 +146,57 @@ namespace MyApps.Infrastructure.DB
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<string> SP_LoginUser(string userName, string motDePasse)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var motDePasseParameter = motDePasse != null ?
+                new ObjectParameter("MotDePasse", motDePasse) :
+                new ObjectParameter("MotDePasse", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_LoginUser", userNameParameter, motDePasseParameter);
+        }
+    
+        public virtual int SP_RegisterUser(string userName, string motDePasse, string userRole)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var motDePasseParameter = motDePasse != null ?
+                new ObjectParameter("MotDePasse", motDePasse) :
+                new ObjectParameter("MotDePasse", typeof(string));
+    
+            var userRoleParameter = userRole != null ?
+                new ObjectParameter("UserRole", userRole) :
+                new ObjectParameter("UserRole", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_RegisterUser", userNameParameter, motDePasseParameter, userRoleParameter);
+        }
+    
+        public virtual int SP_UpDate(Nullable<int> idUser, string userName, string motDePasse, string userRole)
+        {
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(int));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var motDePasseParameter = motDePasse != null ?
+                new ObjectParameter("MotDePasse", motDePasse) :
+                new ObjectParameter("MotDePasse", typeof(string));
+    
+            var userRoleParameter = userRole != null ?
+                new ObjectParameter("UserRole", userRole) :
+                new ObjectParameter("UserRole", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpDate", idUserParameter, userNameParameter, motDePasseParameter, userRoleParameter);
         }
     }
 }

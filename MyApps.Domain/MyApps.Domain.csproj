@@ -67,6 +67,7 @@
     <Compile Include="Service\ResultatService.cs" />
     <Compile Include="Service\SitePlanningService.cs" />
     <Compile Include="Service\SiteService.cs" />
+    <Compile Include="Service\UserRolesServices.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

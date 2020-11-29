@@ -16,23 +16,31 @@
         Title="TableauDeBord" Height="900" Width="1700">
     <Grid>
 
-        <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left">
+           
             <Button Content="Accueil" MinWidth="50" Margin="10,2,0,1.2" Click="GestionSite" Height="Auto"/>
-            <Button Content="Gestion de Site Planning" MinWidth="50" Margin="15,0,0,0" Click="GestionSiteModule"/>
-            <Button Content="Gestion Formateur et Module" MinWidth="50" Margin="15,0,0,0" Click="GestionFormateurModule"/>
-            <Button Content=" Gestion des Inscriptions" MinWidth="50" Margin="15,0,0,0" Click="GestionInscription"/>
-            <Button Content="Gestion des Presences" MinWidth="50" Margin="15,0,0,0" Click="GestionDePresence"/>
-            <Button Content="Gestion des Résultats et examens" MinWidth="50" Margin="15,0,0,0" Click="GestionRésultat"/>
-            <Button Content="Gestion des Certificats" MinWidth="50" Margin="15,0,0,0" Click="GestionCertificat"/>
-            <Button Content="Gestion des Users" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
+            <Button Content="Planning Formation" x:Name="BoutonPlanningFormation" MinWidth="70" Margin="10,0,0,0" Click="PlanningFormation"/>
+            <Button Content="Formateur et Module" x:Name="BoutonFormateurModule" MinWidth="50" Margin="15,0,0,0" Click="GestionFormateurModule"/>
+            <Button Content="Certificats" x:Name="BoutonCertificats" MinWidth="50" Margin="15,0,0,0" Click="GestionCertificat"/>
+
+            <Button Content="Présences" x:Name="BoutonPresence" MinWidth="50" Margin="15,0,0,0" Click="GestionDePresence"/>
+            <Button Content="Résultats" x:Name="BoutonResultats" MinWidth="50" Margin="15,0,0,0" Click="GestionRésultat"/>
+            
+          
+            <Button x:Name="BoutonInscription" Content="Inscriptions" MinWidth="50" Margin="15,0,0,0" Click="GestionInscription" />
+            <Button Content="Site Planning" x:Name="BoutonSitePlanning" MinWidth="50" Margin="15,0,0,0" Click="GestionSiteModule"/>
+
             <!--<Button Content="Participant" Visibility="Hidden" MinWidth="50" Click="GestionParticipants"/>-->
             <!--<Button Content="Formation" MinWidth="50" Margin="10,0,0,0" Click="GestionFormation"/>-->
 
-            <Button Content="Planning Formation" MinWidth="70" Margin="10,0,0,0" Click="PlanningFormation"/>
-            <!--<Button Content="Formateur" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionFormateur"/>-->
-
+           <!--<Button Content="Formateur" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionFormateur"/>-->
+            <Button Content="Users" x:Name="BoutonUsers" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
             <!--<Button Content="Examen" Visibility="Hidden"  MinWidth="50" Margin="10,2,0,0" Click="GestionExamen" VerticalAlignment="Top"/>
             <Button Content="Module" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionModule"/>-->
+            <Label FontWeight="ExtraBlack" Margin="10,5,0,0" Foreground="White" Content="Rôle : " Width="70" />
+            <Label FontWeight="ExtraBlack"  Foreground="Wheat" FontSize="18" Margin="4,2" x:Name="TextBoxUserRole" Width="100" />
+            <Label FontWeight="ExtraBlack" Margin="0,5,0,0" Foreground="White" Content="Nom : " Width="50" />
+            <Label FontWeight="ExtraBlack"  Foreground="Wheat" FontSize="18" Margin="4,2" x:Name="TextBoxUserName" Width="180" />
 
         </StackPanel>
 

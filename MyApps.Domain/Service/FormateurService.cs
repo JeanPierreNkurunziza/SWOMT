@@ -70,5 +70,18 @@ namespace MyApps.Domain.Service
             }
 
         }
+        public static bool GetFormateurNom(string FormateurNom)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var formateur = db.Formateurs.FirstOrDefault(a => a.NomFormateur == FormateurNom);
+                if(formateur!= null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
     }
 }

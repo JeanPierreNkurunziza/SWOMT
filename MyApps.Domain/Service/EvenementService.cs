@@ -15,7 +15,7 @@ namespace MyApps.Domain.Service
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
        
-                db.Evenements.Add(evenement);
+                db.Evenements.Add(evenement); 
                 db.SaveChanges();
             }
         }
@@ -66,6 +66,17 @@ namespace MyApps.Domain.Service
                 
                 return GetName.NomFormateur; 
 
+            }
+        }
+        public static List<Evenement> GetListOfCurrentEvenement() 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                DateTime weekago = DateTime.Now.AddDays(-90);
+                //var siteplanning = db.SiteModules.Find(IdSiteModule);
+                // var idSiteModule = siteplanning.IdSiteModule;
+                var moduleParticipant = db.Evenements.Where(a => a.DateOfEVent>=weekago).OrderByDescending(a => a.DateOfEVent);
+                return moduleParticipant.ToList();
             }
         }
     }

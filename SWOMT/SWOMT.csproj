@@ -123,8 +123,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\Utilisateur.xaml.cs">
-      <DependentUpon>Utilisateur.xaml</DependentUpon>
+    <Compile Include="Views\Users.xaml.cs">
+      <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
     <Page Include="TableauDeBord.xaml">
       <SubType>Designer</SubType>
@@ -190,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Utilisateur.xaml">
+    <Page Include="Views\Users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,6 +235,15 @@
       <Project>{3D12A2E5-4CB1-47D1-B134-8665577D067A}</Project>
       <Name>MyApps.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Image\cle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Image\Frontiers.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Image\frontiers2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

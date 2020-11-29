@@ -1,0 +1,150 @@
+﻿<Page x:Class="SWOMT.Views.Users"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SWOMT.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1500"
+      Title="Users">
+
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" FontSize="25" 
+                   Background="AliceBlue" Foreground="Black" FontWeight="ExtraBold"></Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Grid.Column="0">
+                <Label Name="listes" Content="Gestion des Utilisateurs" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+               
+                <ColumnDefinition Width="920"></ColumnDefinition>
+                <ColumnDefinition Width="520"></ColumnDefinition>
+               
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Width="920">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="250"></RowDefinition> 
+                </Grid.RowDefinitions>
+                <Border   Margin="10,10,0,0" Width="900" HorizontalAlignment="Left">
+                    <GroupBox x:Name="UtilisateurListBox" HorizontalAlignment="Left" Height="300" Width="900" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste des Utilisateurs"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
+                                <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
+
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <DataGrid Grid.Row="0" x:Name="ListUser" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListUser_MouseDoubleClick">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header="IdUser"  FontSize="15" Binding="{Binding Path=IdUser}" Visibility="Hidden"></DataGridTextColumn>
+                                <DataGridTextColumn Header="UserName"  FontSize="15" Binding="{Binding Path=UserName}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="MotDePasse"  FontSize="15" Binding="{Binding Path=MotDePasse}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="UserRole"  FontSize="15" Binding="{Binding Path=UserRole}"></DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Border>
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="UtilisateurTextBox" Header="Gérer des utilisateur" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="900">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel >
+                                <Label Name="LabelIdUser" Content="User" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="90,2" Name="IdUser" Text="{Binding Path=IdUser}"  Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelUserName" Content="User Name " ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="54,2" x:Name="UserName" MaxLength="49" Text="{Binding Path=UserName}" Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelMotDePasse" Content="Mot De Passe" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="46,2" MaxLength="20" x:Name="MotDePasse" Text="{Binding Path=MotDePasse}"  Width="250"  IsEnabled="False"  />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelUserRole" Content="User Role" ></Label>
+                                <ComboBox FontWeight="ExtraBold" Margin="64,2" x:Name="ComboBoxUserRole" Text="{Binding Path=UserRole}"  Width="250"  IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel>
+
+                                <Button   Name="Ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
+                                <Button  Name="Modifier" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="Modifier_Click"></Button>
+                                <Button  Name="Supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
+                                <Button  Name="MettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" Width="520">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="320"></RowDefinition>
+                    <RowDefinition Height="250"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border   Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <GroupBox x:Name="UserListBox" HorizontalAlignment="Left" Height="300" Width="500" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste des Roles utilisateur"></Label>
+                               
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <DataGrid Grid.Row="0" x:Name="ListUserRole" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListUserRole_MouseDoubleClick">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header="Identifiant"  FontSize="15" Binding="{Binding Path=IdUserRole}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Role"  FontSize="15" Binding="{Binding Path=UserRoleName}"></DataGridTextColumn>
+                              
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Border>
+                <Grid Grid.Row="1">
+
+                    <GroupBox x:Name="UserRoleTextBox" Header="Gérer des Roles" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel >
+                                <Label Name="LabelIdUserRole" Content="Identifiant" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="60,2" Name="IdUserRole" Text="{Binding Path=IdUserRole}"  Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelUserRoleName" Content="Role Name " ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="54,2" x:Name="UserRoleName" MaxLength="20" Text="{Binding Path=UserRoleName}" Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                           
+                            <WrapPanel>
+
+                                <Button   Name="AjouterRole" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="AjouterRole_Click"></Button>
+                                <Button  Name="ModifierRole" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="ModifierRole_Click"></Button>
+                                <Button  Name="SupprimerRole" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="SupprimerRole_Click"></Button>
+                                <Button  Name="MettreAjourRole" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjourRole_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Page>

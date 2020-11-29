@@ -30,28 +30,54 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.FormateurViewModel> ListeFormateur = new List<MyApps.Application.ViewModels.FormateurViewModel>();
 
 
+        string nomevent;
         string enregistre;
         int idSiteModuleSelected;
         int idFormateurSelected;
-        public Resultats() 
+        string nomFormateurProgrammeExamen;
+        public Resultats(string nomFormateur, string userRole)  
         {
             InitializeComponent();
             liste = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
             listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
-            listeModule = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
+            listeModule = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(nomFormateur); 
             listParticipantFailed = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
             ListeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameNomFormateur(nomFormateur);
+            nomFormateurProgrammeExamen = nomFormateur;
             
             PopulateAndBindExamen(listeExamen);
+            if ((string)userRole == "Admin")
+            {
+                //BoutonInscription.IsEnabled=false;
+                listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens(); 
+                PopulateAndBindExamen(listeExamen);
+                //supprimer.IsEnabled = false;
+            }
+           bool  nomToCheckFormateur = MyApps.Domain.Service.FormateurService.GetFormateurNom(nomFormateur);
+           
+                if (!nomToCheckFormateur)
+                {
+                    EvenementToPost.Visibility = Visibility.Collapsed;
+                    return;
+                }
+          
+
+            if ((string)userRole != "Formateur")
+            {
+                Rechercher.IsEnabled = false;
+                ReSet.IsEnabled = false;
+                NomRechercher.IsEnabled = false;
+            }
             this.SelectedNomModule();
             this.SelectedNomModuleExamenPlanned();
-            this.SelectedNomFormateur();
-
+            //this.SelectedNomFormateur();
+            IdFormateur.Items.Add(nomFormateur); 
             EstPresent.Items.Add("True");
             EstPresent.Items.Add("False");
             ParticipantRéussi.Items.Add("True");
-            ParticipantRéussi.Items.Add("False"); 
-
+            ParticipantRéussi.Items.Add("False");
+            nomevent = nomFormateur;
         }
 
 
@@ -218,7 +244,15 @@ namespace SWOMT.Views
                 element.IdModuleInscription = short.Parse(IdModuleInscription.Text); 
                 element.Points = short.Parse(Points.Text);
                 element.EstPresent = bool.Parse(EstPresent.Text);
-                element.ParticipantRéussi = bool.Parse(ParticipantRéussi.Text);
+                if (element.Points >= 50)
+                {
+                    element.ParticipantRéussi = true;
+                }
+                else
+                {
+                    element.ParticipantRéussi = false;
+                }
+                //element.ParticipantRéussi = bool.Parse(ParticipantRéussi.Text);
 
                 MyApps.Domain.Service.ResultatService.Update(element); 
             }
@@ -354,8 +388,8 @@ namespace SWOMT.Views
         /// <returns></returns>
         private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
         {
-
-            foreach (var module in listeModule)
+           // listeModule = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(nomFormateur); 
+            foreach (var module in listeModule) 
             {
 
                 IdSite.Items.Add(module.NomModule + " : " + module.IdSiteModule);
@@ -412,18 +446,7 @@ namespace SWOMT.Views
                 IdSiteModule.Text= donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString() + " : "+ donnee.DateExamen.ToString();
 
             }
-            ////Participant réussi dans un module 
-            //liste.Clear();
-            //liste = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantRéussi(short.Parse(IdExamen.Text));
-            //TotalRéussi.Text = liste.Count().ToString();
-            //PopulateAndBind(liste);
-
-            //// Participant échoué dans un module
-            //listParticipantFailed.Clear();
-            //listParticipantFailed = MyApps.Application.Services.ResultatsVieModelService.GetListParticipantEchoué(short.Parse(IdExamen.Text));
-            //TotalEchoué.Text = listParticipantFailed.Count().ToString();
-            //PopulateAndBindParticipantFailed(listParticipantFailed);
-            //PopulateAndBind(liste);
+           
         }
 
         private void AjouterExamen_Click(object sender, RoutedEventArgs e)
@@ -465,6 +488,14 @@ namespace SWOMT.Views
                 //element.IdExamen = short.Parse(IdExamen.Text);
                 element.IdSiteModule = (short)(idSiteModuleSelected);
                 element.DateExamen = DateTime.Parse(DateExamen.Text).Date;
+
+                // la date d'examen doit etre superieur à la date courante
+                if(element.DateExamen < DateTime.Now)
+                {
+                    MessageBox.Show("La date ne doit pas etre inférieur à la date courante");
+                    return;
+                }
+
                 foreach (var donne in MyApps.Application.Services.ExamenViewModelService.GetExamens())
                 {
                     //avoid the duplicate datas in the liste of sites 
@@ -486,16 +517,33 @@ namespace SWOMT.Views
                 element.IdSiteModule = (short)(idSiteModuleSelected);
 
                 element.DateExamen = DateTime.Parse(DateExamen.Text).Date;
+                if (element.DateExamen < DateTime.Now)
+                {
+                    MessageBox.Show("La date ne doit pas etre inférieur à la date courante");
+                    return;
+                }
+                foreach (var donne in MyApps.Application.Services.ExamenViewModelService.GetExamens())
+                {
+                    //avoid the duplicate datas in the liste of sites 
+                    if ((element.IdSiteModule == donne.IdSiteModule) && (element.DateExamen == donne.DateExamen)) // if already the items exist then rejects
+                    {
+                        MessageBox.Show("les données existé déjà ! dans la base de données");
+                        return;
+                    }
+                }
 
                 MyApps.Domain.Service.ExamenService.Update(element);
             }
            
             listeExamen.Clear();
-            listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
+           // listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameNomFormateur(nomFormateurProgrammeExamen);
+
+           // PopulateAndBindExamen(listeExamen);
             PopulateAndBindExamen(listeExamen);
             ClearFormValuesExamen();
             ModeIsEnabledFalseExamen();
-           
+          
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une formation
@@ -544,7 +592,8 @@ namespace SWOMT.Views
             IdExamen.IsEnabled = true;
             ClearFormValuesExamen();
             listeExamen.Clear();
-            listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens();
+            listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameNomFormateur(nomFormateurProgrammeExamen); 
+
             PopulateAndBindExamen(listeExamen);
             ClearFormValuesExamen();
 
@@ -746,35 +795,49 @@ namespace SWOMT.Views
 
         //*********************************************************************************************************************************
         //********************************************* Code pour post un évenement par un formateur***************************************
-        private List<MyApps.Application.ViewModels.FormateurViewModel> SelectedNomFormateur()
-        {
+        //private List<MyApps.Application.ViewModels.FormateurViewModel> SelectedNomFormateur()
+        //{
 
-            foreach (var formateur in ListeFormateur)
-            {
+        //    foreach (var formateur in ListeFormateur)
+        //    {
 
-                IdFormateur.Items.Add(formateur.NomFormateur); 
-            }
+        //        IdFormateur.Items.Add(formateur.NomFormateur); 
+        //    }
 
-            return ListeFormateur; 
-        }
+        //    return ListeFormateur; 
+        //}
         private void Event_Click(object sender, RoutedEventArgs e)
         {
-            Evenement element = new Evenement();
+            Evenement.Visibility = Visibility;
+            Evenement1.Visibility = Visibility;
+            IdFormateur.Visibility = Visibility;
 
+        }
+        private void Message_Click(object sender, RoutedEventArgs e) 
+        {
+            Evenement element = new Evenement();
+            
             if (Evenement1.Text == "")
             {
                 MessageBox.Show("Veuillez écrire un message pour publier");
+
+                return;
             }
             if (IdFormateur.Text == "")
             {
                 MessageBox.Show("Veuillez sélectionner votre nom ");
+                return;
             }
             element.Evenement1 = Evenement1.Text;
             element.DateOfEVent = DateTime.Now;
+           
             element.IdFormateur = (short)(idFormateurSelected);
             MyApps.Domain.Service.EvenementService.Create(element);
             Evenement1.Text = "";
             IdFormateur.Text = "";
+            Evenement.Visibility = Visibility.Hidden;
+            Evenement1.Visibility = Visibility.Hidden;
+            IdFormateur.Visibility = Visibility.Hidden;
         }
 
         private void ComboBoxIdFormateur_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -792,6 +855,7 @@ namespace SWOMT.Views
                     idFormateurSelected = module.IdFormateur;
 
                 }
+                
             }
         }
     }

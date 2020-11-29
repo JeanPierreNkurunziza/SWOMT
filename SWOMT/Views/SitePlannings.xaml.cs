@@ -168,6 +168,11 @@ namespace SWOMT.Views
                 MessageBox.Show("Click on the Ajouter button to add the Datas or select the datas to modify in the list ");
                 return;
             }
+            if (IdFormateurModule.Text == "")
+            {
+                MessageBox.Show(" veuillez sélectionner un formateur ");
+                return;
+            }
 
             if (enregistre == "Ajouter")
             {
@@ -177,7 +182,18 @@ namespace SWOMT.Views
                 element.IdModule = (short)(idModuleSelected);
                
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text).Date;
+                if (element.DateDebutModule < DateTime.Now)
+                {
+                    MessageBox.Show("La date de début est inférieur à la date currente");
+                    return;
+                }
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                if (element.DateFinModule < element.DateDebutModule)
+                {
+                    MessageBox.Show("La date de fin est inférieur à la date de début");
+                    return;
+                }
+               
                 element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Create(element);
@@ -191,7 +207,17 @@ namespace SWOMT.Views
                 element.IdSite = (short)(idSiteSelected);
                 element.IdModule = (short)(idModuleSelected);              
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text);
+                if (element.DateDebutModule < DateTime.Now)
+                {
+                    MessageBox.Show("La date de début est inférieur à la date currente");
+                    return;
+                }
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                if (element.DateFinModule < element.DateDebutModule)
+                {
+                    MessageBox.Show("La date de fin est inférieur à la date de début");
+                    return;
+                }
                 element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Update(element);

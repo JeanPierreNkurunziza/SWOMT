@@ -1,6 +1,7 @@
 ﻿using MyApps.Infrastructure.DB;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace SWOMT.Views
         string enregistre;
         int idSiteModuleSelected;
         int idParticipantSelected;
-        public Presences() 
+        public Presences(string nomFormateur) 
         {
             InitializeComponent();
             liste = MyApps.Application.Services.PresenceViewModelService.GetPresences();
@@ -40,12 +41,53 @@ namespace SWOMT.Views
             listeInscription = MyApps.Application.Services.InscriptionViewModelService.GetInscriptions();
             listeParticipantAbsent = MyApps.Application.Services.PresenceViewModelService.GetPresences();
             listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-            
-            PopulateAndBindModule(listeModulePlanning); 
+            listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(nomFormateur);
+            PopulateAndBindModule(listeModulePlanning);
+
+            if ((string)nomFormateur == "Muhayimana Edison")
+            {
+                //BoutonInscription.IsEnabled=false;
+                listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
+                PopulateAndBindModule(listeModulePlanning);
+                //supprimer.IsEnabled = false;
+            }
+            if ((string)nomFormateur != "Muhayimana Edison")
+            {
+                RechercherModule.IsEnabled = false;
+                ReSetModule.IsEnabled = false;
+                NomRechercherModule.IsEnabled = false;
+            }
+            // PopulateAndBindModule(listeModulePlanning); 
             this.SelectedNomModule();
             EstPresent.Items.Add("True");
-            EstPresent.Items.Add("False"); 
+            EstPresent.Items.Add("False");
 
+            //Ajouter une case à cocher pour simplifier les présences
+            //*****************************************************
+
+
+            //Binding binding = new Binding("DataContext.SelectAll");
+            //binding.Mode = BindingMode.TwoWay;
+            //binding.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor);
+            //binding.RelativeSource.AncestorType = GetType();
+
+            //CheckBox headerCheckBox = new CheckBox();
+            //headerCheckBox.Content = "Is Selected";
+            //headerCheckBox.SetBinding(CheckBox.IsCheckedProperty, binding);
+
+            //DataGridCheckBoxColumn checkBoxColumn = new DataGridCheckBoxColumn();
+            //checkBoxColumn.Header = headerCheckBox;
+            //checkBoxColumn.Binding = new Binding("IsSelected");
+
+
+            //ListElement.Columns.Insert(0, checkBoxColumn);
+            //************************************************* second way of adding check box in datagrid********************
+            //DataGridCheckBoxColumn dgvCmb = new DataGridCheckBoxColumn();
+            //dgvCmb.SetValue = typeof(bool);
+            //dgvCmb.Name = "Chk";
+            //dgvCmb.Header= "CheckBox";
+            //ListElement.Columns.Add(dgvCmb);
+            //***************************************************** fin ****************************************************
         }
 
 
@@ -172,12 +214,21 @@ namespace SWOMT.Views
 
             if (enregistre == "Ajouter")
             {
-
+                CultureInfo provider = CultureInfo.InvariantCulture;
                 //element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
                 element.IdSiteModule = (short)(idSiteModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);
                 element.DateHeureDePresence = DateTime.Parse(DateHeureDePresence.Text).Date;
                 element.EstPresent = bool.Parse(EstPresent.Text);
+
+                //Vérifier si la date de presence est comprise entre la date de début et la date de fin 
+                if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text).Date) || (element.DateHeureDePresence > DateTime.Parse(DateFin.Text).Date))
+
+                {
+                    MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) +
+                       " et la date de Fin : " + DateTime.Parse(DateFin.Text));
+                    return;
+                }
                 //code pour éviter des doublons dans les presences et respecter la date de début et date de fin de modules
                 foreach (var donne in MyApps.Application.Services.PresenceViewModelService.GetPresences())
                 {
@@ -185,19 +236,10 @@ namespace SWOMT.Views
                     if ((element.IdSiteModule == donne.IdSiteModule) && ( element.IdParticipant== donne.IdParticipant) && (element.DateHeureDePresence== donne.DateHeureDePresence)) // if already the items exist then rejects
                     {
                         MessageBox.Show("les données existé déjà ! dans la base de données");
+
                         return;
                     }
-                    if (element.IdSiteModule == donne.IdSiteModule)
-                        {
-                        if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text)) && (element.DateHeureDePresence >= DateTime.Parse(DateDébut.Text)))
-                        {
-                            MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) + 
-                                " et la date de Fin : " + DateTime.Parse(DateFin.Text));
-                            return;
-                        }
-                    
-                        }
-                    
+                  
                 }
               
                 MyApps.Domain.Service.PresenceService.Create(element);
@@ -206,12 +248,30 @@ namespace SWOMT.Views
 
             if (enregistre == "Modifier")
             {
-
+                if (IdPresence.Text == "")
+                {
+                   MessageBox.Show("Veuillez seléctionner un élément à modifier dans la liste des participants réussis ou échoués");
+                    IdParticipant.Text = "";
+                    DateHeureDePresence.Text = "";
+                    EstPresent.Text = "";
+                    ModeIsEnabledFalse();
+                    return;
+                }
                 element.IdPresence = short.Parse(IdPresence.Text);  
                 element.IdSiteModule = (short)(idSiteModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);
                 element.DateHeureDePresence = DateTime.Parse(DateHeureDePresence.Text).Date;
                 element.EstPresent = bool.Parse(EstPresent.Text);
+
+                //Vérifier si la date de presence est comprise entre la date de début et la date de fin 
+                if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text).Date) || (element.DateHeureDePresence > DateTime.Parse(DateFin.Text).Date)) 
+
+                {
+                    MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) +
+                       " et la date de Fin : " + DateTime.Parse(DateFin.Text));
+                    return;
+                }
+                
                 foreach (var donne in MyApps.Application.Services.PresenceViewModelService.GetPresences())
                 {
                     //avoid the duplicate datas in the liste of sites 
@@ -220,17 +280,7 @@ namespace SWOMT.Views
                         MessageBox.Show("les données existé déjà ! dans la base de données");
                         return;
                     }
-                    if (element.IdSiteModule == donne.IdSiteModule)
-                    {
-                        if ((element.DateHeureDePresence <= DateTime.Parse(DateDébut.Text)) && (element.DateHeureDePresence >= DateTime.Parse(DateDébut.Text)))
-                        {
-                            MessageBox.Show("La date de presence doit être comprise entre  : La date de Début : " + DateTime.Parse(DateDébut.Text) +
-                                " et la date de Fin : " + DateTime.Parse(DateFin.Text));
-                            return;
-                        }
-
-                    }
-
+                   
                 }
 
                 MyApps.Domain.Service.PresenceService.Update(element);
@@ -371,24 +421,6 @@ namespace SWOMT.Views
             }
 
 
-
-            //IdModuleInscription.IsEnabled = false;
-            //IdSiteModule.IsEnabled = true;
-            ////IdParticipant.SelectedValue = "";
-            //NomModule.Text = "";
-            //NomParticipant.Text = "";
-            ////DateInscription.Text = "";
-            //// EstSurListeAttente.Text = "";
-
-            //listeInscription.Clear();
-            //ListElement.DataContext = clearListe;
-            //IdModuleInscription.IsEnabled = false;
-            //// IdModule.IsEnabled = false;
-            ////IdParticipant.IsEnabled = false;
-            //NomModule.IsEnabled = false;
-            //NomParticipant.IsEnabled = false;
-            ////DateInscription.IsEnabled = false;
-            ////EstSurListeAttente.IsEnabled = false;
 
             listeInscription = MyApps.Application.Services.InscriptionViewModelService.GetParticipantPerModule((short)(idSiteModuleSelected));
             //TotalParticipant.Text = listeInscription.Count().ToString();
@@ -588,6 +620,11 @@ namespace SWOMT.Views
             }
 
             return assets.ToList();
+        }
+
+        private void ValiderPresence_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

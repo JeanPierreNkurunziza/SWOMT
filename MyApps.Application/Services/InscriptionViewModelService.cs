@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
    public class InscriptionViewModelService
     {
+       /// <summary>
+       /// la méthode pour mapper les données  de modèles inscription. 
+       /// </summary>
+       /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetInscriptions() 
         {
             List<ViewModels.InscriptionViewModel> Liste = new List<ViewModels.InscriptionViewModel>();

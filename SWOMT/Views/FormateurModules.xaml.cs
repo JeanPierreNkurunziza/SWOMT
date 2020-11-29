@@ -32,7 +32,7 @@ namespace SWOMT.Views
         int idFormateurSelected;
         int idFormationSelected;
         string enregistre;
-        public FormateurModules()
+        public FormateurModules(string roleName)  
         {
             InitializeComponent();
             liste= MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
@@ -48,8 +48,17 @@ namespace SWOMT.Views
 
             PopulateAndBindFormateurs(listeFormateur);
             PopulateAndBindModule(listeModule);
-           // PopulateAndBind(liste);
-            
+            // PopulateAndBind(liste);
+            if ((string)roleName != "Admin")
+            {
+                //BoutonInscription.IsEnabled=false;
+                FormateurtextBox.IsEnabled=false;
+                // FormateurtextBox.Content=false;
+                ModuleFormateurtextBox.IsEnabled = false;
+                GroupBoxModuleTextBox.IsEnabled = false;
+                
+            }
+
 
         }
 
@@ -423,7 +432,8 @@ namespace SWOMT.Views
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             PopulateAndBindFormateurs(listeFormateur);
 
-            MessageBox.Show("Reload the pages to validate the modifications");
+            //MessageBox.Show("Reload the pages to validate the modifications");
+            //Main.Content = new FormateurModules(); 
         }
 
         private void MettreAjourFormateur_Click(object sender, RoutedEventArgs e) 
@@ -434,7 +444,7 @@ namespace SWOMT.Views
             if (NomFormateur.Text=="")
             {
                 MessageBox.Show("Il faut mettre les données à enregistrer");
-                return;
+                return; 
             }
 
 
@@ -469,7 +479,7 @@ namespace SWOMT.Views
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             ClearFormValuesFormateur();
             PopulateAndBindFormateurs(listeFormateur);
-            MessageBox.Show("Reload the pages to validate the modifications");
+           // MessageBox.Show("Reload the pages to validate the modifications");
 
         }
         private void ClearFormValuesFormateur()
@@ -558,7 +568,7 @@ namespace SWOMT.Views
         {
             if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
             {
-                Id.Text = donnee.IdModule.ToString();
+                idModule.Text = donnee.IdModule.ToString();
                 IdFormation.Text = donnee.NomFormation.ToString();
                 NomModule.Text = donnee.NomModule.ToString();
                // NomFormation.Text = donnee.NomFormation.ToString();
@@ -587,28 +597,28 @@ namespace SWOMT.Views
         private void MettreAjourModule_Click(object sender, RoutedEventArgs e)
         {
             Module element = new Module();
-            //Competence competence = new Competence();
+           
 
-            if (Id.Text == "")
+            if (idModule.Text == "")
             {
                 MessageBox.Show("Il faut saisir identifiant ");
                 return;
             }
             if (!int.TryParse(CreditModule.Text, out int nbr))
             {
-                MessageBox.Show("Format du nombre  est incorrect SVP !");
+                MessageBox.Show("Format du nombre pour le Crédit de module  est incorrect SVP !");
                 return;
             }
             if (!int.TryParse(NombrePrévu.Text, out int nbrPrevu))
             {
-                MessageBox.Show("Format du nombre est incorrect SVP !");
+                MessageBox.Show("Format du nombre Prévus des participants est incorrect SVP !");
                 return;
             }
 
             if (enregistre == "Ajouter")
             {
 
-                //element.IdModule = short.Parse(IdModule.Text);
+               // element.IdModule = short.Parse(IdModule.Text);
                 element.IdFormation = (short)(idFormationSelected);
                 element.NomModule = NomModule.Text;
                 element.CreditModule = short.Parse(CreditModule.Text);
@@ -621,7 +631,7 @@ namespace SWOMT.Views
             if (enregistre == "Modifier")
             {
 
-                //element.IdModule = short.Parse(IdModule.Text);
+                element.IdModule = short.Parse(idModule.Text);
                 element.IdFormation = (short)(idFormationSelected);
                 element.NomModule = NomModule.Text;
                 element.CreditModule = short.Parse(CreditModule.Text);
@@ -631,10 +641,11 @@ namespace SWOMT.Views
             }
 
             ModeIsEnabledFalseModule();
-            listeModule.Clear();
+            //listeModule.Clear();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+            ClearFormValuesModule(); 
             PopulateAndBind(listeModule);
-            ClearFormValuesModule();
+           
 
         }
         /// <summary>
@@ -645,7 +656,7 @@ namespace SWOMT.Views
         private void ModifierModule_Click(object sender, RoutedEventArgs e)
         {
 
-            if (Id.Text == "")
+            if (idModule.Text == "")
             {
                 MessageBox.Show("Entrer la formation à modifier");
                 return;
@@ -678,7 +689,7 @@ namespace SWOMT.Views
         }
         private void ClearFormValuesModule()
         {
-            Id.Text = "";
+            idModule.Text = "";
             IdFormation.SelectedValue = "";
             NomModule.Text = "";
            // NomFormation.Text = "";
@@ -688,7 +699,7 @@ namespace SWOMT.Views
         }
         private void ModeIsEnabledTrueModule()
         {
-            Id.IsEnabled = false;
+            idModule.IsEnabled = false;
             IdFormation.IsEnabled = true;
             NomModule.IsEnabled = true;
            // NomFormation.IsEnabled = true;
@@ -698,7 +709,7 @@ namespace SWOMT.Views
         }
         private void ModeIsEnabledFalseModule()
         {
-            Id.IsEnabled = false;
+            idModule.IsEnabled = false;
             IdFormation.IsEnabled = false;
             NomModule.IsEnabled = false;
            // NomFormation.IsEnabled = false;

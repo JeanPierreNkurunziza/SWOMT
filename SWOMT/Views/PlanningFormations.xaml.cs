@@ -26,7 +26,7 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
 
         string enregistre;
-        public PlanningFormations() 
+        public PlanningFormations(string roleName) 
         {
             InitializeComponent();
             liste = MyApps.Application.Services.PlanningsFormation.GetPlanningFormation();
@@ -35,6 +35,14 @@ namespace SWOMT.Views
             PopulateAndBindFormation(listeFormation);
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
             PopulateAndBindModule(listeModule);
+            if ((string)roleName != "Admin")
+            {
+                
+                FormationTextBox.IsEnabled = false;
+                // FormateurtextBox.Content=false;
+                ModuleSiteTextBox.IsEnabled = false;
+              
+            }
 
         }
 
@@ -69,7 +77,8 @@ namespace SWOMT.Views
                 IdFormation.Text = donnee.IdFormation.ToString();
                 NomFormation.Text = donnee.NomFormation.ToString();
                 DateFormation.Text = donnee.DateFormation.ToString();
-
+                Id.Text = donnee.IdFormation.ToString();
+                Nom.Text = donnee.NomFormation.ToString();
             }
         }
 
@@ -215,6 +224,8 @@ namespace SWOMT.Views
                 IdFormation.Text = donnee.IdFormation.ToString();
                 NomFormation.Text = donnee.NomFormation.ToString();
                 Description.Text = donnee.Description.ToString();
+                Id.Text = donnee.IdFormation.ToString();
+                Nom.Text = donnee.NomFormation.ToString();
 
             }
             listeModule.Clear();

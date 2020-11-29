@@ -91,7 +91,21 @@ namespace MyApps.Application.Services
                          select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper()) || s.DateDebutModule.ToString().Contains(searchString.ToString()));
+                assets = assets.Where(s => s.NomModule.ToUpper().Contains(searchString.ToUpper()) || s.DateDebutModule.ToString().Contains(searchString.ToString())
+                                            || s.NomFormateur.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            return assets.ToList();
+        }
+        public static List<ViewModels.SitePlanningViewModel> AfficherModulePerFormateur(string searchString)
+        {
+            List<ViewModels.SitePlanningViewModel> Liste = new List<ViewModels.SitePlanningViewModel>();
+            var GetListe = GetSitePlanning();
+            var assets = from s in GetListe
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                assets = assets.Where(s => s.NomFormateur.ToUpper().Contains(searchString.ToUpper()));
             }
 
             return assets.ToList();

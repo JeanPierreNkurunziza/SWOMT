@@ -29,6 +29,24 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
-       
+        public static List<ViewModels.PlanningViewModel> GetPlanningFormationThisYearAndNextYear() 
+        {
+            List<ViewModels.PlanningViewModel> Liste = new List<ViewModels.PlanningViewModel>();
+            var GetListe = PlanningService.GetListOfPlanningFormationWithinAcademicYear();
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.PlanningViewModel vm = new ViewModels.PlanningViewModel()
+                {
+                    IdPlanning = itemList.IdPlanning,
+                    IdFormation = itemList.IdFormation,
+                    NomFormation = PlanningService.GetNomFormation(itemList.IdFormation),
+                    DateFormation = itemList.DateFormation,
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+
     }
 }

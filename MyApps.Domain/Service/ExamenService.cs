@@ -67,6 +67,19 @@ namespace MyApps.Domain.Service
 
             }
         }
-        
+        public static string GetNomFormateur(int? IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var getIdSiteModule = db.SiteModules.Find(IdSiteModule);
+                var IdFormateurModule = getIdSiteModule.IdFormateurModule;
+                var GetIdFormateurModule = db.FormateurModules.Find(IdFormateurModule);
+                var IdFormateur = GetIdFormateurModule.IdFormateur;
+                var nomFormateur = db.Formateurs.Find(IdFormateur);
+                return nomFormateur.NomFormateur; 
+
+            }
+        }
+
     }
 }

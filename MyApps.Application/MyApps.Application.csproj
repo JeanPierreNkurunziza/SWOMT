@@ -66,6 +66,7 @@
     <Compile Include="Services\ResultatsVieModelService.cs" />
     <Compile Include="Services\SitePlanningViewModelService.cs" />
     <Compile Include="Services\SitesViewModelsServices.cs" />
+    <Compile Include="Services\UserRolesViewModelService.cs" />
     <Compile Include="Services\UserViewModelService.cs" />
     <Compile Include="ViewModels\CertificatViewModel.cs" />
     <Compile Include="ViewModels\EvenementViewModel.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="ViewModels\ResultatViewModel.cs" />
     <Compile Include="ViewModels\SitePlanningViewModel.cs" />
     <Compile Include="ViewModels\SiteViewModel.cs" />
+    <Compile Include="ViewModels\UserRolesViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

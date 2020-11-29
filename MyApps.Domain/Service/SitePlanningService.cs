@@ -105,6 +105,14 @@ namespace MyApps.Domain.Service
                 return moduleSite;
             }
         }
+        public static List<SiteModule> GetListSitePerFormateur(int IdFormateur)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.IdFormateurModule == IdFormateur).ToList(); 
+                return moduleSite;
+            }
+        }
         public static List<SiteModule> GetListModuleEncours()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

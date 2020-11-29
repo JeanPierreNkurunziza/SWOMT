@@ -29,7 +29,7 @@ namespace SWOMT.Views
 
         string enregistre;
        
-        public Certificats()
+        public Certificats(string roleName)
         {
             InitializeComponent();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
@@ -37,8 +37,15 @@ namespace SWOMT.Views
             listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
             PopulateAndBindParticipant(listeParticipant);
             ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
-            ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetResultats(); 
-           
+            ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
+            if ((string)roleName != "Admin")
+            {
+
+               
+                // FormateurtextBox.Content=false;
+                CertificatTextBox.IsEnabled = false;
+
+            }
 
         }
 

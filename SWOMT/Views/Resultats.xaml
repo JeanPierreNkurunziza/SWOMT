@@ -34,10 +34,10 @@
             </Grid>
             <Grid Grid.Column="1">
                 <StackPanel Grid.Column="1">
-                    <WrapPanel>
-                        <Label Name="Evenement" FontSize="28" FontWeight="Bold" Content="Event"></Label>
-                        <TextBox Background="White"  FontWeight="ExtraBold" Margin="10,2" Name="Evenement1" Text="{Binding Path=Evenement1}"  Width="450"  ></TextBox>
-                        <ComboBox  FontWeight="ExtraBold" Margin="10,2" Name="IdFormateur" Text="{Binding Path=IdFormateur}"  Width="160" SelectionChanged="ComboBoxIdFormateur_SelectionChanged"></ComboBox>
+                    <WrapPanel Margin="0,10,0,0">
+                        <Button Name="Evenement" Visibility="Hidden" FontSize="14" Content="Envoyer" Click="Message_Click"></Button>
+                        <TextBox Background="White" Visibility="Hidden" FontWeight="ExtraBold" Margin="10,2" Name="Evenement1" Text="{Binding Path=Evenement1}"  Width="440"  ></TextBox>
+                        <ComboBox  FontWeight="ExtraBold" Visibility="Hidden" Margin="10,2" Name="IdFormateur" Text="{Binding Path=IdFormateur}"  Width="160" SelectionChanged="ComboBoxIdFormateur_SelectionChanged"></ComboBox>
                         
                         <Button   Name="EvenementToPost" Content="Publier" Click="Event_Click"></Button>
                      
@@ -75,8 +75,8 @@
                                     <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdExamen}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomModule}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Date Examen"  FontSize="15" Binding="{Binding Path=DateExamen}"></DataGridTextColumn>
-
+                                    <DataGridTextColumn Header="Date Examen"  FontSize="15" Binding="{Binding Path=DateExamen, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Formateur"  FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn> 
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>

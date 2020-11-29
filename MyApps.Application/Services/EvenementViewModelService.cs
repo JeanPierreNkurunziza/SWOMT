@@ -28,5 +28,24 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        public static List<ViewModels.EvenementViewModel> GetCurrentEvenementsWithin90Days() 
+        {
+            List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();
+            var GetListe = EvenementService.GetListOfCurrentEvenement();
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.EvenementViewModel vm = new ViewModels.EvenementViewModel()
+                {
+                    IdEvenement = itemList.IdEvenement,
+                    IdFormateur = itemList.IdFormateur,
+                    Evenement1 = itemList.Evenement1,
+                    DateOfEvent = itemList.DateOfEVent,
+                    NomFormateur = EvenementService.GetNomFormateur(itemList.IdFormateur)
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
     }
 }

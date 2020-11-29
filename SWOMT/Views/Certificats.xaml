@@ -128,7 +128,7 @@
 
                                 </WrapPanel>
                                 <WrapPanel >
-                                    <Label Name="NbrTotal" Content="Nbr Récus" FontSize="12"></Label>
+                                    <Label Name="NbrTotal" Content="Certificat Récus" FontSize="12"></Label>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <TextBox Name="NbrCertificatRécu" Margin="0,2" Text="{Binding NbrCertificatRécu}"  Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
@@ -164,7 +164,7 @@
                     <RowDefinition Height="300"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <GroupBox x:Name="ListeModule" Header="Liste des participants réussis par module" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="ListeModule" Header="Liste des modules réussis par un participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
                          
                             <!--<Border BorderBrush="Black" BorderThickness="1,1,1,1">-->
@@ -186,7 +186,7 @@
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ListeAttenteBox" Header="Liste des participants échoués par module " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="ListeAttenteBox" Header="Liste des modules échoués par un participant " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="1">
 
                             <DataGrid Name="ListParticipantFailed" Height="215" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListParticipantFailed_MouseDoubleClick" >

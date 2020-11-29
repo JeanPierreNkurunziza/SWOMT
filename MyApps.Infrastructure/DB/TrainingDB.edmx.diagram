@@ -37,6 +37,7 @@
         <AssociationConnector Association="TrainingDBModel.Fk_Presence_Participant" ManuallyRouted="false" />
         <AssociationConnector Association="TrainingDBModel.Fk_Presence_SiteModule" ManuallyRouted="false" />
         <AssociationConnector Association="TrainingDBModel.Fk_SiteModule_Site" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TrainingDBModel.UserRole" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

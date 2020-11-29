@@ -240,7 +240,7 @@ namespace SWOMT.Views
                 //element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
                 element.IdSiteModule = (short)(idModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);  
-                element.DateInscription = DateTime.Parse(DateInscription.Text).Date; 
+                element.DateInscription = DateTime.Now; 
                 element.EstSurListeAttente = bool.Parse(EstSurListeAttente.Text);
                 foreach (var donne in MyApps.Application.Services.InscriptionViewModelService.GetInscriptions())
                 {
@@ -429,7 +429,7 @@ namespace SWOMT.Views
             IdParticipant.IsEnabled = true;
             NomModule.IsEnabled = true;
             NomParticipant.IsEnabled = true;
-            DateInscription.IsEnabled = true;
+            DateInscription.IsEnabled = false;
             EstSurListeAttente.IsEnabled = true;
 
         }
@@ -489,6 +489,7 @@ namespace SWOMT.Views
             ClearFormValuesParticipant();
             ModeIsEnabledTrueParticipant();
             Id.IsEnabled=false;
+            DateEncodage.IsEnabled = false;
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une competence
@@ -498,8 +499,8 @@ namespace SWOMT.Views
         private void MettreAjourParticipant_Click(object sender, RoutedEventArgs e)
         {
             Participant participant = new Participant();
-            
 
+            DateTime ages = DateTime.Now.AddYears(-18);
             if (Nom.Text == "")
             {
                 MessageBox.Show("Il faut saisir le nom de participant");
@@ -523,7 +524,13 @@ namespace SWOMT.Views
                 participant.EmailParticipant = EmailParticipant.Text;
                 participant.SecteurParticipant = SecteurParticipant.Text;
                 participant.DistrictParticipant = DistrictParticipant.Text;
-                participant.DateEncodage = DateTime.Parse(DateEncodage.Text);
+                participant.DateEncodage = DateTime.Now;
+
+                if(participant.DateNaissance < ages )
+                {
+                    MessageBox.Show("Votre age est inférieur à 18 ans");
+                    return;
+                }
 
                 foreach (var donne in MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants())
                 {
@@ -549,6 +556,13 @@ namespace SWOMT.Views
                 participant.SecteurParticipant = SecteurParticipant.Text;
                 participant.DistrictParticipant = DistrictParticipant.Text;
                 participant.DateEncodage = DateTime.Parse(DateEncodage.Text);
+                if (participant.DateNaissance > ages)
+                {
+                    MessageBox.Show("Votre age est inférieur à 18 ans");
+                    return;
+                }
+
+                
                 MyApps.Domain.Service.ParticipantService.Update(participant);
             }
         
@@ -576,6 +590,7 @@ namespace SWOMT.Views
             enregistre = "Modifier";
             ModeIsEnabledTrueParticipant();
             Id.IsEnabled = false;
+            DateEncodage.IsEnabled = false;
 
 
         }

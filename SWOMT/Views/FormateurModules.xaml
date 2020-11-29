@@ -18,11 +18,11 @@
         <Grid Grid.Row="0">
             <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center" FontSize="25" 
-                   Background="AliceBlue" FontWeight="Bold"></Label>
+                   Background="AliceBlue" FontWeight="ExtraBold" Foreground="Black"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Gestion des Formateur" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                <Label Name="listes" Content="Gestion des Formateurs et leurs Modules" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
             </StackPanel>
 
         </Grid>
@@ -65,7 +65,7 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="FormateurtextBox" Header="Formateur" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                    <GroupBox x:Name="FormateurtextBox"  Header="Formateur" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
@@ -190,7 +190,7 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="ParticipantTextBox" Header="Souscrire un Module" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
+                    <GroupBox x:Name="GroupBoxModuleTextBox" Header="Souscrire un Module" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="490">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >

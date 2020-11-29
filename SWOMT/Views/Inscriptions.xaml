@@ -224,8 +224,8 @@
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -255,8 +255,8 @@
                                         <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
                                         <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                         <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
-                                        <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}" Visibility="Hidden"></DataGridTextColumn>
-                                        <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}" Visibility="Hidden"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
                                         <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
