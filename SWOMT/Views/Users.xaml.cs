@@ -93,7 +93,8 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             UserName.IsEnabled = true;
-            MotDePasse.IsEnabled = true;
+            MotDePasse.IsEnabled = false;
+           // MotDePasse.Visibility = Visibility.Collapsed;
             ComboBoxUserRole.IsEnabled = true;
 
         }
@@ -158,14 +159,7 @@ namespace SWOMT.Views
                 element.UserName = UserName.Text;
                 element.MotDePasse = MotDePasse.Text;
                 element.UserRole = ComboBoxUserRole.Text;
-                foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
-                {
-                    if ((element.UserName == donne.UserName) && (element.MotDePasse == donne.MotDePasse)) // if the items has both ids then rejects
-                    {
-                        MessageBox.Show("les données existé déjà ! dans la base de données");
-                        return;
-                    }
-                }
+                
                // MyApps.Domain.Service.UserService.Update(element);
                 MyApps.Domain.Service.UserService.MetàJourUser(element.IdUser,element.UserName,element.MotDePasse,element.UserRole);
             }
@@ -285,14 +279,7 @@ namespace SWOMT.Views
                 element.IdUserRole = short.Parse(IdUserRole.Text);
                 element.UserRoleName = UserRoleName.Text;
 
-                foreach (var donne in MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles())
-                {
-                    if ((element.UserRoleName == donne.UserRoleName)) // if the items has both ids then rejects
-                    {
-                        MessageBox.Show("les données existé déjà ! dans la base de données");
-                        return;
-                    }
-                }
+                
                 MyApps.Domain.Service.UserRolesServices.Update(element);
 
             }

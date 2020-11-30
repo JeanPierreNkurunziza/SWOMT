@@ -24,6 +24,10 @@ namespace MyApps.Domain.Service
             }
         }
 
+        /// <summary>
+        /// Méthode pour supprimer une inscription
+        /// </summary>
+        /// <param name="id"> identifiant d'un élement à supprimer </param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -45,7 +49,11 @@ namespace MyApps.Domain.Service
                 return inscription.ToList();
             }
         }
-
+        /// <summary>
+        /// Méthode pour récuperer une inscription 
+        /// </summary>
+        /// <param name="id"> à partir d'un identifiant affiche une inscription</param>
+        /// <returns>une inscription d'un participant </returns>
         public static ModuleInscription GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -54,7 +62,10 @@ namespace MyApps.Domain.Service
                 return inscription;
             }
         }
-
+        /// <summary>
+        /// Méthode pour mettre à jour une inscription
+        /// </summary>
+        /// <param name="inscription"></param>
         public static void Update(ModuleInscription inscription)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -133,12 +144,17 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                //var siteplanning = db.SiteModules.Find(IdSiteModule);
-               // var idSiteModule = siteplanning.IdSiteModule;
+                
                 var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdSiteModule == IdSiteModule && a.EstSurListeAttente==false).ToList();
                 return moduleParticipant;
             }
         }
+
+        /// <summary>
+        /// la liste des participants inscrits sur une liste d'attente
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
         public static List<ModuleInscription> GetListAttenteParticipantPerModule(int IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

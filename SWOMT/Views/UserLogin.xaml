@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SWOMT.Views"
         mc:Ignorable="d"
-       Title="Login" Height="650" Width="650" FontSize="14" Background="#04c582" HorizontalAlignment="Center" VerticalAlignment="Center">
+       Title="Login" Height="650" Width="650" FontSize="14" Background="#04c582" WindowStartupLocation="CenterScreen">
     <Border Background="#2e3137" CornerRadius="20" Margin="20">
         <StackPanel Margin="20">
            

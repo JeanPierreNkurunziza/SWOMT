@@ -32,6 +32,11 @@ namespace SWOMT.Views
         string enregistre;
         int idSiteModuleSelected;
         int idParticipantSelected;
+
+        /// <summary>
+        /// Un constructeur de classe presence 
+        /// </summary>
+        /// <param name="nomFormateur"></param>
         public Presences(string nomFormateur) 
         {
             InitializeComponent();
@@ -44,52 +49,26 @@ namespace SWOMT.Views
             listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(nomFormateur);
             PopulateAndBindModule(listeModulePlanning);
 
-            if ((string)nomFormateur == "Muhayimana Edison")
+            //Controle des droit d'accès aux fonctionnalités de page de présence 
+            if (MyApps.Domain.Service.UserService.GetUtilisateurUserRole((string)nomFormateur) == "Admin"
+                || MyApps.Domain.Service.UserService.GetUtilisateurUserRole((string)nomFormateur) == "Secrétaire")
             {
-                //BoutonInscription.IsEnabled=false;
+                
                 listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
                 PopulateAndBindModule(listeModulePlanning);
-                //supprimer.IsEnabled = false;
+                RechercherModule.IsEnabled = true;
+                ReSetModule.IsEnabled = true;
+                NomRechercherModule.IsEnabled = true;
+                ModuleSiteTextBox.IsEnabled = false;
+                Valider.Visibility = Visibility.Hidden;
+               
             }
-            if ((string)nomFormateur != "Muhayimana Edison")
-            {
-                RechercherModule.IsEnabled = false;
-                ReSetModule.IsEnabled = false;
-                NomRechercherModule.IsEnabled = false;
-            }
-            // PopulateAndBindModule(listeModulePlanning); 
+           
             this.SelectedNomModule();
             EstPresent.Items.Add("True");
             EstPresent.Items.Add("False");
-
-            //Ajouter une case à cocher pour simplifier les présences
-            //*****************************************************
-
-
-            //Binding binding = new Binding("DataContext.SelectAll");
-            //binding.Mode = BindingMode.TwoWay;
-            //binding.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor);
-            //binding.RelativeSource.AncestorType = GetType();
-
-            //CheckBox headerCheckBox = new CheckBox();
-            //headerCheckBox.Content = "Is Selected";
-            //headerCheckBox.SetBinding(CheckBox.IsCheckedProperty, binding);
-
-            //DataGridCheckBoxColumn checkBoxColumn = new DataGridCheckBoxColumn();
-            //checkBoxColumn.Header = headerCheckBox;
-            //checkBoxColumn.Binding = new Binding("IsSelected");
-
-
-            //ListElement.Columns.Insert(0, checkBoxColumn);
-            //************************************************* second way of adding check box in datagrid********************
-            //DataGridCheckBoxColumn dgvCmb = new DataGridCheckBoxColumn();
-            //dgvCmb.SetValue = typeof(bool);
-            //dgvCmb.Name = "Chk";
-            //dgvCmb.Header= "CheckBox";
-            //ListElement.Columns.Add(dgvCmb);
-            //***************************************************** fin ****************************************************
+           
         }
-
 
 
         /// <summary>
@@ -104,6 +83,10 @@ namespace SWOMT.Views
             };
             ListParticipantPresent.DataContext = listeItems;
         }
+        /// <summary>
+        /// Méthode pour binding la liste de participants absents
+        /// </summary>
+        /// <param name="listeItems"></param>
         private void PopulateAndBindParticipantAbsent(List<MyApps.Application.ViewModels.PresenceViewModel> listeItems)
         {
             Binding monBinding = new Binding
@@ -188,7 +171,7 @@ namespace SWOMT.Views
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             Presence element = new Presence();
-            //Competence competence = new Competence();
+            
 
             if (IdSiteModule.Text == "")
             {
@@ -214,8 +197,7 @@ namespace SWOMT.Views
 
             if (enregistre == "Ajouter")
             {
-                CultureInfo provider = CultureInfo.InvariantCulture;
-                //element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
+                
                 element.IdSiteModule = (short)(idSiteModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);
                 element.DateHeureDePresence = DateTime.Parse(DateHeureDePresence.Text).Date;
@@ -401,6 +383,11 @@ namespace SWOMT.Views
 
             return listeModulePlanning;
         }
+        /// <summary>
+        /// Méthode pour récuperer l'identifiant seléctionné 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBoxPerticipantPerModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IdSiteModule.SelectedItem == null)
@@ -477,6 +464,11 @@ namespace SWOMT.Views
             //}
 
         }
+        /// <summary>
+        /// Méthode pour faire une rechercher à partir du nom
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RechercherModule_Click(object sender, RoutedEventArgs e)
         {
 
@@ -493,6 +485,11 @@ namespace SWOMT.Views
             listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.SearchMethodByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModulePlanning);
         }
+        /// <summary>
+        /// Méthode pour initialiser la liste 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReSetListModule_Click(object sender, RoutedEventArgs e)
         {
             NomRechercherModule.Text = "";

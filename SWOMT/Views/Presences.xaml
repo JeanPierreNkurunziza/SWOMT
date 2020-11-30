@@ -55,8 +55,8 @@
                                     <!--<DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="IdSite"  FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>-->
                                     <!--<DataGridTextColumn Header="IdModule"  FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>-->
-                                    <DataGridTextColumn Header="NomSite"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Site"  FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="Date Début Module"  FontSize="15" Binding="{Binding Path=DateDebutModule, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Date Fin Module"  FontSize="15" Binding="{Binding Path=DateFinModule, StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Formateur"  FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
@@ -182,12 +182,12 @@
                                     <DataGridCheckBoxColumn Header="Oui" IsThreeState="True" x:Name="CheckBoxEstPresent" Binding="{Binding EstPresent}" />
                                     <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Sur Liste Attente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -207,7 +207,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Participants Présent"></Label>
                                 <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
-                                <Button   Name="RechercherNom" Content="Search" Click="Rechercher_Click"></Button>
+                                <Button   Name="RechercherNom" Content="Rechercher" Click="Rechercher_Click"></Button>
                                 <Button   Name="ReSetList" Content="Set" Click="ReSetList_Click"></Button>
 
                             </StackPanel>
@@ -218,11 +218,11 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPresence}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="DateHeureDePresence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Heure De Presence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <!--</Border>-->
@@ -239,11 +239,11 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPresence}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="DateHeureDePresence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Heure De Presence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 

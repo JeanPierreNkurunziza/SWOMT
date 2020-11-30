@@ -50,7 +50,9 @@ namespace SWOMT.Views
             this.SelectedNomModule(); 
             this.SelectedNomParticipant();
             this.SelectedNomParticipantsGetModules(); 
+            
 
+           
             EstSurListeAttente.Items.Add("true");
             EstSurListeAttente.Items.Add("false");
 

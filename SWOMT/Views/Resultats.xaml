@@ -22,19 +22,20 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="720"></ColumnDefinition>
+                <ColumnDefinition Width="640"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel Grid.Column="0">
                   
-                        <Label Name="listes" Content="Gestion des Resultats" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                        <Label Name="listes" Content="Gestion des Resultats" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Left" ></Label>
                        
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
                 <StackPanel Grid.Column="1">
                     <WrapPanel Margin="0,10,0,0">
+                        <Button Name="Annuler" Visibility="Hidden" FontSize="14" Content="Annuler" Click="Annuler_Click" Margin="0,0,10,0"></Button>
                         <Button Name="Evenement" Visibility="Hidden" FontSize="14" Content="Envoyer" Click="Message_Click"></Button>
                         <TextBox Background="White" Visibility="Hidden" FontWeight="ExtraBold" Margin="10,2" Name="Evenement1" Text="{Binding Path=Evenement1}"  Width="440"  ></TextBox>
                         <ComboBox  FontWeight="ExtraBold" Visibility="Hidden" Margin="10,2" Name="IdFormateur" Text="{Binding Path=IdFormateur}"  Width="160" SelectionChanged="ComboBoxIdFormateur_SelectionChanged"></ComboBox>
@@ -130,8 +131,8 @@
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
-                                <Label Name="LabelIdResultat" Content="IdResultat" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="50,2" Name="IdResultat" Text="{Binding Path=IdResultat}"  Width="250" IsEnabled="False" ></TextBox>
+                                <Label Name="LabelIdResultat" Content="Resultat" ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="58,2" Name="IdResultat" Text="{Binding Path=IdResultat}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdSiteModule" Content="Module" ></Label>
@@ -159,11 +160,11 @@
                                 <TextBox FontWeight="ExtraBold" Margin="65,2" x:Name="Points" Text="{Binding Path=Points}" Width="250" IsEnabled="False" MaxLength="2" TextChanged="Points_TextChanged"/>
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelEstPresent" Content="EstPrésent" ></Label>
+                                <Label Name="LabelEstPresent" Content="Est Présent" ></Label>
                                 <ComboBox FontWeight="ExtraBold" Margin="44,2" x:Name="EstPresent" Text="{Binding Path=EstPresent}"  Width="250"  IsEnabled="False"  ></ComboBox>
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelParticipantRéussi" Content="ParticipantRéussi" ></Label>
+                                <Label Name="LabelParticipantRéussi" Content="Participant Réussi" ></Label>
                                 <ComboBox FontWeight="ExtraBold" Margin="10,2" x:Name="ParticipantRéussi" Text="{Binding Path=ParticipantRéussi}"  Width="250"  IsEnabled="False"  ></ComboBox>
                             </WrapPanel>
 
@@ -234,12 +235,12 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Sur Liste Attente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -265,12 +266,12 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdResultat}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdExamen" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdExamen}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ParticipantRéussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <!--</Border>-->
@@ -286,12 +287,12 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdResultat}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdExamen" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdExamen}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ParticipantRéussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 

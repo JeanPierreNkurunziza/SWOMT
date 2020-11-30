@@ -11,6 +11,10 @@ namespace MyApps.Domain.Service
 {
   public  class ResultatService 
     {
+        /// <summary>
+        /// Méthode pour donner des points à des participants
+        /// </summary>
+        /// <param name="resultat"></param>
         public static void Create(Resultat resultat)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -20,6 +24,10 @@ namespace MyApps.Domain.Service
             }
         }
 
+        /// <summary>
+        /// Méthode pour supprimer des points 
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -29,7 +37,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// afficher une liste
+        /// </summary>
+        /// <returns></returns>
         public static List<Resultat> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -38,7 +49,11 @@ namespace MyApps.Domain.Service
                 return resultat.ToList();
             }
         }
-
+        /// <summary>
+        /// afficher un élément de la table résultat 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Resultat GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -47,7 +62,10 @@ namespace MyApps.Domain.Service
                 return resultat;
             }
         }
-
+        /// <summary>
+        /// mettre à jour les éléments de la table
+        /// </summary>
+        /// <param name="resultat"></param>
         public static void Update(Resultat resultat)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -56,6 +74,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// afficher le nom de module
+        /// </summary>
+        /// <param name="idExamen"></param>
+        /// <returns></returns>
         public static string GetNomModule(int? idExamen) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -70,6 +93,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// affiche le nom de participant
+        /// </summary>
+        /// <param name="IdInscription"></param>
+        /// <returns></returns>
         public static string GetNomParticipant(int? IdInscription) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -80,6 +108,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// à partir d'un identifiant on récupere l'id d'un participant
+        /// </summary>
+        /// <param name="IdInscription"></param>
+        /// <returns></returns>
         public static int GetParIdParticipant(int? IdInscription)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -90,6 +123,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// afficher la liste des participant réussis par module
+        /// </summary>
+        /// <param name="IdExamen"></param>
+        /// <returns></returns>
         public static List<Resultat> GetListParticipantRéussi(int IdExamen)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

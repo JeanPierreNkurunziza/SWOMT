@@ -45,29 +45,35 @@ namespace SWOMT.Views
             ListeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             listeExamen = MyApps.Application.Services.ExamenViewModelService.SearchByNameNomFormateur(nomFormateur);
             nomFormateurProgrammeExamen = nomFormateur;
-            
+
+           
+
             PopulateAndBindExamen(listeExamen);
-            if ((string)userRole == "Admin")
+            if ((string)userRole == "Admin" || (string)userRole=="Secrétaire")
             {
                 //BoutonInscription.IsEnabled=false;
                 listeExamen = MyApps.Application.Services.ExamenViewModelService.GetExamens(); 
                 PopulateAndBindExamen(listeExamen);
-                //supprimer.IsEnabled = false;
+                Rechercher.IsEnabled = true;
+                ReSet.IsEnabled = true;
+                NomRechercher.IsEnabled =true; 
             }
            bool  nomToCheckFormateur = MyApps.Domain.Service.FormateurService.GetFormateurNom(nomFormateur);
            
                 if (!nomToCheckFormateur)
                 {
                     EvenementToPost.Visibility = Visibility.Collapsed;
-                    return;
+                ExamenTextBox.IsEnabled = false;
+                ModuleSiteTextBox.IsEnabled = false;
+                return;
                 }
           
 
-            if ((string)userRole != "Formateur")
+            if (MyApps.Domain.Service.UserService.GetUtilisateurUserRole((string)nomFormateur) != "Formateur")
             {
-                Rechercher.IsEnabled = false;
-                ReSet.IsEnabled = false;
-                NomRechercher.IsEnabled = false;
+                
+                ExamenTextBox.IsEnabled = false;
+                ModuleSiteTextBox.IsEnabled = false;
             }
             this.SelectedNomModule();
             this.SelectedNomModuleExamenPlanned();
@@ -117,7 +123,7 @@ namespace SWOMT.Views
             
         }
         /// <summary>
-        /// the method to fill in the combobox the liste items for selection 
+        /// the method to fill in the combobox of the list items for selection 
         /// </summary>
         /// <returns></returns>
         
@@ -137,7 +143,7 @@ namespace SWOMT.Views
 
 
         /// <summary>
-        /// afffichage apres la selection
+        /// afffichage après la selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -164,7 +170,11 @@ namespace SWOMT.Views
             }
             
         }
-
+        /// <summary>
+        /// bouton pour ajouter les champs des saisies 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
@@ -204,7 +214,7 @@ namespace SWOMT.Views
             }
 
            
-
+            // Programmer un examen
             if (enregistre == "Ajouter")
             {
 
@@ -214,7 +224,7 @@ namespace SWOMT.Views
                 element.Points = short.Parse(Points.Text);
                
                 element.EstPresent = bool.Parse(EstPresent.Text);
-                    if (element.Points >= 50)
+                    if (element.Points >= 50) // si les points obtenues inférieurs à 50 % le participant à échouer
                     {
                         element.ParticipantRéussi = true;
                     }
@@ -225,7 +235,7 @@ namespace SWOMT.Views
                
                 foreach (var donne in MyApps.Application.Services.ResultatsVieModelService.GetResultats())
                 {
-                    //avoid the duplicate datas in the liste of results 
+                    //avoid the duplicate datas in the list of results 
                     if ((element.IdExamen == donne.IdExamen) && (element.IdModuleInscription == donne.IdModuleInscription)) // if already the items exist then rejects
                     {
                         MessageBox.Show("les données existé déjà ! dans la base de données");
@@ -235,7 +245,7 @@ namespace SWOMT.Views
                 MyApps.Domain.Service.ResultatService.Create(element); 
 
             }
-
+            // modifier les points d'un examen programmé
             if (enregistre == "Modifier")
             {
 
@@ -806,13 +816,24 @@ namespace SWOMT.Views
 
         //    return ListeFormateur; 
         //}
+        /// <summary>
+        /// afficher les champs pour publier un événement 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Event_Click(object sender, RoutedEventArgs e)
         {
             Evenement.Visibility = Visibility;
             Evenement1.Visibility = Visibility;
             IdFormateur.Visibility = Visibility;
+            Annuler.Visibility = Visibility;
 
         }
+        /// <summary>
+        /// envoyer un événement par un formateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Message_Click(object sender, RoutedEventArgs e) 
         {
             Evenement element = new Evenement();
@@ -820,7 +841,7 @@ namespace SWOMT.Views
             if (Evenement1.Text == "")
             {
                 MessageBox.Show("Veuillez écrire un message pour publier");
-
+               
                 return;
             }
             if (IdFormateur.Text == "")
@@ -838,6 +859,7 @@ namespace SWOMT.Views
             Evenement.Visibility = Visibility.Hidden;
             Evenement1.Visibility = Visibility.Hidden;
             IdFormateur.Visibility = Visibility.Hidden;
+            Annuler.Visibility = Visibility.Hidden;
         }
 
         private void ComboBoxIdFormateur_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -857,6 +879,20 @@ namespace SWOMT.Views
                 }
                 
             }
+        }
+        /// <summary>
+        /// annuler une publication d'un événement 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            Evenement1.Text = "";
+            IdFormateur.Text = "";
+            Evenement.Visibility = Visibility.Hidden;
+            Evenement1.Visibility = Visibility.Hidden;
+            IdFormateur.Visibility = Visibility.Hidden;
+            Annuler.Visibility = Visibility.Hidden;
         }
     }
 }

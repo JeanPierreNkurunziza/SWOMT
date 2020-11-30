@@ -29,13 +29,15 @@ namespace SWOMT.Views
             liste = MyApps.Application.Services.UserViewModelService.GetUsers();
 
             UserRoleList = MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles(); 
-            //foreach (var utilisateur in liste)
-            //{
-            //    username.Items.Add(utilisateur.UserName);
-            //}
-            this.SelectedRolesusers(); 
+            
+            this.SelectedRolesusers(); // passer la liste des roles utilisateur dans le combobox
         }
 
+        /// <summary>
+        /// Bouton pour valider les données d'un utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginSubmit(object sender, RoutedEventArgs e)
         {
             
@@ -51,14 +53,7 @@ namespace SWOMT.Views
                 return;
             }
 
-           // string utilisateurNom = MyApps.Domain.Service.UserService.GetUtilisateurNom(username.Text); 
-
-            //if (username.Text == "")
-            //{
-            //    MessageBox.Show("L'utilisateur n'existe pas dans la base de données SVP");
-            //    return;
-            //}
-            
+            //appel d'un méthode pour vérifier si le nom et le mot de passe correspond et réturne le nom d'utilisateur
             string utilisateurValidé = MyApps.Domain.Service.UserService.LoginUserNom(username.Text, password.Password);
             
 
@@ -68,6 +63,7 @@ namespace SWOMT.Views
                 return;
             }
            
+            //récupérer le role d'un utilisateur 
             string utilisateurUserRole = MyApps.Domain.Service.UserService.GetUtilisateurUserRole(utilisateurValidé);
 
             TableauDeBord accueil = new TableauDeBord(utilisateurValidé.ToString() ,utilisateurUserRole.ToString());   
@@ -76,21 +72,35 @@ namespace SWOMT.Views
             password.Password = "";
        
         }
-        
+        /// <summary>
+        /// bouton pour annuler la page de login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// bouton pour s'inscrire à nouveau
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegisterUser_Click(object sender, RoutedEventArgs e)
         {
-            LabelRoleUtilisateur.Visibility = Visibility;
+            //affichage des champs cashés
+            LabelRoleUtilisateur.Visibility = Visibility; 
             ComboBoxUserRole.Visibility=Visibility;
             ValiderInscription.Visibility = Visibility;
            
         }
-
+        /// <summary>
+        /// enregistrement d'un compte 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ValiderInscription_Click(object sender, RoutedEventArgs e)
         {
             Utilisateur element = new Utilisateur();

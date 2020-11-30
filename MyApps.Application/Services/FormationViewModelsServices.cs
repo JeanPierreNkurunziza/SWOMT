@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
   public  class FormationViewModelsServices
     {
+        /// <summary>
+        /// mapping datas of the view model and view
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.FormationViewModel> GetFormations()
         {
             List<ViewModels.FormationViewModel> FormationListe = new List<ViewModels.FormationViewModel>();
@@ -30,7 +34,7 @@ namespace MyApps.Application.Services
         public static List<ViewModels.FormationViewModel> GetSearchByName(string searchString)
         {
             List<ViewModels.FormationViewModel> FormationListe = new List<ViewModels.FormationViewModel>();
-            var ListeFormation = FormationService.SearchMethodByName(searchString); 
+            var ListeFormation = FormationService.SearchMethodByName(searchString);  // appel d'un méthode de rechercher par nom 
             foreach (var formation in ListeFormation)
             {
                 ViewModels.FormationViewModel vm = new ViewModels.FormationViewModel()

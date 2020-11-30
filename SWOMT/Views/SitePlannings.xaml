@@ -90,7 +90,7 @@
                     <RowDefinition Height="320"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                <GroupBox x:Name="ModuleSitetextBox" Header="ModulePerSite" HorizontalAlignment="Center" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="480">
+                <GroupBox x:Name="ModuleSitetextBox" Header="Programmer un Module " HorizontalAlignment="Center" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="480">
                     <StackPanel Grid.Column="1">
 
                         <WrapPanel >

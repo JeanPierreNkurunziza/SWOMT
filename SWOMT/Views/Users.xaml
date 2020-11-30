@@ -110,7 +110,7 @@
                         </GroupBox.Header>
                         <DataGrid Grid.Row="0" x:Name="ListUserRole" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListUserRole_MouseDoubleClick">
                             <DataGrid.Columns >
-                                <DataGridTextColumn Header="Identifiant"  FontSize="15" Binding="{Binding Path=IdUserRole}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Identifiant" Visibility="Hidden"  FontSize="15" Binding="{Binding Path=IdUserRole}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="Role"  FontSize="15" Binding="{Binding Path=UserRoleName}"></DataGridTextColumn>
                               
                             </DataGrid.Columns>
@@ -122,7 +122,7 @@
                     <GroupBox x:Name="UserRoleTextBox" Header="Gérer des Roles" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
                         <StackPanel Grid.Column="0">
 
-                            <WrapPanel >
+                            <WrapPanel Visibility="Hidden">
                                 <Label Name="LabelIdUserRole" Content="Identifiant" ></Label>
                                 <TextBox FontWeight="ExtraBold" Margin="60,2" Name="IdUserRole" Text="{Binding Path=IdUserRole}"  Width="250" IsEnabled="False" />
                             </WrapPanel>

@@ -13,7 +13,7 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="TableauDeBord" Height="900" Width="1700">
+        Title="TableauDeBord" Height="900" Width="1700" WindowState="Maximized">
     <Grid>
 
         <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -34,7 +34,7 @@
             <!--<Button Content="Formation" MinWidth="50" Margin="10,0,0,0" Click="GestionFormation"/>-->
 
            <!--<Button Content="Formateur" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionFormateur"/>-->
-            <Button Content="Users" x:Name="BoutonUsers" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
+            <Button Content="Utilisateur" x:Name="BoutonUsers" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
             <!--<Button Content="Examen" Visibility="Hidden"  MinWidth="50" Margin="10,2,0,0" Click="GestionExamen" VerticalAlignment="Top"/>
             <Button Content="Module" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionModule"/>-->
             <Label FontWeight="ExtraBlack" Margin="10,5,0,0" Foreground="White" Content="Rôle : " Width="70" />

@@ -22,7 +22,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Gestion des Planing Formation" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                <Label Name="listes" Content="Gestion de Planing Formation" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
             </StackPanel>
 
         </Grid>
@@ -42,7 +42,7 @@
                     <GroupBox x:Name="formationBox"  HorizontalAlignment="Left" Height="430" Width="500" VerticalAlignment="Top" >
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="La liste des Formation"></Label>
+                                <Label Content="La liste de Formation"></Label>
                                 <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
                                 <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
                                 <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
@@ -133,7 +133,7 @@
                     
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ParticipantModuleTextBox2" Height="365" Header="Les Formation programmées au cour de l'année" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <GroupBox x:Name="ParticipantModuleTextBox2" Height="365" Header="Les Formations programmées au cour de l'année" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="1">
 
                             <DataGrid Name="ListElement"  ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
@@ -185,81 +185,5 @@
     </Grid>
 
 
-    <!--<Grid >
-        <Grid.RowDefinitions >
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="240"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
-                   VerticalContentAlignment="Center" FontSize="25" 
-                   Background="AliceBlue" FontWeight="Bold"></Label>
-        </Grid>
-        <Grid Grid.Row="1">
-            <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Listes des Plannings" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
-            </StackPanel>
-
-        </Grid>
-        <Grid Grid.Row="2">
-
-
-            <Grid Grid.Column="0" Width="700">
-                <Border BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <DataGrid Grid.Row="1" x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
-                        <DataGrid.Columns >
-                            <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
-                            <DataGridTextColumn Header="IdFormationPlanning"  FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
-                            <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation}"></DataGridTextColumn>
-
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
-            </Grid>
-
-        </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="550"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <GroupBox x:Name="PlanningtextBox" Header="Planning" HorizontalAlignment="Left" Height="160" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
-                <StackPanel Grid.Column="0">
-
-                    <WrapPanel >
-                        <Label Name="LabelIdPlanning" Content="Identifiant" ></Label>
-                        <TextBox  Margin="70,2" Name="IdPlanning" Text="{Binding Path=IdPlanning}"  Width="250" IsEnabled="False" ></TextBox>
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelIdFormation" Content="Id Formation" ></Label>
-                        <TextBox  Margin="70,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelNom" Content="Nom " ></Label>
-                        <TextBox  Margin="54,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="255" IsEnabled="False" />
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelDateFormation" Content="Planning Date" ></Label>
-                        <DatePicker  Margin="34,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
-                    </WrapPanel>
-
-                </StackPanel>
-            </GroupBox>
-
-            <StackPanel Grid.Column="1" >
-
-                <Button   Name="ajouter" Content="Ajouter" Width="150" Margin="20,20,20,20"  FontSize="18" Click="Ajouter_Click"></Button>
-                <Button  Name="modifier" Content="Modifier" Width="150" Margin="20,0,20,20"  FontSize="18" Click="Modifier_Click"></Button>
-                <Button  Name="supprimer" Content="Supprimer" Width="150" Margin="20,0,20,20"  FontSize="18" Click="Supprimer_Click"></Button>
-                <Button  Name="mettreAjour" Content="Enregistrer" Width="150" Margin="20,0,20,20"  FontSize="18" Click="MettreAjour_Click"></Button>
-            </StackPanel>
-
-
-        </Grid>
-
-
-    </Grid>-->
+   
 </Page>

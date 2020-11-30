@@ -81,8 +81,8 @@
                                 <TextBox FontWeight="ExtraBold" Margin="70,2" x:Name="Domaine" Text="{Binding Path=Domaine}" Width="255" IsEnabled="False" MaxLength="20" />
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelTelephone" Content="TelFormateur " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="50,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
+                                <Label Name="LabelTelephone" Content="Tél Formateur " ></Label>
+                                <TextBox FontWeight="ExtraBold" Margin="47,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelEmail" Content="Email " ></Label>
@@ -149,9 +149,9 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="IdFormateurModule" Width="50" Binding="{Binding Path=IdFormateurModule}"></DataGridTextColumn>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id" Width="50" Binding="{Binding Path=IdModule}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="NomFormateur" Width="200" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="NomModule" Width="150" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="VersionModule" Width="200" Binding="{Binding Path=VersionModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Formateur" Width="200" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Module" Width="150" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Version Module" Width="200" Binding="{Binding Path=VersionModule}"></DataGridTextColumn>
 
                             </DataGrid.Columns>
                         </DataGrid>

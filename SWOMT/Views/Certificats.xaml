@@ -172,12 +172,12 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdResultat}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdExamen" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdExamen}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ParticipantRéussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <!--</Border>-->
@@ -193,12 +193,12 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdResultat}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdExamen" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdExamen}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="EstPresent"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ParticipantRéussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 
