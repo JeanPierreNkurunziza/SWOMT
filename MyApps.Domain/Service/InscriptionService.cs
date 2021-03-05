@@ -181,5 +181,16 @@ namespace MyApps.Domain.Service
                 return total;
             }
         }
+        public static int GetNbreTotalParticipantParModule(int IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var TotalParticipant = db.ModuleInscriptions.Where(a => a.IdSiteModule == IdSiteModule);
+                int total = TotalParticipant.Count();
+
+                return total;
+            }
+        }
     }
 }

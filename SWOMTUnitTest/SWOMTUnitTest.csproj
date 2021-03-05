@@ -57,6 +57,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitTestFormateurModule.cs" />
+    <Compile Include="UnitTestInscription.cs" />
+    <Compile Include="UnitTestPresence.cs" />
     <Compile Include="UnitTestSWOMT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

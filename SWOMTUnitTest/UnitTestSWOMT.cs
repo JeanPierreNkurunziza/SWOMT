@@ -4,6 +4,7 @@ using SWOMT.Views;
 using MyApps.Domain.Service;
 using MyApps.Application;
 using MyApps.Infrastructure.DB;
+using System.Linq;
 
 namespace SWOMTUnitTest
 {
@@ -24,7 +25,7 @@ namespace SWOMTUnitTest
           string ActualResponse=  UserService.LoginUserNom(UserName, MotDePasse);
             // Assert
           
-           // double actual = account.Balance;
+           
             Assert.AreEqual(reponseExcepted, ActualResponse, true, "Vérifier si le nom d'utilisateur correspond à son mot de passe "); 
         }
         [TestMethod]
@@ -33,16 +34,16 @@ namespace SWOMTUnitTest
 
             // Arrange
             //var utilisateur = UserService.GetAll();
-            string UserName = "Christinejjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj |||&&&&&&&######### /////////////// **********------";
-            string MotDePasse = "dada";
-            string reponseExcepted = null;
+            string UserName = "Christine";
+            string MotDePasse = "1011"; 
+            string reponseExcepted = UserName;
             // Act
 
             string ActualResponse = UserService.LoginUserNom(UserName, MotDePasse);
             // Assert
 
-            // double actual = account.Balance;
-            Assert.AreEqual(reponseExcepted, ActualResponse, true, "Le nom d'utilisateur ne correspond pas à son mot de passe ");
+            Assert.AreNotEqual(reponseExcepted, ActualResponse, true, "Le nom d'utilisateur ne correspond pas à son mot de passe ");
+            //Assert.Fail(reponseExcepted, ActualResponse, false, "Le nom d'utilisateur et le mot de passe ne correspondent pas"); 
         }
         [TestMethod]
         public void CheckExamPlannedMatchWithTheNameOfModule() 
@@ -61,13 +62,43 @@ namespace SWOMTUnitTest
             // double actual = account.Balance;
             Assert.AreEqual(reponseExcepted, ActualResponse, true, "Vérifier si le nom module d'un examen planifié est correcte  ");
         }
+
+        [TestMethod]
+        public void InvalidExamNameMatchWithTheModuleExpected()
+        {
+
+            // Arrange
+
+            int IdExamen = 9;
+
+            string reponseExcepted = "Projet appraisal";
+            // Act
+            try
+            {
+                string ActualResponse = ResultatService.GetNomModule(IdExamen);
+                // Assert
+
+                // double actual = account.Balance;
+                Assert.AreNotEqual(reponseExcepted, ActualResponse, true, " L'examen cherché ne corresponds pas au module concerné ");
+            }
+            catch (System.NullReferenceException e)
+            { 
+                // Assert
+
+
+                //Assert.ThrowsException<System.ArgumentNullException>(() => ResultatService.GetNomModule(IdExamen));
+                StringAssert.Contains(ResultatService.MessageOfNullableIdParameterException, e.Message);
+                return;
+            }
+        }
+
         [TestMethod]
         public void CheckExamPlannedMatchWithInvalidDataTheNameOfModule()
         {
 
             // Arrange
 
-            int IdExamen = 5874;
+            int IdExamen = 589658;
 
             string reponseExcepted = "Projet appraisal";
             // Act
@@ -133,6 +164,25 @@ namespace SWOMTUnitTest
             Assert.Fail("The expected exception was not thrown.");
 
 
+        }
+        [TestMethod]
+        public void CheckIdInscriptionMatchWithListModuleSucceeded()
+        {
+
+            // Arrange
+
+            int IdParticipant =7;
+            int IdInscription = 28;
+            string reponseExcepted = "Tupont Aimable";
+            int reponseExcepted2 = 1;
+            // Act
+
+            string ActualResponse = ResultatService.GetNomParticipant(IdInscription); 
+            int ActualResponse2 = ResultatService.GetListModuleRéussis(IdParticipant).Count(); 
+            // Assert
+           
+            Assert.AreEqual(reponseExcepted, ActualResponse, true, "Vérifier si le nom de participant correspont son ID d'inscription dans la table Resultat ");
+            Assert.AreEqual(reponseExcepted2, ActualResponse2, "Vérifier le nombre de modues réussis");
         }
 
     }

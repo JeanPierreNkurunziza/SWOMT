@@ -73,10 +73,9 @@ namespace MyApps.Domain.Service
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
                 DateTime weekago = DateTime.Now.AddDays(-90);
-                //var siteplanning = db.SiteModules.Find(IdSiteModule);
-                // var idSiteModule = siteplanning.IdSiteModule;
+              
                 var moduleParticipant = db.Evenements.Where(a => a.DateOfEVent>=weekago).OrderByDescending(a => a.DateOfEVent);
-                return moduleParticipant.ToList();
+                return moduleParticipant.ToList(); 
             }
         }
     }
