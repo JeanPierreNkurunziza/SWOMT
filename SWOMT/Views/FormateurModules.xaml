@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1600"
       Title="FormateurModules">
-
-    <Grid >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -58,7 +58,7 @@
                             <DataGridTextColumn Header="Domaine"  FontSize="15" Binding="{Binding Path=Domaine}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Télephone"  FontSize="15" Binding="{Binding Path=TelFormateur}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Email"  FontSize="15" Binding="{Binding Path=EmailFormateur}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage,  StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     </GroupBox>
@@ -70,27 +70,27 @@
 
                             <WrapPanel >
                                 <Label Name="LabelIdSite" Content="Identifiant" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="70,2" Name="Id" Text="{Binding Path=IdFormateur}"  Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox FontWeight="ExtraBold" Margin="70,2" Name="Id" Text="{Binding Path=IdFormateur}"  Width="255" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelNom" Content="Nom " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="90,2" x:Name="NomFormateur" Text="{Binding Path=NomFormateur}" Width="255" IsEnabled="False" MaxLength="50" />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="94,2" x:Name="NomFormateur" Text="{Binding Path=NomFormateur}" Width="255" IsEnabled="False" MaxLength="50" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDomaine" Content="Domaine " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="70,2" x:Name="Domaine" Text="{Binding Path=Domaine}" Width="255" IsEnabled="False" MaxLength="20" />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="72,2" x:Name="Domaine" Text="{Binding Path=Domaine}" Width="255" IsEnabled="False" MaxLength="20" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelTelephone" Content="Tél Formateur " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="47,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="47,2" x:Name="TelFormateur" Text="{Binding Path=TelFormateur}" Width="255" IsEnabled="False" MaxLength="15" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelEmail" Content="Email " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="90,2" x:Name="EmailFormateur" Text="{Binding Path=EmailFormateur}" Width="255" IsEnabled="False" MaxLength="50"/>
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="91,2" x:Name="EmailFormateur" Text="{Binding Path=EmailFormateur}" Width="255" IsEnabled="False" MaxLength="50"/>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateEncodage" Content="Date d'encodage" ></Label>
-                                <DatePicker FontWeight="ExtraBold" Margin="34,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="250"  IsEnabled="False" ></DatePicker>
+                                <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="33,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="255"  IsEnabled="False" ></DatePicker>
                             </WrapPanel>
                             <WrapPanel>
 
@@ -119,16 +119,16 @@
                         </WrapPanel>
                         <WrapPanel >
                             <Label Name="LabelIdFormateur" Content="Formateur" ></Label>
-                                <ComboBox FontWeight="ExtraBold" Margin="60,2" Name="IdFormateur" SelectedValue="{Binding Path=IdFormateur, Mode=OneWayToSource, ValidatesOnDataErrors=true}"  Width="250"  SelectionChanged="IdFormateur_SelectionChanged" ></ComboBox>
+                                <ComboBox Background="#545d6a" FontSize="15" FontWeight="ExtraBold" Margin="60,2" Name="IdFormateur" SelectedValue="{Binding Path=IdFormateur, Mode=OneWayToSource, ValidatesOnDataErrors=true}"  Width="250"  SelectionChanged="IdFormateur_SelectionChanged" ></ComboBox>
                         </WrapPanel>
                         <WrapPanel Margin="0,20,0,0">
                             <Label Name="LabelIdModule" Content="Nom Module" ></Label>
-                                <ComboBox FontWeight="ExtraBold" Margin="40,2" Name="IdModule" SelectedValue="{Binding Path=IdModule}"  Width="250"  SelectionChanged="IdModule_SelectionChanged" ></ComboBox>
+                                <ComboBox Background="#545d6a" FontWeight="ExtraBold" Margin="44,2" Name="IdModule" SelectedValue="{Binding Path=IdModule}"  Width="250"  SelectionChanged="IdModule_SelectionChanged" ></ComboBox>
                         </WrapPanel>
 
                         <WrapPanel Margin="0,20,0,0">
                             <Label Name="LabelModuleVersion" Content="Module Version" ></Label>
-                                <DatePicker Margin="34,2" x:Name="VersionModule" Text="{Binding Path=VersionModule}" Width="250" FontWeight="ExtraBold" IsEnabled="False" />
+                                <DatePicker Background="#545d6a" Margin="30,2" x:Name="VersionModule" Text="{Binding Path=VersionModule}" Width="250" FontWeight="ExtraBold" IsEnabled="False" />
                         </WrapPanel>
 
                         <WrapPanel>
@@ -151,7 +151,7 @@
                                 <DataGridTextColumn Visibility="Hidden" Header="Id" Width="50" Binding="{Binding Path=IdModule}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Nom Formateur" Width="200" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="Nom Module" Width="150" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
-                                <DataGridTextColumn Header="Version Module" Width="200" Binding="{Binding Path=VersionModule}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Version Module" Width="200" Binding="{Binding Path=VersionModule,  StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -199,12 +199,12 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdFormation" Content="Id Formation" ></Label>
-                                <ComboBox  Margin="56,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" SelectionChanged="IdFormation_SelectionChanged"/>
+                                <ComboBox Background="#545d6a" FontSize="15" FontWeight="ExtraBold" Margin="53,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" SelectionChanged="IdFormation_SelectionChanged"/>
                             </WrapPanel>
 
                             <WrapPanel >
                                 <Label Name="LabelNomModule" Content="Nom " ></Label>
-                                <TextBox  Margin="92,2" x:Name="NomModule" Text="{Binding Path=NomModule}" Width="250" IsEnabled="False" MaxLength="40"/>
+                                <TextBox Background="#545d6a" FontSize="15" FontWeight="ExtraBold" Margin="92,2" x:Name="NomModule" Text="{Binding Path=NomModule}" Width="250" IsEnabled="False" MaxLength="40"/>
                             </WrapPanel>
                             <!--<WrapPanel >
                                 <Label Name="LabelFormation" Content="Nom Formation" ></Label>
@@ -212,11 +212,11 @@
                             </WrapPanel>-->
                             <WrapPanel >
                                 <Label Name="LabelCreditModule" Content="Credit Module" ></Label>
-                                <TextBox  Margin="48,2" x:Name="CreditModule" Text="{Binding Path=CreditModule}"  Width="250"  IsEnabled="False" MaxLength="4"  />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="45,2" x:Name="CreditModule" Text="{Binding Path=CreditModule}"  Width="250"  IsEnabled="False" MaxLength="4"  />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelNombrePreévu" Content="Nombre Prévu" ></Label>
-                                <TextBox  Margin="49,2" x:Name="NombrePrévu" Text="{Binding Path=NombrePrévu}"  Width="250"  IsEnabled="False" MaxLength="2" />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="45,2" x:Name="NombrePrévu" Text="{Binding Path=NombrePrévu}"  Width="250"  IsEnabled="False" MaxLength="2" />
                             </WrapPanel>
 
                             <WrapPanel>
@@ -234,5 +234,5 @@
 
         </Grid>
        
-    </Grid>
+    </Grid></ScrollViewer>
 </Page>

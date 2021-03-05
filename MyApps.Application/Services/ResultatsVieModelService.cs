@@ -21,7 +21,7 @@ namespace MyApps.Application.Services
                     IdExamen = itemList.IdExamen,
                     IdModuleInscription = itemList.IdModuleInscription,
                     NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
+                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription), 
                     Points = itemList.Points,
                     EstPresent = itemList.EstPresent,
                     ParticipantRéussi=itemList.ParticipantRéussi 

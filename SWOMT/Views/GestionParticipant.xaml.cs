@@ -46,34 +46,7 @@ namespace SWOMT.Views
 
         }
 
-        /// <summary>
-        /// récuperer la liste de competence
-        /// </summary>
-        /// <returns></returns>
-        //private List<UI.ViewModels.CompetenceInfoViewModel> ListeComp()
-        //{
-        //    var listeView = BU.CompetenceService.SetCompetencesList();
-
-        //    try
-        //    {
-        //        foreach (var comp in listeView)
-        //        {
-        //            competence = new ViewModels.CompetenceInfoViewModel
-        //            {
-        //                IdCompetence = comp.IdCompetence,
-        //                NomCompetence = comp.NomCompetence
-        //            };
-
-        //            liste.Add(competence);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("it can not be connected to the database");
-        //    }
-
-        //    return liste;
-        //}
+       
 
 
         /// <summary>

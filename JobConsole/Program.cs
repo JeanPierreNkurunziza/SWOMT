@@ -61,6 +61,23 @@ namespace JobConsole
             //                                                      etudiant.IdModuleInscription, ResultatService.GetNomParticipant(etudiant.IdModuleInscription));
             //    Console.ReadLine();
             //}
+
+            //public void CheckUserLoginNameValid()
+            //{
+
+            //    // Arrange
+            //    //var utilisateur = UserService.GetAll();
+            //    string UserName = "Hinda";
+            //    string MotDePasse = "Hinda1";
+            //    string reponseExcepted = UserName;
+            //    // Act
+
+            //    string ActualResponse = UserService.LoginUserNom(UserName, MotDePasse);
+            //    // Assert
+
+            //    // double actual = account.Balance;
+            //    Assert.AreEqual(reponseExcepted, ActualResponse, "The user can now log in the system");
+            //}
         }
     }
 }

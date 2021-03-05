@@ -21,7 +21,7 @@ namespace SWOMT
     /// </summary>
     public partial class TableauDeBord : Window
     {
-        List<MyApps.Application.ViewModels.UserViewModel> liste = new List<MyApps.Application.ViewModels.UserViewModel>();
+        List<MyApps.Application.ViewModels.UserViewModel> liste = new List<MyApps.Application.ViewModels.UserViewModel>(); 
         //string nomUser;
         public TableauDeBord(string UserName, string UserRole) 
         {

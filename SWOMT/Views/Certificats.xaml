@@ -4,10 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SWOMT.Views"
+      xmlns:converter="clr-namespace:SWOMT.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1600"
       Title="Certificats">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:MyBoolConverter x:Key="MyConverter"/>
+            <converter:MyBoolConverterReussiEchoue x:Key="MyConverterResultat"/>
+            <converter:MyBoolConverterPresentAbsent x:Key="MyConverterPresenceAbsence"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
     <Grid Margin="0,0,5,0" >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
@@ -53,13 +61,13 @@
                             <DataGrid.Columns >
                                 <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Téléphone"  FontSize="15" Binding="{Binding Path=TelParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Email"  FontSize="15" Binding="{Binding Path=EmailParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Secteur"  FontSize="15" Binding="{Binding Path=SecteurParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="District"  FontSize="15" Binding="{Binding Path=DistrictParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
 
 
                             </DataGrid.Columns>
@@ -78,31 +86,31 @@
                         <ColumnDefinition Width="320"></ColumnDefinition>
                         <ColumnDefinition Width="140"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="CertificatTextBox" Header="Les certificats delivrés" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <GroupBox x:Name="CertificatTextBox" Header="Délivrer un certificat à un participant réussi" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="0">
 
-                            <WrapPanel >
+                            <WrapPanel Visibility="Collapsed" >
                                 <Label Name="LabelIdCertificat" Content="IdCerticat" ></Label>
                                 <TextBox FontWeight="ExtraBold" Margin="50,2" Name="IdCertificat" Text="{Binding Path=IdCertificat}"  Width="150" IsEnabled="False" ></TextBox>
                             </WrapPanel>
-                            <WrapPanel >
+                            <WrapPanel Visibility="Collapsed" >
                                 <Label Name="LabelIdParticipant" Content="Participant" ></Label>
                                 <TextBox FontWeight="Medium"  Margin="45,2" Name="IdParticipant" Text="{Binding Path=IdParticipant}"  Width="150" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelNomParticipant" Content="NomParticipant" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="20,2" Name="NomParticipant" Text="{Binding Path=NomParticipant}"  Width="150" IsEnabled="False" ></TextBox>
+                                <Label Name="LabelNomParticipant" Content="Nom Participant" ></Label>
+                                <TextBox FontSize="15" Background="#545d6a" FontWeight="ExtraBlack" Margin="17,2" Name="NomParticipant" Text="{Binding Path=NomParticipant}"  Width="170" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDate" Content="Date Délivrance" ></Label>
-                                <DatePicker FontWeight="ExtraBold" Margin="20,2" Name="DateDelivrance" Text="{Binding Path=DateDelivrance}"  Width="150" IsEnabled="False" DisplayDate="{Binding DateTime.Now}" ></DatePicker>
+                                <DatePicker FontSize="15" Background="#545d6a" FontWeight="ExtraBold" Margin="20,2" Name="DateDelivrance" Text="{Binding Path=DateDelivrance}"  Width="170" IsEnabled="False" DisplayDate="{Binding DateTime.Now}" ></DatePicker>
                             </WrapPanel>
                             <WrapPanel>
 
-                                <Button   Name="ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
+                                <Button Visibility="Collapsed"  Name="ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
                                 <!--<Button  Name="modifier" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="Modifier_Click"></Button>-->
-                                <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
-                                <Button  Name="mettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
+                                <Button  Name="supprimer" Content="Supprimer Certificat" Width="130" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
+                                <Button  Name="mettreAjour" Content="Délivrer un Certificat" Width="135" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
                             </WrapPanel>
 
                         </StackPanel>
@@ -140,7 +148,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ListeCertificatTextBox2" Header="Les certificats délivrées par Participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="450">
+                    <GroupBox x:Name="ListeCertificatTextBox2" Header="Les certificats délivrés par Participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="450">
                         <StackPanel Grid.Column="1">
 
                             <DataGrid Name="ListElement" Height="280" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
@@ -148,7 +156,7 @@
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdCertificat}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Date délivrance"  FontSize="15" Binding="{Binding Path=DateDelivrance}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date délivrance"  FontSize="15" Binding="{Binding Path=DateDelivrance, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
 
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -176,8 +184,8 @@
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent, Converter={StaticResource MyConverterPresenceAbsence}}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi, Converter={StaticResource MyConverterResultat}}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <!--</Border>-->
@@ -197,8 +205,8 @@
                                     <DataGridTextColumn Header="IdModuleInscription" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModuleInscription}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Points"  FontSize="15" Binding="{Binding Path=Points}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent, Converter={StaticResource MyConverterPresenceAbsence}}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Participant Réussi"  FontSize="15" Binding="{Binding Path=ParticipantRéussi, Converter={StaticResource MyConverterResultat}}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 
@@ -210,5 +218,5 @@
         </Grid>
 
     </Grid>
- 
+ </ScrollViewer>
 </Page>

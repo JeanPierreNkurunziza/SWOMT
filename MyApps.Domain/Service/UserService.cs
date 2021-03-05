@@ -32,11 +32,20 @@ namespace MyApps.Domain.Service
 
         public static List<Utilisateur> GetAll()
         {
-            using (TrainingDBEntities db = new TrainingDBEntities())
+            try
             {
-                var utilisateur = db.Utilisateurs.ToList();
-                return utilisateur;
+                using (TrainingDBEntities db = new TrainingDBEntities())
+                {
+                    var utilisateur = db.Utilisateurs.ToList();
+                    return utilisateur;
+                }
             }
+            catch (Exception)
+            {
+                throw new Exception("Vérifier la connection sqlServer !!! La base de données introuvable ");
+               // return null;
+            }
+            
         }
 
         public static Utilisateur GetOne(int id)
@@ -117,11 +126,11 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var utilisateur = db.Utilisateurs.FirstOrDefault(a =>a.UserName == utilisateurNom ); 
-                return utilisateur.UserRole;
+                var utilisateur = db.Utilisateurs.FirstOrDefault(a =>a.UserName == utilisateurNom );  
+                return utilisateur.UserRole; 
             } 
         }
-
+       
         public static int GetUtilisateurUserId(string utilisateurNom)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

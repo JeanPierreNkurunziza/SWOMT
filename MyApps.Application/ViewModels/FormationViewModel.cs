@@ -9,6 +9,7 @@ namespace MyApps.Application.ViewModels
    public class FormationViewModel
     {
         public int IdFormation { get; set; }
+        
         public string NomFormation { get; set; }
         public string Description { get; set; } 
     }

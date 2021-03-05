@@ -134,7 +134,7 @@ namespace SWOMT.Views
 
         }
         /// <summary>
-        /// méthode pour liberer le schamps à modifier une competence
+        /// méthode pour liberer le schamps à modifier 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -143,7 +143,7 @@ namespace SWOMT.Views
 
             if (IdParticipant.Text == "")
             {
-                MessageBox.Show("Entrer la competence à modifier");
+                MessageBox.Show("Entrer le participant à modifier");
                 return;
             }
             enregistre = "Modifier";
@@ -153,14 +153,17 @@ namespace SWOMT.Views
         }
 
         /// <summary>
-        /// méthode pour supprimer une  competence
+        /// méthode pour supprimer un participant
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
-
+            if (IdParticipant.Text == "")
+            {
+                MessageBox.Show("Veuillez selectionner ID à supprimer"); return;
+            }
             MyApps.Domain.Service.ParticipantService.Delete(short.Parse(IdParticipant.Text));
 
             ClearFormValues();

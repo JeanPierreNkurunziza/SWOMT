@@ -4,11 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SWOMT.Views"
+      xmlns:converter="clr-namespace:SWOMT.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="760" d:DesignWidth="1600"
       Title="Presences">
-
-    <Grid >
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:MyBoolConverter x:Key="MyConverter"/>
+            <converter:MyBoolConverterReussiEchoue x:Key="MyConverterResultat"/>
+            <converter:MyBoolConverterPresentAbsent x:Key="MyConverterPresenceAbsence"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -86,21 +94,21 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdSiteModule" Content="Module" ></Label>
-                                <ComboBox FontWeight="Medium"  Margin="61,2" Name="IdSiteModule" Text="{Binding Path=IdSiteModule}"  Width="250" SelectionChanged="ComboBoxPerticipantPerModule_SelectionChanged"  ></ComboBox>
+                                <ComboBox Background="#545d6a" FontWeight="ExtraBlack"  Margin="60,2" Name="IdSiteModule" Text="{Binding Path=IdSiteModule}"  Width="250" SelectionChanged="ComboBoxPerticipantPerModule_SelectionChanged"  ></ComboBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdParticipant" Content="Participant" ></Label>
-                                <TextBox  FontWeight="ExtraBold" Margin="48,2" Name="IdParticipant" Text="{Binding Path=IdParticipant}" TextChanged="IdParticipant_TextChanged" Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="44,2" Name="IdParticipant" Text="{Binding Path=IdParticipant}" TextChanged="IdParticipant_TextChanged" Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                      
                             <WrapPanel >
                                 <Label Name="LabelDateHeureDePresence" Content="Date de presence" ></Label>
-                                <DatePicker  Margin="14,2" x:Name="DateHeureDePresence" Text="{Binding Path=DateHeureDePresence}" Width="250" IsEnabled="False" />
+                                <DatePicker Background="#545d6a" FontWeight="ExtraBlack" Margin="9,2" x:Name="DateHeureDePresence" Text="{Binding Path=DateHeureDePresence}" Width="250" IsEnabled="False" />
                             </WrapPanel>
 
                             <WrapPanel >
                                 <Label Name="LabelEstPresent" Content="EstPrésent" ></Label>
-                                <ComboBox FontWeight="ExtraBold" Margin="51,2" x:Name="EstPresent" Text="{Binding Path=EstPresent}"  Width="250"  IsEnabled="False"  ></ComboBox>
+                                <ComboBox Background="#545d6a" FontWeight="ExtraBold" Margin="46,2" x:Name="EstPresent" Text="{Binding Path=EstPresent}"  Width="250"  IsEnabled="False"  ></ComboBox>
                             </WrapPanel>
 
                             <WrapPanel>
@@ -179,7 +187,7 @@
 
                             <DataGrid Name="ListElement" Height="295" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Header="Oui" IsThreeState="True" x:Name="CheckBoxEstPresent" Binding="{Binding EstPresent}" />
+                                    <!--<DataGridCheckBoxColumn Header="Oui" IsThreeState="True" x:Name="CheckBoxEstPresent" Binding="{Binding EstPresent}" />-->
                                     <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
@@ -187,7 +195,7 @@
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Est Sur Liste Attente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Sur Liste Attente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente , Converter={StaticResource MyConverter }}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -222,7 +230,7 @@
                                     <DataGridTextColumn Header="IdParticipant" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Heure De Presence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent, Converter={StaticResource MyConverterPresenceAbsence}}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <!--</Border>-->
@@ -243,7 +251,7 @@
                                     <DataGridTextColumn Header="IdParticipant" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdParticipant}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date Heure De Presence"  FontSize="15" Binding="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Est Present"  FontSize="15" Binding="{Binding Path=EstPresent, Converter={StaticResource MyConverterPresenceAbsence}}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 
@@ -255,5 +263,5 @@
         </Grid>
 
     </Grid>
-
+</ScrollViewer>
 </Page>

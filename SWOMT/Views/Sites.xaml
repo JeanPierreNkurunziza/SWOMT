@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SWOMT.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="760" d:DesignWidth="1600"
+      d:DesignHeight="760" d:DesignWidth="1600"  
       Title="Sites">
-
-    <Grid >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -35,6 +35,7 @@
             </StackPanel>
 
         </Grid>
+        
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="580"></ColumnDefinition>
@@ -78,7 +79,7 @@
                                     <DataGridTextColumn Header="IdFormateur" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Formateur" FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Evenement" Foreground="SpringGreen" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Date" FontSize="15" Binding="{Binding Path=DateOfEvent}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date" FontSize="15" Binding="{Binding Path=DateOfEvent, StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                        
@@ -153,4 +154,5 @@
         </Grid>
 
     </Grid>
+    </ScrollViewer>
 </Page>

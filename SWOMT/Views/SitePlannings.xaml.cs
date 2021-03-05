@@ -39,7 +39,7 @@ namespace SWOMT.Views
             liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
             listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-            listeFormateurModule = MyApps.Application.Services.FormateurModuleViewModelService.GetFormatuerModules();
+          
             PopulateAndBindSites(listeSite);
             PopulateAndBindModule(listeModule);
             this.SelectedNomModule();
@@ -59,6 +59,7 @@ namespace SWOMT.Views
             };
             ListModuleSite.DataContext = listeItems;
         }
+       
         /// <summary>
         /// Biding the list of the sites
         /// </summary>
@@ -84,6 +85,18 @@ namespace SWOMT.Views
             }
 
             return listeModule;
+        }
+        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> SelectedNomFormateurPerModule ()
+        {
+            listeFormateurModule = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
+            foreach (var module in listeFormateurModule)
+            {
+                
+                IdFormateurModule.Items.Add(module.NomFormateur + " : " + module.IdFormateurModule);
+            }
+           
+
+            return listeFormateurModule; 
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID
@@ -131,7 +144,7 @@ namespace SWOMT.Views
            
             if (IdSite.SelectedItem == null)
             {
-                MessageBox.Show("Please select the name of site");
+                MessageBox.Show("Veuillez selectionner le nom de site");
                 return;
             }
             IdSiteModule.IsEnabled = false;
@@ -165,7 +178,7 @@ namespace SWOMT.Views
 
             if (IdModule.Text == "")
             {
-                MessageBox.Show("Click on the Ajouter button to add the Datas or select the datas to modify in the list ");
+                MessageBox.Show("Un simple clic sur le bouton 'Ajouter' où bien selectionner un élément de mettre à jour dans la liste ");
                 return;
             }
             if (IdFormateurModule.Text == "")
@@ -261,10 +274,10 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e) 
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            
             if (IdSiteModule.Text == "")
             {
-                MessageBox.Show("Please select the the items in the list to delete");
+                MessageBox.Show("Veuillez selectionner un élément à supprimer");
                 return;
             }
 
@@ -348,16 +361,19 @@ namespace SWOMT.Views
                     idModuleSelected = module.IdModule;
                 }
             }
-           
-            foreach (var module in MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected)))
-            {
-                IdFormateurModule.Items.Add(module.NomFormateur + " : " + module.IdFormateurModule); 
-            }
+            IdFormateurModule.Items.Clear(); 
+            this.SelectedNomFormateurPerModule();
+            
+            
 
         }
 
         private void IdSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (IdSite.SelectedItem == null)
+            {
+                return;
+            }
             string nomSiteSelected = IdSite.SelectedValue.ToString();
 
             foreach (var site in listeSite)
@@ -401,7 +417,7 @@ namespace SWOMT.Views
 
             if (Nom.Text == "")
             {
-                MessageBox.Show("Please type the name of the site");
+                MessageBox.Show("Veuillez entrer le nom de site ");
                 return;
             }
 
@@ -444,6 +460,8 @@ namespace SWOMT.Views
             Nom.Text = "";
             AdresseSite.Text = ""; 
             ModeIsEnabledFalseSite();
+            IdSite.Items.Clear();
+            this.SelectedNomSite();
 
         }
         /// <summary>
@@ -475,7 +493,7 @@ namespace SWOMT.Views
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
             if (Id.Text == "")
             {
-                MessageBox.Show("Please select the site to delete");
+                MessageBox.Show("Veuillez selectionner un élément à supprimer");
                 return;
             }
             // to avoid the suppression of the site that has already assigned the module to manage 
@@ -483,7 +501,7 @@ namespace SWOMT.Views
             {
                 if ((short.Parse(Id.Text) == donne.IdSite))
                 {
-                    MessageBox.Show("The site has the modules to manage ! Delete first the modules");
+                    MessageBox.Show("Le site gere des module ! Veuillez supprimer d'abord les modules concernées dans le site planning ");
                     ClearFormValuesSite(); 
                     return; 
                 }
@@ -497,7 +515,8 @@ namespace SWOMT.Views
             listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
             PopulateAndBindSites(listeSite);
             ClearFormValuesSite();
-
+            IdSite.Items.Clear();
+            this.SelectedNomSite();
         }
         private void ClearFormValuesSite()
         {
@@ -615,6 +634,7 @@ namespace SWOMT.Views
                     
                 }
             }
+           
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MyApps.Domain.Service
 {
   public  class ResultatService 
     {
+        public const string MessageOfNullableIdParameterException = "La référence d'objet n'est pas définie à une instance d'un objet.";
         /// <summary>
         /// Méthode pour donner des points à des participants
         /// </summary>
@@ -58,6 +59,7 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
+                
                 var resultat = db.Resultats.Find(id);
                 return resultat;
             }
@@ -83,7 +85,11 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                
+                if (idExamen == null)
+                {
+                    throw new System.NullReferenceException();
+                    
+                }
                 var IdExamen = db.Examen.Find(idExamen);                
                 var GetIdSiteModule = db.Modules.Find(IdExamen.IdSiteModule);  
                
@@ -102,6 +108,11 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
+                if (IdInscription == null)
+                {
+                    throw new System.NullReferenceException();
+                    
+                }
                 var idInscription = db.ModuleInscriptions.Find(IdInscription);
                 var GetName = db.Participants.Find(idInscription.IdParticipant);
                 return GetName.NomParticipant; 
@@ -117,6 +128,11 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
+                if (IdInscription == null)
+                {
+                    throw new System.NullReferenceException();
+
+                }
                 var idInscription = db.ModuleInscriptions.Find(IdInscription);
                 var GetName = db.Participants.Find(idInscription.IdParticipant);
                 return GetName.IdParticipant;
@@ -145,22 +161,40 @@ namespace MyApps.Domain.Service
                 return moduleParticipant;
             }
         }
-        public static List<Resultat> GetListModuleEchoué(int IdModuleInscription)
+        public static List<Resultat> GetListModuleEchoué(int IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == IdModuleInscription && a.ParticipantRéussi == false).ToList();
-                return moduleParticipant;
+                List<Resultat> resultatEchoué = new List<Resultat>();
+                var participant = db.ModuleInscriptions.Where(b => b.IdParticipant == IdParticipant).ToList();
+                foreach (var element in participant)
+                {
+                    var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == element.IdModuleInscription && a.ParticipantRéussi == false).ToList();
+                    foreach (var item in moduleParticipant)
+                    {
+                        resultatEchoué.Add(item);
+                    }
+                }
+                return resultatEchoué;
+                
             }
         }
-        public static List<Resultat> GetListModuleRéussis(int IdModuleInscription)
+        public static List<Resultat> GetListModuleRéussis(int IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
+                List<Resultat> resultatReussi = new List<Resultat>();
+                var participant = db.ModuleInscriptions.Where(b => b.IdParticipant == IdParticipant).ToList();  
+                foreach(var element in participant)
+                {
+                    var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == element.IdModuleInscription && a.ParticipantRéussi == true).ToList();
+                    foreach(var item in moduleParticipant)
+                    {
+                        resultatReussi.Add(item);
+                    }
+                }
 
-                var moduleParticipant = db.Resultats.Where(a => a.IdModuleInscription == IdModuleInscription && a.ParticipantRéussi == true).ToList();
-                return moduleParticipant;
-
+                return resultatReussi; 
             }
         }
         public static int GetIdInscription(int? Idparticipant)

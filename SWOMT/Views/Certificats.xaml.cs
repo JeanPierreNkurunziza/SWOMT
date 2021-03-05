@@ -79,7 +79,7 @@ namespace SWOMT.Views
                 IdCertificat.Text = donnee.IdCertificat.ToString();
                 IdParticipant.Text = donnee.IdParticipant.ToString();
                 NomParticipant.Text = donnee.NomParticipant.ToString();
-                DateDelivrance.Text = donnee.DateDelivrance.ToString();
+                //DateDelivrance.Text = donnee.DateDelivrance.ToString();
 
             }
            
@@ -107,18 +107,18 @@ namespace SWOMT.Views
 
             if (IdParticipant.Text == "")
             {
-                MessageBox.Show("Il faut saisir identifiant de certificat ");
+                MessageBox.Show("Il faut sélectionner un élément dans liste des certificats délivrés ");
                 return;
             }
             if (NomParticipant.Text == "")
             {
-                MessageBox.Show("Il faut séléctionner un participant récu dans un module ");
+                MessageBox.Show("Il faut sélectionner un participant réussi un module ");
                 return;
             }
 
             if (DateDelivrance.Text=="")
             {
-                MessageBox.Show("Il faut saisir la date de délivrance");
+                MessageBox.Show("Il faut sélectionner dans la liste des modules réussis par un participant");
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace SWOMT.Views
             if (enregistre == "Ajouter")
             {
                 element.IdParticipant = short.Parse(IdParticipant.Text);
-                element.DateDelivrance = DateTime.Parse(DateDelivrance.Text).Date;
+                element.DateDelivrance = DateTime.Now;
 
                 MyApps.Domain.Service.CertificatService.Create(element); 
 
@@ -185,12 +185,13 @@ namespace SWOMT.Views
 
             MyApps.Domain.Service.CertificatService.Delete(short.Parse(IdCertificat.Text));
 
-            ClearFormValues();
+          
+            
             liste.Clear();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificatsPerParticipant(short.Parse(IdParticipant.Text));
             NbrCertificatRécu.Text = liste.Count().ToString();
             PopulateAndBind(liste);
-
+            ClearFormValues();
         }
         private void ClearFormValues()
         {
@@ -232,16 +233,16 @@ namespace SWOMT.Views
         {
             if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.ParticipantViewModel donnee)
             {
-               
-                       
-             ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(
-                  MyApps.Domain.Service.ResultatService.GetIdInscription((short)(donnee.IdParticipant)));
-              PopulateAndBindRéussis(ListeModulesReussis);
+
+                IdParticipant.Text = donnee.IdParticipant.ToString();
+                ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(short.Parse(IdParticipant.Text));
+                //ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(
+                //     MyApps.Domain.Service.ResultatService.GetIdInscription(donnee.IdParticipant));
+                PopulateAndBindRéussis(ListeModulesReussis);
                 TotalRéussi.Text = ListeModulesReussis.Count().ToString();
 
-                ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetListModulesEchoué(
-                    MyApps.Domain.Service.ResultatService.GetIdInscription((short)(donnee.IdParticipant)));
-             PopulateAndBindParticipantFailed(ListeModulesEchoues);
+                ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetListModulesEchoué(short.Parse(IdParticipant.Text));
+                PopulateAndBindParticipantFailed(ListeModulesEchoues);
                 TotalEchoué.Text = ListeModulesEchoues.Count().ToString(); 
 
                 IdParticipant.Text = donnee.IdParticipant.ToString();
@@ -310,14 +311,16 @@ namespace SWOMT.Views
             {
                 if (donnee.IdExamen == 0)
                 {
-                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    MessageBox.Show("Selectionner un élément dans la liste");
                     return;
                  
                 }
-              
+                enregistre = "Ajouter";
                 NomParticipant.Text = donnee.NomParticipant.ToString();
-                
-          
+                DateDelivrance.Text = DateTime.Now.ToString();
+
+
+
             }
 
 
@@ -330,7 +333,7 @@ namespace SWOMT.Views
             {
                 if (donnee.IdExamen == 0)
                 {
-                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    MessageBox.Show("Selectionner un élément dans la liste");
                     return;
                  
                 }

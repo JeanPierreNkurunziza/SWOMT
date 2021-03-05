@@ -26,11 +26,20 @@ namespace SWOMT.Views
         public UserLogin()
         {
             InitializeComponent();
-            liste = MyApps.Application.Services.UserViewModelService.GetUsers();
+            try
+            {
+                liste = MyApps.Application.Services.UserViewModelService.GetUsers();
 
-            UserRoleList = MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles(); 
-            
-            this.SelectedRolesusers(); // passer la liste des roles utilisateur dans le combobox
+                UserRoleList = MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles();
+
+                this.SelectedRolesusers();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Vérifier la connection sqlServer !!! La base de données introuvable ");
+                this.Close();
+            }
+            // passer la liste des roles utilisateur dans le combobox
         }
 
         /// <summary>

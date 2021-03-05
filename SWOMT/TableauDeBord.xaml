@@ -13,8 +13,8 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="TableauDeBord" Height="900" Width="1700" WindowState="Maximized">
-    <Grid>
+        Title="TableauDeBord" Height="900" Width="1700" WindowState="Maximized" > 
+    <Grid >
 
         <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left">
            
@@ -37,14 +37,14 @@
             <Button Content="Utilisateur" x:Name="BoutonUsers" MinWidth="50" Margin="15,2,0,1.2" Click="GestionUsers" Height="Auto"/>
             <!--<Button Content="Examen" Visibility="Hidden"  MinWidth="50" Margin="10,2,0,0" Click="GestionExamen" VerticalAlignment="Top"/>
             <Button Content="Module" Visibility="Hidden" MinWidth="50" Margin="10,0,0,0" Click="GestionModule"/>-->
-            <Label FontWeight="ExtraBlack" Margin="10,5,0,0" Foreground="White" Content="Rôle : " Width="70" />
+            <Label FontWeight="ExtraBlack" Margin="10,5,0,0" Foreground="White" Content="Rôle : " Width="40" />
             <Label FontWeight="ExtraBlack"  Foreground="Wheat" FontSize="18" Margin="4,2" x:Name="TextBoxUserRole" Width="100" />
             <Label FontWeight="ExtraBlack" Margin="0,5,0,0" Foreground="White" Content="Nom : " Width="50" />
-            <Label FontWeight="ExtraBlack"  Foreground="Wheat" FontSize="18" Margin="4,2" x:Name="TextBoxUserName" Width="180" />
+            <Label FontWeight="ExtraBlack"  Foreground="Wheat" FontSize="12" Margin="0,5" x:Name="TextBoxUserName" Width="180" />
 
         </StackPanel>
 
-        <Frame x:Name="Main" Margin="0,35,0,0"/>
+        <Frame x:Name="Main" Margin="0,35,0,0" />
 
 
     </Grid>

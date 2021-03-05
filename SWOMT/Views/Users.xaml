@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1500"
       Title="Users">
-
-    <Grid >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -53,9 +53,9 @@
                         <DataGrid Grid.Row="0" x:Name="ListUser" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListUser_MouseDoubleClick">
                             <DataGrid.Columns >
                                 <DataGridTextColumn Header="IdUser"  FontSize="15" Binding="{Binding Path=IdUser}" Visibility="Hidden"></DataGridTextColumn>
-                                <DataGridTextColumn Header="UserName"  FontSize="15" Binding="{Binding Path=UserName}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="MotDePasse"  FontSize="15" Binding="{Binding Path=MotDePasse}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="UserRole"  FontSize="15" Binding="{Binding Path=UserRole}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Utilisateur"  FontSize="15" Binding="{Binding Path=UserName}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="MotDePasse" Visibility="Hidden" FontSize="15" Binding="{Binding Path=MotDePasse}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Role"  FontSize="15" Binding="{Binding Path=UserRole}"></DataGridTextColumn>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -63,24 +63,24 @@
                 </Border>
                 <Grid Grid.Row="1">
 
-                    <GroupBox x:Name="UtilisateurTextBox" Header="Gérer des utilisateur" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="900">
+                    <GroupBox x:Name="UtilisateurTextBox" Header="Gérer des utilisateurs" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="900">
                         <StackPanel Grid.Column="0">
 
                             <WrapPanel >
                                 <Label Name="LabelIdUser" Content="User" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="90,2" Name="IdUser" Text="{Binding Path=IdUser}"  Width="250" IsEnabled="False" />
+                                <TextBox FontWeight="ExtraBold" Margin="93,2" Name="IdUser" Text="{Binding Path=IdUser}"  Width="250" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelUserName" Content="User Name " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="54,2" x:Name="UserName" MaxLength="49" Text="{Binding Path=UserName}" Width="250" IsEnabled="False" />
+                                <Label Name="LabelUserName" Content="Nom " ></Label>
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="88,2" x:Name="UserName" MaxLength="49" Text="{Binding Path=UserName}" Width="250" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelMotDePasse" Content="Mot De Passe" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="46,2" MaxLength="20" x:Name="MotDePasse" Text="{Binding Path=MotDePasse}"  Width="250"  IsEnabled="False"  />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="46,2" MaxLength="20" x:Name="MotDePasse" Text="{Binding Path=MotDePasse}"  Width="250"  IsEnabled="False"  />
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelUserRole" Content="User Role" ></Label>
-                                <ComboBox FontWeight="ExtraBold" Margin="64,2" x:Name="ComboBoxUserRole" Text="{Binding Path=UserRole}"  Width="250"  IsEnabled="False" />
+                                <Label Name="LabelUserRole" Content="Role" ></Label>
+                                <ComboBox Background="#545d6a" FontWeight="ExtraBold" Margin="94,2" x:Name="ComboBoxUserRole" Text="{Binding Path=UserRole}"  Width="250"  IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel>
 
@@ -104,7 +104,7 @@
                     <GroupBox x:Name="UserListBox" HorizontalAlignment="Left" Height="300" Width="500" VerticalAlignment="Top" >
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="La liste des Roles utilisateur"></Label>
+                                <Label Content="La liste de Role des utilisateurs"></Label>
                                
                             </StackPanel>
                         </GroupBox.Header>
@@ -124,11 +124,11 @@
 
                             <WrapPanel Visibility="Hidden">
                                 <Label Name="LabelIdUserRole" Content="Identifiant" ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="60,2" Name="IdUserRole" Text="{Binding Path=IdUserRole}"  Width="250" IsEnabled="False" />
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="62,2" Name="IdUserRole" Text="{Binding Path=IdUserRole}"  Width="250" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
-                                <Label Name="LabelUserRoleName" Content="Role Name " ></Label>
-                                <TextBox FontWeight="ExtraBold" Margin="54,2" x:Name="UserRoleName" MaxLength="20" Text="{Binding Path=UserRoleName}" Width="250" IsEnabled="False" />
+                                <Label Name="LabelUserRoleName" Content="Nom de Role " ></Label>
+                                <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="44,2" x:Name="UserRoleName" MaxLength="20" Text="{Binding Path=UserRoleName}" Width="250" IsEnabled="False" />
                             </WrapPanel>
                            
                             <WrapPanel>
@@ -147,4 +147,5 @@
         </Grid>
 
     </Grid>
+        </ScrollViewer>
 </Page>

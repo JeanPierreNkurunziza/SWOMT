@@ -32,7 +32,7 @@ namespace SWOMT.Views
         string enregistre;
         int idSiteModuleSelected;
         int idParticipantSelected;
-
+        string copyNomFormateur;
         /// <summary>
         /// Un constructeur de classe presence 
         /// </summary>
@@ -48,7 +48,7 @@ namespace SWOMT.Views
             listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
             listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(nomFormateur);
             PopulateAndBindModule(listeModulePlanning);
-
+            copyNomFormateur = nomFormateur;
             //Controle des droit d'accès aux fonctionnalités de page de présence 
             if (MyApps.Domain.Service.UserService.GetUtilisateurUserRole((string)nomFormateur) == "Admin"
                 || MyApps.Domain.Service.UserService.GetUtilisateurUserRole((string)nomFormateur) == "Secrétaire")
@@ -455,7 +455,8 @@ namespace SWOMT.Views
         {
             if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.SitePlanningViewModel donnee) 
             {
-                
+               
+
                 IdSiteModule.Text = donnee.NomModule.ToString() + " : " + donnee.IdSiteModule.ToString();
             }
             //if (enregistre != "Ajouter")
@@ -493,8 +494,10 @@ namespace SWOMT.Views
         private void ReSetListModule_Click(object sender, RoutedEventArgs e)
         {
             NomRechercherModule.Text = "";
-            listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.SearchMethodByName(NomRechercherModule.Text); 
-            PopulateAndBindModule(listeModulePlanning);
+            //listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.SearchMethodByName(NomRechercherModule.Text); 
+            //PopulateAndBindModule(listeModulePlanning);
+            listeModulePlanning = MyApps.Application.Services.SitePlanningViewModelService.AfficherModulePerFormateur(copyNomFormateur); 
+            PopulateAndBindModule(listeModulePlanning); 
         }
 
         //******************************************************************************************************************************
@@ -506,7 +509,7 @@ namespace SWOMT.Views
 
             if (ListElement.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
-                if (donnee.IdSiteModule == 0)
+                if (donnee ==null)
                 {
                     MessageBox.Show("Séléctionner un élément dans la liste");
                     return;
@@ -623,5 +626,6 @@ namespace SWOMT.Views
         {
 
         }
+        
     }
 }

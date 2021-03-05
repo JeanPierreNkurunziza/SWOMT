@@ -69,7 +69,7 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.FormateurViewModel> selectedNomFormateur()
         {
             //var listeView = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-
+            liste = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs(); 
             foreach (var formateur in liste)
             {
                 IdFormateur.Items.Add(formateur.NomFormateur);
@@ -173,7 +173,7 @@ namespace SWOMT.Views
             //Vérifier si l'identifiant n'est pas null
             if(IdFormateur.SelectedItem == null)
             {
-                MessageBox.Show("Please select the name of trainer");
+                MessageBox.Show("Veuillez selectionner le formateur");
                 return;
             }
             IdFormateurModule.IsEnabled = false;
@@ -259,7 +259,7 @@ namespace SWOMT.Views
                 return;
             }
             enregistre = "Modifier";
-            IdFormateur.IsEnabled = false;
+            IdFormateur.IsEnabled = true; 
             IdModule.IsEnabled = false;
 
             VersionModule.IsEnabled = true;
@@ -327,7 +327,7 @@ namespace SWOMT.Views
         {
             if (IdFormateur.SelectedIndex == -1)
             {
-                MessageBox.Show("Selectionner l'identifiant du formateur");
+               // MessageBox.Show("Selectionner l'identifiant du formateur");
                 return;
             }
 
@@ -342,7 +342,7 @@ namespace SWOMT.Views
             }
 
             IdFormateur.IsEnabled = true;
-            IdModule.SelectedValue="";
+            //IdModule.SelectedValue="";
             VersionModule.Text = "";
             //VersionModule.IsEnabled=false;
             liste2.Clear();
@@ -361,9 +361,9 @@ namespace SWOMT.Views
         {
             if(ListModule.SelectedItem is MyApps.Application.ViewModels.FormateurModuleViewModel donnee)
             {
-                
+                IdFormateurModule.Text = donnee.IdFormateurModule.ToString();
+                IdFormateur.SelectedItem = donnee.NomFormateur.ToString();
                 IdModule.Text = donnee.NomModule.ToString(); 
-
                 VersionModule.Text = donnee.VersionModule.ToString();
             }
         }
@@ -431,9 +431,9 @@ namespace SWOMT.Views
 
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             PopulateAndBindFormateurs(listeFormateur);
-
-            //MessageBox.Show("Reload the pages to validate the modifications");
-            //Main.Content = new FormateurModules(); 
+            IdFormateur.Items.Clear();
+            this.selectedNomFormateur();
+            
         }
 
         private void MettreAjourFormateur_Click(object sender, RoutedEventArgs e) 
@@ -479,8 +479,9 @@ namespace SWOMT.Views
             listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             ClearFormValuesFormateur();
             PopulateAndBindFormateurs(listeFormateur);
-           // MessageBox.Show("Reload the pages to validate the modifications");
-
+            IdFormateur.Items.Clear();
+            this.selectedNomFormateur();
+           
         }
         private void ClearFormValuesFormateur()
         {
@@ -574,7 +575,7 @@ namespace SWOMT.Views
                // NomFormation.Text = donnee.NomFormation.ToString();
                 CreditModule.Text = donnee.CreditModule.ToString();
                 NombrePrévu.Text = donnee.NombrePrévu.ToString();
-                IdModule.SelectedItem = donnee.NomModule.ToString();
+               IdModule.SelectedItem = donnee.NomModule.ToString(); 
             }
             if (enregistre != "Ajouter")
             {
@@ -599,11 +600,7 @@ namespace SWOMT.Views
             Module element = new Module();
            
 
-            if (idModule.Text == "")
-            {
-                MessageBox.Show("Il faut saisir identifiant ");
-                return;
-            }
+           
             if (!int.TryParse(CreditModule.Text, out int nbr))
             {
                 MessageBox.Show("Format du nombre pour le Crédit de module  est incorrect SVP !");
@@ -630,6 +627,11 @@ namespace SWOMT.Views
 
             if (enregistre == "Modifier")
             {
+                if (idModule.Text == "")
+                {
+                    MessageBox.Show("Il faut saisir identifiant ");
+                    return;
+                }
 
                 element.IdModule = short.Parse(idModule.Text);
                 element.IdFormation = (short)(idFormationSelected);
@@ -641,11 +643,14 @@ namespace SWOMT.Views
             }
 
             ModeIsEnabledFalseModule();
-            //listeModule.Clear();
+            listeModule.Clear();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            ClearFormValuesModule(); 
-            PopulateAndBind(listeModule);
-           
+          
+            PopulateAndBindModule(listeModule);
+            ClearFormValuesModule();
+            IdModule.SelectedItem = element.NomModule;
+            IdModule.Items.Clear();
+            this.selectedNomModule();
 
         }
         /// <summary>
@@ -673,7 +678,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void SupprimerModule_Click(object sender, RoutedEventArgs e)
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            // on doit d'abord faire une vérification
             if (idModule.Text=="")
             {
                 MessageBox.Show("Séléctionner un élement à supprimer");

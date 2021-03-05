@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="760" d:DesignWidth="1600"
       Title="PlanningFormations">
-
-    <Grid >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -66,15 +66,15 @@
 
                             <WrapPanel >
                                 <Label Name="LabelIdFormation" Content="Identifiant" ></Label>
-                                <TextBox  Margin="65,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox  FontWeight="ExtraBlack" Margin="65,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelNomFormation" Content="Nom " ></Label>
-                                <TextBox  Margin="90,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="89,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDescription" Content="Description" ></Label>
-                                <TextBox  Margin="58,2" x:Name="Description" Text="{Binding Path=Description}"  Width="250"  IsEnabled="False"  ></TextBox>
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="58,2" x:Name="Description" Text="{Binding Path=Description}"  Width="250"  IsEnabled="False"  ></TextBox>
                             </WrapPanel>
 
                             <WrapPanel>
@@ -98,24 +98,24 @@
                     <Grid.ColumnDefinitions>
                        
                     </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="ModuleSiteTextBox" Header="Programmer une Formation" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                    <GroupBox x:Name="ModuleSiteTextBox" Header="Sélectionner une Formation à programmer" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="0">
 
-                            <WrapPanel >
-                                <Label Name="LabelIdPlanning" Content="Identifiant" ></Label>
-                                <TextBox  Margin="45,2" Name="IdPlanning" Text="{Binding Path=IdPlanning}"  Width="250" IsEnabled="False" ></TextBox>
+                            <WrapPanel Visibility="Collapsed">
+                                <Label  Name="LabelIdPlanning" Content="Identifiant" ></Label>
+                                <TextBox  FontWeight="Regular" Margin="45,2" Name="IdPlanning" Text="{Binding Path=IdPlanning}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
-                            <WrapPanel >
+                            <WrapPanel  Visibility="Collapsed">
                                 <Label Name="LabelId" Content="Id Formation" ></Label>
-                                <TextBox  Margin="30,2" Name="Id" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
+                                <TextBox  FontWeight="ExtraBold" Margin="30,2" Name="Id" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelNom" Content="Nom " ></Label>
-                                <TextBox  Margin="67,2" x:Name="Nom" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="67,2" x:Name="Nom" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateFormation" Content="Planning Date" ></Label>
-                                <DatePicker  Margin="24,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                                <DatePicker Background="White" FontWeight="ExtraBlack" Margin="23,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
                             </WrapPanel>
 
 
@@ -134,6 +134,7 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <GroupBox x:Name="ParticipantModuleTextBox2" Height="365" Header="Les Formations programmées au cour de l'année" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                        
                         <StackPanel Grid.Column="1">
 
                             <DataGrid Name="ListElement"  ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
@@ -141,7 +142,7 @@
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdFormationPlanning" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
 
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -154,7 +155,7 @@
             <Grid Grid.Column="2">
                 
                 <Grid Grid.Row="0">
-                    <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="400" Width="490" VerticalAlignment="Top" Margin="10,10,0,0">
+                    <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="613" Width="490" VerticalAlignment="Top" Margin="10,10,0,0">
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="La liste de Module"></Label>
@@ -184,6 +185,6 @@
 
     </Grid>
 
-
+    </ScrollViewer>
    
 </Page>

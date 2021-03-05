@@ -94,7 +94,7 @@ namespace SWOMT.Views
             enregistre = "Modifier";
             UserName.IsEnabled = true;
             MotDePasse.IsEnabled = false;
-           // MotDePasse.Visibility = Visibility.Collapsed;
+           // MotDePasse.Visibility = Visibility.Collapsed; 
             ComboBoxUserRole.IsEnabled = true;
 
         }
@@ -240,8 +240,10 @@ namespace SWOMT.Views
             UserRoleName.IsEnabled = false;
             IdUserRole.Text = "";
             UserRoleName.Text = "";
-           
-        }
+            ComboBoxUserRole.Items.Clear();
+            this.SelectedRolesusers(); 
+
+        } 
         private void MettreAjourRole_Click(object sender, RoutedEventArgs e) 
         {
           
@@ -287,8 +289,9 @@ namespace SWOMT.Views
             UserRoleList = MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles(); 
             PopulateAndBindUserRole(UserRoleList); 
             IdUserRole.Text = "";
-            UserRoleName.Text = "";  
-            
+            UserRoleName.Text = "";
+            ComboBoxUserRole.Items.Clear();
+            this.SelectedRolesusers();
         }
         private List<MyApps.Application.ViewModels.UserRolesViewModel> SelectedRolesusers()
         {

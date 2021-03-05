@@ -65,12 +65,19 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFGlobalExceptionHandling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFGlobalExceptionHandling.1.0.0\lib\net452\WPFGlobalExceptionHandling.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\MyBoolConverter.cs" />
+    <Compile Include="Converter\MyBoolConverterPresentAbsent.cs" />
+    <Compile Include="Converter\MyBoolConverterReussiEchoue.cs" />
+    <Compile Include="MyExtensionChangingTrueOrFalseDisplays.cs" />
     <Compile Include="TableauDeBord.xaml.cs">
       <DependentUpon>TableauDeBord.xaml</DependentUpon>
     </Compile>

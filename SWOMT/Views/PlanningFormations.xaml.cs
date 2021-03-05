@@ -96,13 +96,13 @@ namespace SWOMT.Views
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             Planning element = new Planning();
-            //Competence competence = new Competence();
 
-            //if (NomCompetence.Text == "")
-            //{
-            //    MessageBox.Show("Il faut saisir le nom de la competence");
-            //    return;
-            //}
+
+            if (Id.Text == "")
+            {
+                MessageBox.Show("Il faut saisir l'identifiant de formation");
+                return;
+            }
 
 
 
@@ -126,11 +126,11 @@ namespace SWOMT.Views
             }
 
 
-            ModeIsEnabledFalse();
+           
             liste.Clear();
             liste = MyApps.Application.Services.PlanningsFormation.GetPlanningFormation();
             PopulateAndBind(liste);
-
+            ModeIsEnabledFalse();
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une formation
@@ -159,7 +159,11 @@ namespace SWOMT.Views
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
-
+            if (IdPlanning.Text == "")
+            {
+                MessageBox.Show("Veuillez inserer l'identifiant");
+                return;
+            }
             MyApps.Domain.Service.PlanningService.Delete(short.Parse(IdPlanning.Text));
 
             ClearFormValues();
@@ -194,7 +198,7 @@ namespace SWOMT.Views
         }
 
         //*************************************************************************************************************************
-        //**************************************** code pour la partie : gestin de formation **************************************
+        //**************************************** code pour la partie : gestion de formation **************************************
 
         /// <summary>
         /// biding la liste de formations
@@ -221,6 +225,11 @@ namespace SWOMT.Views
         {
             if (ListFormation.SelectedItem is MyApps.Application.ViewModels.FormationViewModel donnee)
             {
+                if (donnee == null)
+                {
+                    MessageBox.Show("L'identiant de formation ne doit pas etre null");
+                    return;
+                }
                 IdFormation.Text = donnee.IdFormation.ToString();
                 NomFormation.Text = donnee.NomFormation.ToString();
                 Description.Text = donnee.Description.ToString();
@@ -228,9 +237,19 @@ namespace SWOMT.Views
                 Nom.Text = donnee.NomFormation.ToString();
 
             }
-            listeModule.Clear();
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModulesPerFormation(short.Parse(IdFormation.Text));
-            PopulateAndBindModule(listeModule);
+
+            try
+            {
+                listeModule.Clear();
+                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModulesPerFormation(short.Parse(IdFormation.Text));
+                PopulateAndBindModule(listeModule);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("L'identifiant de formation ne doit etre null");
+                return;
+            }
+            
         }
 
         private void AjouterFormation_Click(object sender, RoutedEventArgs e)
@@ -238,6 +257,7 @@ namespace SWOMT.Views
             enregistre = "Ajouter";
             ClearFormValuesFormation();
             ModeIsEnabledTrueFormation();
+            IdFormation.IsEnabled = false;
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une competence
@@ -249,18 +269,26 @@ namespace SWOMT.Views
             Formation formation = new Formation();
             //Competence competence = new Competence();
 
-            //if (NomCompetence.Text == "")
-            //{
-            //    MessageBox.Show("Il faut saisir le nom de la competence");
-            //    return;
-            //}
-
-
+            if (NomFormation.Text == "")
+            {
+                MessageBox.Show("Il faut saisir le nom de formation");
+                return;
+            }
 
             if (enregistre == "Ajouter")
             {
+               
                 formation.NomFormation = NomFormation.Text;
                 formation.Description = Description.Text;
+                foreach (var donne in MyApps.Application.Services.FormationViewModelsServices.GetFormations())
+                {
+                    //avoid the duplicate datas in the liste of sites 
+                    if ((formation.NomFormation == donne.NomFormation)) // if already the items exist then rejects
+                    {
+                        MessageBox.Show("les données existé déjà ! dans la base de données");
+                        return;
+                    }
+                }
 
                 MyApps.Domain.Service.FormationService.Create(formation);
 
@@ -268,7 +296,11 @@ namespace SWOMT.Views
 
             if (enregistre == "Modifier")
             {
-
+                if (IdFormation.Text == "")
+                {
+                    MessageBox.Show("Il faut saisir l'identifiant de formation");
+                    return;
+                }
                 formation.IdFormation = short.Parse(IdFormation.Text);
                 formation.NomFormation = NomFormation.Text;
                 formation.Description = Description.Text;
@@ -277,10 +309,14 @@ namespace SWOMT.Views
             }
 
 
-            ModeIsEnabledFalseFormation();
             listeFormation.Clear();
             listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
             PopulateAndBindFormation(listeFormation);
+            IdFormation.Text = "";
+            NomFormation.Text = "";
+            Description.Text = "";
+            ModeIsEnabledFalseFormation();
+           
 
         }
         /// <summary>
@@ -298,6 +334,7 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             ModeIsEnabledTrueFormation();
+            IdFormation.IsEnabled = false;
 
 
         }
@@ -310,7 +347,11 @@ namespace SWOMT.Views
         private void SupprimerFormation_Click(object sender, RoutedEventArgs e)
         {
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
-
+            if (IdFormation.Text == "")
+            {
+                MessageBox.Show("Veuillez inserer l'identifiant de formation");
+                return;
+            }
             MyApps.Domain.Service.FormationService.Delete(short.Parse(IdFormation.Text));
 
             ClearFormValuesFormation();

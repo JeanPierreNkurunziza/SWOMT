@@ -189,7 +189,7 @@ namespace SWOMT.Views
             //ModeIsEnabledTrue();
             if (IdSiteModule.SelectedItem == null)
             {
-                MessageBox.Show("Please select the name of Module");
+                MessageBox.Show("Veuillez selectionner un nom de module");
                 return;
             }
             IdModuleInscription.IsEnabled = false;
@@ -225,12 +225,12 @@ namespace SWOMT.Views
 
             if (IdParticipant.Text == "")
             {
-                MessageBox.Show("Click on the Ajouter button to add the Datas or select the datas to modify in the list ");
+                MessageBox.Show("Veuillez selectionner les données à d'un participant à inscrire ou modifier ");
                 return;
             }
             if (EstSurListeAttente.Text == "")
             {
-                MessageBox.Show("Please determine if the participant is on the list");
+                MessageBox.Show("Veuillez préciser si le participant est sur la liste d'attente");
                 return; 
             }
 
@@ -322,7 +322,7 @@ namespace SWOMT.Views
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
             if (IdModuleInscription.Text == "")
             {
-                MessageBox.Show("Please select the the items in the list to delete");
+                MessageBox.Show("Veuillez selectionner un élément à supprimer dans la liste ");
                 return;
             }
             MyApps.Domain.Service.InscriptionService.Delete(short.Parse(IdModuleInscription.Text));
@@ -460,7 +460,7 @@ namespace SWOMT.Views
             {
                 if (donnee.IdParticipant == 0) 
                 {
-                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    MessageBox.Show("Selectionner un élément dans la liste");
                     return;
                     //IdSite.Text = "";   
                 }
@@ -528,7 +528,7 @@ namespace SWOMT.Views
                 participant.DistrictParticipant = DistrictParticipant.Text;
                 participant.DateEncodage = DateTime.Now;
 
-                if(participant.DateNaissance < ages )
+                if(participant.DateNaissance > ages ) 
                 {
                     MessageBox.Show("Votre age est inférieur à 18 ans");
                     return;
@@ -574,7 +574,10 @@ namespace SWOMT.Views
             ClearFormValuesParticipant();
             
             ModeIsEnabledFalseParticipant();
-
+            IdParticipant.Items.Clear();
+            this.SelectedNomParticipant(); 
+            IdParticipants.Items.Clear();
+            this.SelectedNomParticipantsGetModules();
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une competence
@@ -607,7 +610,7 @@ namespace SWOMT.Views
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
             if (Id.Text == "")
             {
-                MessageBox.Show("Please select the participant to delete");
+                MessageBox.Show("Veuillez selection l'ID à supprimer");
                 return;
             }
             // to avoid the suppression of the participant that has already assigned to the module 
@@ -615,7 +618,7 @@ namespace SWOMT.Views
             {
                 if ((short.Parse(Id.Text) == donne.IdParticipant))
                 {
-                    MessageBox.Show("The participant has the module ! Delete him first in the modules");
+                    MessageBox.Show("Le participant est inscrit dans un module ! D'abord, Veuillez le supprimer dans la liste de module");
                     ClearFormValuesParticipant();
                     return;
                 }
@@ -629,6 +632,10 @@ namespace SWOMT.Views
             listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
             PopulateAndBindParticipant(listeParticipant);
             ClearFormValuesParticipant();
+            IdParticipant.Items.Clear();
+            this.SelectedNomParticipant();
+            IdParticipants.Items.Clear();
+            this.SelectedNomParticipantsGetModules();
         }
         private void Rechercher_Click(object sender, RoutedEventArgs e)
         {
