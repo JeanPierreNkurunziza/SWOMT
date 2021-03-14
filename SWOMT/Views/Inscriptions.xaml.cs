@@ -751,6 +751,38 @@ namespace SWOMT.Views
             PopulateAndBindModulePerParticipant(listeModulePerParticipant);
         }
 
-       
+        private void Valider_Click(object sender, RoutedEventArgs e)
+        {
+            if (IdSiteModuleRechercher.Text == "")
+            {
+                MessageBox.Show("Entrer la réference de site module");
+
+                return;
+            }
+
+            if (!Int16.TryParse(IdSiteModuleRechercher.Text, out Int16 nbr ))
+            {
+                MessageBox.Show(" La réference saisie n'existe pas !!!  Veuillez consulter la planning des site et module !!! ");
+                IdSiteModuleRechercher.Text = "";
+                return;
+            }
+            var module = MyApps.Domain.Service.SitePlanningService.GetOne(short.Parse(IdSiteModuleRechercher.Text));
+            if (module == null)
+            {
+                MessageBox.Show("La réference saisie n'existe pas !!!  Veuillez consulter la planning des site et module");
+                IdSiteModuleRechercher.Text = "";
+                return;
+            }
+
+            foreach (var mod in listeModule)
+            {
+                if (mod.IdSiteModule == module.IdSiteModule)
+                {
+                    IdSiteModule.SelectedItem = mod.NomModule + " : " + mod.IdSiteModule;
+                }
+            }
+                       
+            IdSiteModuleRechercher.Text = "";
+        }
     }
 }

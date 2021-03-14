@@ -46,6 +46,14 @@ namespace SWOMT.Views
                 CertificatTextBox.IsEnabled = false;
 
             }
+            if ((string)roleName != "Secrétaire" && (string)roleName != "Admin" && (string)roleName != "Formateur")
+            {
+
+                IdNationale.Visibility = Visibility.Hidden;
+                Datenaissance.Visibility = Visibility.Hidden;
+                email.Visibility = Visibility.Hidden;
+                telephone.Visibility = Visibility.Hidden;
+            }
 
         }
 
@@ -226,6 +234,7 @@ namespace SWOMT.Views
             {
                 Path = new PropertyPath("Value")
             };
+           
             ListParticipant.DataContext = listeCompetences;
 
         }

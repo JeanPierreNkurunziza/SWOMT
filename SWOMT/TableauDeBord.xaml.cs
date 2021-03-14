@@ -46,7 +46,7 @@ namespace SWOMT
                 BoutonInscription.Visibility=Visibility.Hidden;
                 BoutonSitePlanning.Visibility=Visibility.Hidden;               
             }
-            if ((string)TextBoxUserRole.Content == "Personnel")
+            if ((string)TextBoxUserRole.Content != "Secrétaire" && (string)TextBoxUserRole.Content != "Admin" &&(string)TextBoxUserRole.Content != "Formateur")
             {
 
                 BoutonPresence.Visibility = Visibility.Hidden;

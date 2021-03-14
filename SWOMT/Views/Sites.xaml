@@ -89,21 +89,13 @@
             <Grid Grid.Column="1">
 
 
-
-                <!--<GroupBox x:Name="ModuleSiteTextBox" Height="630"  FontSize="50"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="340">-->
                     <StackPanel>
-                        <!--<Label  HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Frontiers" />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Adventures" />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Great" />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Lakes " />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content=" - " />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content=" Experiantial" />
-                        <Label HorizontalContentAlignment="Center" FontWeight="ExtraBlack" Content="Learning" />-->
-                        <Image Name="imgConnection" Width="340" Height="630" HorizontalAlignment="Left" Source="/Views/Image/frontiers2.png" Margin="0,0,-8,-5">
+                        
+                        <Image Name="imgConnection" Width="340" Height="650" HorizontalAlignment="Left" Source="/Views/Image/frontiers2.png" Margin="0,0,-8,-5">
 
                         </Image>
                     </StackPanel>
-               <!--// </GroupBox>-->
+             
 
             </Grid>
             <Grid Grid.Column="2">
@@ -116,8 +108,8 @@
                         <StackPanel Grid.Column="0">
                             <DataGrid Name="ListModuleEncours"  Height="260" ItemsSource="{Binding}" AutoGenerateColumns="False"  >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="IdSite" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Code" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn> 
+                                    <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Site" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>

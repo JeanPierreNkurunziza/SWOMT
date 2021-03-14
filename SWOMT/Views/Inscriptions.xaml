@@ -139,8 +139,12 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox x:Name="ModuleSiteTextBox" Header="Inscrire un participant dans un module" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="0">
-
-                            <WrapPanel  Visibility="Hidden">
+                            <WrapPanel>
+                                <Label Content="Réf Id Site Module"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="40,2" Name="IdSiteModuleRechercher" Text="{Binding Path=IdSiteModule}"  Width="70" MaxLength="10" TextAlignment="Center"></TextBox>
+                                <Button   Name="Valider" Content="Valider" Click="Valider_Click"></Button> 
+                            </WrapPanel>
+                                <WrapPanel  Visibility="Hidden">
                                 <Label Name="LabelIdModuleInscription" Content="Identifiant" ></Label>
                                 <TextBox Foreground="Black" Margin="80,2" Name="IdModuleInscription" Text="{Binding Path=IdModuleInscription}"  Width="200" IsEnabled="False" ></TextBox>
                             </WrapPanel>
@@ -148,7 +152,7 @@
                                 <Label Name="LabelIdSiteModule" Content="Nom Module" ></Label>
                                 <ComboBox Background="#545d6a" FontWeight="ExtraBlack" Margin="64,2" Name="IdSiteModule"  Text="{Binding Path=IdSiteModule}"  Width="200" SelectionChanged="ComboBoxIdSiteModule_SelectionChanged" ></ComboBox>
                             </WrapPanel>
-                            <WrapPanel  Visibility="Hidden">
+                            <WrapPanel  Visibility="Collapsed">
                                 <Label Name="LabelNomModule" Content="Nom Module" ></Label>
                                 <TextBox Margin="64,2" Name="NomModule" Text="{Binding Path=NomModule}"  Width="200" IsEnabled="False" ></TextBox>
                             </WrapPanel>

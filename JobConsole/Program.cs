@@ -16,10 +16,10 @@ namespace JobConsole
         static void Main(string[] args)
         {
 
-            var participant = new ParticipantService();
-            var examen = ResultatService.GetAll();
+            //var participant = new ParticipantService();
+            //var examen = ResultatService.GetAll();
 
-            var utilisateur = UserService.GetAll();
+            //var utilisateur = UserService.GetAll();
             
             string nom = UserService.LoginUserNom("Hinda", "hinda");
             if (nom!=null)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyApps.Application.Services
 {
-   public class InscriptionViewModelService
+   public class InscriptionViewModelService 
     {
        /// <summary>
        /// la méthode pour mapper les données  de modèles inscription. 
@@ -15,57 +15,16 @@ namespace MyApps.Application.Services
        /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetInscriptions() 
         {
-            List<ViewModels.InscriptionViewModel> Liste = new List<ViewModels.InscriptionViewModel>();
-            var GetListe = InscriptionService.GetAll(); 
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.InscriptionViewModel vm = new ViewModels.InscriptionViewModel()
-                {
-                    IdModuleInscription = itemList.IdModuleInscription, 
-                    IdSiteModule = itemList.IdSiteModule,
-                    IdParticipant = itemList.IdParticipant, 
-                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
-                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant), 
-                    IdNational=InscriptionService.GetIdNational(itemList.IdParticipant),
-                    DateInscription = itemList.DateInscription,
-                    EstSurListeAttente = itemList.EstSurListeAttente,
-
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+           
+            var GetListe = InscriptionService.GetAll();
+            
+           return GetListElement(GetListe); 
         }
-
-        public static List<ViewModels.InscriptionViewModel> GetParticipantPerModule(int IdSiteModule)
+        public static List<ViewModels.InscriptionViewModel> GetListElement (List<Infrastructure.DB.ModuleInscription> listeElement)
         {
             List<ViewModels.InscriptionViewModel> Liste = new List<ViewModels.InscriptionViewModel>();
-            var GetListe = InscriptionService.GetListParticipantPerModule(IdSiteModule);
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.InscriptionViewModel vm = new ViewModels.InscriptionViewModel()
-                {
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    IdSiteModule = itemList.IdSiteModule,
-                    IdParticipant = itemList.IdParticipant,
-                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
-                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
-                    IdNational = InscriptionService.GetIdNational(itemList.IdParticipant),
-                    DateInscription = itemList.DateInscription,
-                    EstSurListeAttente = itemList.EstSurListeAttente,
-                    TotalParticipantPerModule = InscriptionService.GetNbreParticipantParModule(itemList.IdSiteModule), 
-
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
-        }
-        public static List<ViewModels.InscriptionViewModel> GetListAttentParticipantPerModule(int IdParticipant) 
-        {
-            List<ViewModels.InscriptionViewModel> Liste = new List<ViewModels.InscriptionViewModel>();
-            var GetListe = InscriptionService.GetListAttenteParticipantPerModule(IdParticipant);
-            foreach (var itemList in GetListe)
+            
+            foreach (var itemList in listeElement)
             {
                 ViewModels.InscriptionViewModel vm = new ViewModels.InscriptionViewModel()
                 {
@@ -78,35 +37,34 @@ namespace MyApps.Application.Services
                     DateInscription = itemList.DateInscription,
                     EstSurListeAttente = itemList.EstSurListeAttente,
                     TotalParticipantPerModule = InscriptionService.GetNbreParticipantParModule(itemList.IdSiteModule),
-
                 };
                 Liste.Add(vm);
             }
 
             return Liste;
         }
+
+
+        public static List<ViewModels.InscriptionViewModel> GetParticipantPerModule(int IdSiteModule)
+        {
+          
+            var GetListe = InscriptionService.GetListParticipantPerModule(IdSiteModule);
+           
+            return GetListElement(GetListe);
+        }
+        public static List<ViewModels.InscriptionViewModel> GetListAttentParticipantPerModule(int IdParticipant) 
+        {
+          
+            var GetListe = InscriptionService.GetListAttenteParticipantPerModule(IdParticipant);
+           
+            return GetListElement(GetListe);
+        }
         public static List<ViewModels.InscriptionViewModel> GetModulePerParticipant(int IdModule)
         {
-            List<ViewModels.InscriptionViewModel> Liste = new List<ViewModels.InscriptionViewModel>();
+           
             var GetListe = InscriptionService.GetListModulePerParticipant(IdModule);
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.InscriptionViewModel vm = new ViewModels.InscriptionViewModel()
-                {
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    IdSiteModule = itemList.IdSiteModule,
-                    IdParticipant = itemList.IdParticipant,
-                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
-                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
-                    IdNational = InscriptionService.GetIdNational(itemList.IdParticipant),
-                    DateInscription = itemList.DateInscription,
-                    EstSurListeAttente = itemList.EstSurListeAttente,
-                   
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+           
+            return GetListElement(GetListe);
         }
     }
 }

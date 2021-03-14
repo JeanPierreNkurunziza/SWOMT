@@ -61,10 +61,10 @@
                             <DataGrid.Columns >
                                 <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Téléphone"  FontSize="15" Binding="{Binding Path=TelParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Email"  FontSize="15" Binding="{Binding Path=EmailParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Date Naissance" x:Name="Datenaissance" FontSize="15" Binding="{Binding Path=DateNaissance, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Id National" x:Name="IdNationale" FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Téléphone" x:Name="telephone" FontSize="15" Binding="{Binding Path=TelParticipant}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Email" x:Name="email" FontSize="15" Binding="{Binding Path=EmailParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Secteur"  FontSize="15" Binding="{Binding Path=SecteurParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="District"  FontSize="15" Binding="{Binding Path=DistrictParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>

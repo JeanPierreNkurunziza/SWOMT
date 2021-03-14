@@ -144,7 +144,7 @@
                         <StackPanel Grid.Column="1">
                             <DataGrid Name="ListModuleSite" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Id" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="NomSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>

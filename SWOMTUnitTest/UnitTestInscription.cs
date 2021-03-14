@@ -12,7 +12,7 @@ namespace SWOMTUnitTest
    public class UnitTestInscription
     {
         [TestMethod]
-        public void CheckExactNbrParticipantPerModule()
+        public void CheckExactNbrParticipantPerModule() 
         {
 
             // Arrange
