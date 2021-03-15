@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
     public class EvenementViewModelService
     {
+        /// <summary>
+        /// méthode pour récuperer la liste des données pour servir notre interface
+        /// </summary>
+        /// <returns> returne un liste des évenements </returns>
         public static List<ViewModels.EvenementViewModel> GetEvenements() 
         {
             List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();
@@ -28,6 +32,11 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+
+        /// <summary>
+        /// affichage des évenements qui n'ont encore depassent 90 jours 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.EvenementViewModel> GetCurrentEvenementsWithin90Days() 
         {
             List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();

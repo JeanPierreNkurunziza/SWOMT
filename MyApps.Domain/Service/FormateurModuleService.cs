@@ -11,6 +11,10 @@ namespace MyApps.Domain.Service
 {
    public class FormateurModuleService 
     {
+        /// <summary>
+        /// méthode pour affecter le module à un formateur
+        /// </summary>
+        /// <param name="formateurModule"></param>
         public static void Create(FormateurModule formateurModule)
         {
            
@@ -22,7 +26,10 @@ namespace MyApps.Domain.Service
                 }
                        
         }
-
+        /// <summary>
+        /// méthode pour supprimer un élément dans formateur module planning
+        /// </summary>
+        /// <param name="idFormateurModule"></param>
         public static void Delete(int idFormateurModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -37,7 +44,10 @@ namespace MyApps.Domain.Service
                
             }
         }
-
+        /// <summary>
+        /// méthode pour afficher la liste des modules et formateurs
+        /// </summary>
+        /// <returns></returns>
         public static List<FormateurModule> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -46,6 +56,11 @@ namespace MyApps.Domain.Service
                 return formateurModule.ToList();
             }
         }
+        /// <summary>
+        /// récuperer un formateur par module
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public static FormateurModule GetOne(int id)
         {
@@ -55,7 +70,10 @@ namespace MyApps.Domain.Service
                 return formateurModule;
             }
         }
-
+        /// <summary>
+        /// mettre à jour la liste des formateur par module
+        /// </summary>
+        /// <param name="formateurModule"></param>
         public static void Update(FormateurModule formateurModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -64,6 +82,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// récuperer un nom de module
+        /// </summary>
+        /// <param name="IdModule"></param>
+        /// <returns></returns>
         public static string GetNomModule(int? IdModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -74,6 +97,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// récuperer un nom de formateur via l'identiant dans la table formateur
+        /// </summary>
+        /// <param name="IdFormateur"></param>
+        /// <returns></returns>
         public static string GetNomFormateur(int? IdFormateur) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -85,7 +113,11 @@ namespace MyApps.Domain.Service
             }
         }
 
-
+        /// <summary>
+        /// récuperer une liste des moudules par formateur
+        /// </summary>
+        /// <param name="IdFormateur"></param>
+        /// <returns></returns>
         public static List<FormateurModule> GetListModulesPerFormateur(int IdFormateur)
         { 
             using(TrainingDBEntities db= new TrainingDBEntities())

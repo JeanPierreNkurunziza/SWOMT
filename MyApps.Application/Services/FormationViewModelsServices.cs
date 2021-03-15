@@ -31,6 +31,11 @@ namespace MyApps.Application.Services
 
             return FormationListe;
         }
+        /// <summary>
+        /// afficher les données selon la rechercher
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public static List<ViewModels.FormationViewModel> GetSearchByName(string searchString)
         {
             List<ViewModels.FormationViewModel> FormationListe = new List<ViewModels.FormationViewModel>();

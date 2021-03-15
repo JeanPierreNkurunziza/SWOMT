@@ -11,6 +11,10 @@ namespace MyApps.Application.Services
 {
    public class PlanningsFormation
     {
+        /// <summary>
+        /// récuperer le planning des formations
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.PlanningViewModel> GetPlanningFormation()
         {
             List<ViewModels.PlanningViewModel> Liste = new List<ViewModels.PlanningViewModel>();
@@ -29,6 +33,10 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        /// <summary>
+        /// récuperer les planning de formation pour l'année encours 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.PlanningViewModel> GetPlanningFormationThisYearAndNextYear() 
         {
             List<ViewModels.PlanningViewModel> Liste = new List<ViewModels.PlanningViewModel>();

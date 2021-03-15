@@ -44,7 +44,11 @@ namespace MyApps.Application.Services
             return Liste;
         }
 
-
+        /// <summary>
+        /// avec l'identifiant de site module on peut afficher les paricipants concernés
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetParticipantPerModule(int IdSiteModule)
         {
           
@@ -52,6 +56,11 @@ namespace MyApps.Application.Services
            
             return GetListElement(GetListe);
         }
+        /// <summary>
+        /// afficher les données via l'identifiant de participant
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetListAttentParticipantPerModule(int IdParticipant) 
         {
           
@@ -59,6 +68,11 @@ namespace MyApps.Application.Services
            
             return GetListElement(GetListe);
         }
+        /// <summary>
+        /// la liste des modules selon le partipant 
+        /// </summary>
+        /// <param name="IdModule"></param>
+        /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetModulePerParticipant(int IdModule)
         {
            

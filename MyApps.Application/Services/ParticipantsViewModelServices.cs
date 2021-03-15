@@ -36,7 +36,11 @@ namespace MyApps.Application.Services
 
             return ParticipantsListe;
         }
-
+        /// <summary>
+        /// afficher la liste selon le résultat de la recherche
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public static List<ParticipantViewModel> GetParticipantByMethodeSearch(string searchString) 
         {
             List<ViewModels.ParticipantViewModel> ParticipantsListe = new List<ViewModels.ParticipantViewModel>();

@@ -171,7 +171,7 @@ namespace MyApps.Domain.Service
         /// Méthode pour recupérer la liste des participants absents par module
         /// </summary>
         /// <param name="IdSiteModule"></param>
-        /// <returns></returns>
+        /// <returns> liste des presences </returns>
         public static List<Presence> GetListParticipantAbsentPerModule(int IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

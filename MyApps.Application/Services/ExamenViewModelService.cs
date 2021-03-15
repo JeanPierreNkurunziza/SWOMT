@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
    public class ExamenViewModelService
     {
+        /// <summary>
+        /// méthode pour afficher une liste des examens dans la vue concernée
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.ExamenViewModel> GetExamens()
         {
             List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();
@@ -28,6 +32,11 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        /// <summary>
+        /// méthode pour permettre un utilisateur de faire une recherche sur les modules
+        /// </summary>
+        /// <param name="SearchNomModule"></param>
+        /// <returns></returns>
         public static List<ViewModels.ExamenViewModel> SearchByNameModule( string SearchNomModule)
         {
             List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();
@@ -42,6 +51,11 @@ namespace MyApps.Application.Services
             return assets.ToList();
             
         }
+        /// <summary>
+        ///  méthode pour permettre un utilisateur de faire une recherche sur les formateurs
+        /// </summary>
+        /// <param name="SearchNomFormateur"></param>
+        /// <returns></returns>
         public static List<ViewModels.ExamenViewModel> SearchByNameNomFormateur(string SearchNomFormateur)
         {
             List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();

@@ -9,117 +9,87 @@ namespace MyApps.Application.Services
 {
    public class ResultatsVieModelService
     {
+        /// <summary>
+        /// récuperer la liste des éléments à traiter
+        /// </summary>
+        /// <param name="listeElement"></param>
+        /// <returns></returns>
+        public static List<ViewModels.ResultatViewModel> GetResultatsList(List<Infrastructure.DB.Resultat> listeElement)
+        {
+            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+            
+            foreach (var itemList in listeElement)
+            {
+                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
+                {
+                    IdResultat = itemList.IdResultat,
+                    IdExamen = itemList.IdExamen,
+                    IdModuleInscription = itemList.IdModuleInscription,
+                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
+                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
+                    Points = itemList.Points,
+                    EstPresent = itemList.EstPresent,
+                    ParticipantRéussi = itemList.ParticipantRéussi
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+        /// <summary>
+        /// récuperer une liste des résultats 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.ResultatViewModel> GetResultats() 
         {
-            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+            
             var GetListe = ResultatService.GetAll();
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
-                {
-                    IdResultat = itemList.IdResultat,
-                    IdExamen = itemList.IdExamen,
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription), 
-                    Points = itemList.Points,
-                    EstPresent = itemList.EstPresent,
-                    ParticipantRéussi=itemList.ParticipantRéussi 
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            
+            return GetResultatsList(GetListe);
         }
-
+        /// <summary>
+        /// récuperer une lsite des participants réussis
+        /// </summary>
+        /// <param name="idExamen"></param>
+        /// <returns></returns>
         public static List<ViewModels.ResultatViewModel> GetListParticipantRéussi(int idExamen) 
         {
-            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+           
             var GetListe = ResultatService.GetListParticipantRéussi(idExamen);
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
-                {
-                    IdResultat = itemList.IdResultat,
-                    IdExamen = itemList.IdExamen,
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
-                    Points = itemList.Points,
-                    EstPresent = itemList.EstPresent,
-                    ParticipantRéussi = itemList.ParticipantRéussi
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            return GetResultatsList(GetListe);
         }
-
+        /// <summary>
+        /// récuperer une liste des participant échouées
+        /// </summary>
+        /// <param name="idExamen"></param>
+        /// <returns></returns>
         public static List<ViewModels.ResultatViewModel> GetListParticipantEchoué(int idExamen) 
         {
-            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
-            var GetListe = ResultatService.GetListParticipantEchoué(idExamen); 
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
-                {
-                    IdResultat = itemList.IdResultat,
-                    IdExamen = itemList.IdExamen,
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
-                    Points = itemList.Points,
-                    EstPresent = itemList.EstPresent,
-                    ParticipantRéussi = itemList.ParticipantRéussi
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            
+            var GetListe = ResultatService.GetListParticipantEchoué(idExamen);
+            return GetResultatsList(GetListe);
         }
+        /// <summary>
+        /// récuperer une liste des modules per inscription
+        /// </summary>
+        /// <param name="idModuleInscription"></param>
+        /// <returns></returns>
         public static List<ViewModels.ResultatViewModel> GetListModulesEchoué(int idModuleInscription)  
         {
-            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
-            var GetListe = ResultatService.GetListModuleEchoué(idModuleInscription); 
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
-                {
-                    IdResultat = itemList.IdResultat,
-                    IdExamen = itemList.IdExamen,
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
-                    Points = itemList.Points,
-                    EstPresent = itemList.EstPresent,
-                    ParticipantRéussi = itemList.ParticipantRéussi
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+           
+            var GetListe = ResultatService.GetListModuleEchoué(idModuleInscription);
+            return GetResultatsList(GetListe);
         }
+        /// <summary>
+        /// récuperer une liste des modules réussis par inscription 
+        /// </summary>
+        /// <param name="idModuleInscription"></param>
+        /// <returns></returns>
         public static List<ViewModels.ResultatViewModel> GetListModulesRéussis(int idModuleInscription) 
         {
-            List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
-            var GetListe = ResultatService.GetListModuleRéussis(idModuleInscription);   
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.ResultatViewModel vm = new ViewModels.ResultatViewModel()
-                {
-                    IdResultat = itemList.IdResultat,
-                    IdExamen = itemList.IdExamen,
-                    IdModuleInscription = itemList.IdModuleInscription,
-                    NomModule = ResultatService.GetNomModule(itemList.IdExamen),
-                    NomParticipant = ResultatService.GetNomParticipant(itemList.IdModuleInscription),
-                    Points = itemList.Points,
-                    EstPresent = itemList.EstPresent,
-                    ParticipantRéussi = itemList.ParticipantRéussi
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            //List<ViewModels.ResultatViewModel> Liste = new List<ViewModels.ResultatViewModel>();
+            var GetListe = ResultatService.GetListModuleRéussis(idModuleInscription);
+            return GetResultatsList(GetListe);
         }
 
     }

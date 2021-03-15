@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
    public class UserViewModelService
     {
+        /// <summary>
+        /// méthode pour récuperer les utilisateurs et leur roles 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.UserViewModel> GetUsers()
         {
             List<ViewModels.UserViewModel> Liste = new List<ViewModels.UserViewModel>();

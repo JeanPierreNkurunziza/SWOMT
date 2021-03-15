@@ -9,6 +9,10 @@ namespace MyApps.Domain.Service
 {
    public class UserRolesServices
     {
+        /// <summary>
+        /// méthode pour créér un role
+        /// </summary>
+        /// <param name="userRole"></param>
         public static void Create(UserRole userRole)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -17,7 +21,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour supprimer un role
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -27,7 +34,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer une liste de roles
+        /// </summary>
+        /// <returns></returns>
         public static List<UserRole> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -36,7 +46,11 @@ namespace MyApps.Domain.Service
                 return userRole;
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer un role
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static UserRole GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -45,7 +59,10 @@ namespace MyApps.Domain.Service
                 return userRole;
             }
         }
-
+        /// <summary>
+        /// methode pour mettre à jour un role
+        /// </summary>
+        /// <param name="userRole"></param>
         public static void Update(UserRole userRole)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

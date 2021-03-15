@@ -10,6 +10,10 @@ namespace MyApps.Domain.Service
 {
     public class FormationService 
     {
+        /// <summary>
+        /// méthode pour  créer une formation
+        /// </summary>
+        /// <param name="formation"></param>
         public static void Create(Formation formation)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -18,7 +22,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour supprimer une formation
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -28,7 +35,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour avoir la liste de formation
+        /// </summary>
+        /// <returns></returns>
         public static List<Formation> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -37,7 +47,11 @@ namespace MyApps.Domain.Service
                 return db.Formations.ToList();
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer une formation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Formation GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -46,7 +60,10 @@ namespace MyApps.Domain.Service
                 return formation;
             }
         }
-
+        /// <summary>
+        /// méthode pour mettre à jour une formation
+        /// </summary>
+        /// <param name="formation"></param>
         public static void Update(Formation formation)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -55,6 +72,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// méthode pour faire une rechercher par un nom un formateur
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public static List<Formation> SearchMethodByName(string searchString)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

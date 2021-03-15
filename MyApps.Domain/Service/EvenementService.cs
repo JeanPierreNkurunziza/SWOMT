@@ -10,6 +10,10 @@ namespace MyApps.Domain.Service
 {
    public class EvenementService
     {
+        /// <summary>
+        /// methode pour créer un evenement 
+        /// </summary>
+        /// <param name="evenement"></param>
         public static void Create(Evenement evenement)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -19,7 +23,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour supprimer un évenement
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -29,7 +36,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer la liste des évenements
+        /// </summary>
+        /// <returns></returns>
         public static List<Evenement> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -38,7 +48,11 @@ namespace MyApps.Domain.Service
                 return evenement.ToList();
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer un evenement via ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Evenement GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -48,7 +62,10 @@ namespace MyApps.Domain.Service
             }
         }
 
-       
+       /// <summary>
+       /// mettre à jour l'evenement
+       /// </summary>
+       /// <param name="evenement"></param>
         public static void Update(Evenement evenement)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -57,6 +74,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// récuperer un nom de personne posté un evenement
+        /// </summary>
+        /// <param name="IdFormateur"></param>
+        /// <returns></returns>
         public static string GetNomFormateur(int? IdFormateur)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -68,6 +90,10 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// méthode pour récuperer la liste des évenement les plus récentes
+        /// </summary>
+        /// <returns></returns>
         public static List<Evenement> GetListOfCurrentEvenement() 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

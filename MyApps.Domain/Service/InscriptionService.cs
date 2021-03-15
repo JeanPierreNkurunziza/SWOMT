@@ -181,6 +181,11 @@ namespace MyApps.Domain.Service
                 return total;
             }
         }
+        /// <summary>
+        /// méthode pour calculer le nombre total des participant par module
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
         public static int GetNbreTotalParticipantParModule(int IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

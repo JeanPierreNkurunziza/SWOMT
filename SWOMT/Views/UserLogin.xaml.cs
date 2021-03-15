@@ -137,7 +137,7 @@ namespace SWOMT.Views
             element.UserRole = ComboBoxUserRole.Text;
             foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
             {
-                if (element.UserName == donne.UserName) // if the items has both ids then rejects
+                if (element.UserName == donne.UserName) 
                 {
                     MessageBox.Show("les données existé déjà ! dans la base de données");
                     return;
@@ -161,6 +161,19 @@ namespace SWOMT.Views
 
             return UserRoleList;
         }
-       
+        /// <summary>
+        /// Vérifier le nombre minimun de characteur à valider
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ValiderCharacterNumbers(object sender, RoutedEventArgs e)
+        {
+            if (((PasswordBox)sender).Password.Length < 4)
+            {
+                MessageBox.Show("Il faut au moins 4 lettres ou chiffres");  
+                return; 
+            }
+        }
+
     }
 }

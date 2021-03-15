@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
     public class SitesViewModelsServices
     {
+        /// <summary>
+        /// méthode pour récuperer les sites
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.SiteViewModel> GetSites()
         {
             List<ViewModels.SiteViewModel> Liste = new List<ViewModels.SiteViewModel>();

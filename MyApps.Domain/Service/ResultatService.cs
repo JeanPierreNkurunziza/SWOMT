@@ -153,6 +153,11 @@ namespace MyApps.Domain.Service
                 return moduleParticipant;
             }
         }
+        /// <summary>
+        /// la lsite des participant echouées un test
+        /// </summary>
+        /// <param name="IdExamen"></param>
+        /// <returns></returns>
         public static List<Resultat> GetListParticipantEchoué(int IdExamen) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -161,6 +166,11 @@ namespace MyApps.Domain.Service
                 return moduleParticipant;
             }
         }
+        /// <summary>
+        /// mathode pour récuperer la liste des modules non réussis pour chaque participant
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns></returns>
         public static List<Resultat> GetListModuleEchoué(int IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

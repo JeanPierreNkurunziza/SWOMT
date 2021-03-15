@@ -9,8 +9,12 @@ using System.Data.Entity;
 
 namespace MyApps.Domain.Service
 {
+    
     public class CertificatService
     {
+        /// <summary>
+        /// méthode pour créer un certificat 
+        /// </summary>
         public static void Create(Certificat certificat)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -19,7 +23,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// methode pour supprimer un certificat
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -29,6 +36,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// methode pour récuperer la lsite des certificat
+        /// </summary>
+        /// <returns></returns>
 
         public static List<Certificat> GetAll()
         {
@@ -38,6 +49,11 @@ namespace MyApps.Domain.Service
                 return certificat.ToList();
             }
         }
+        /// <summary>
+        /// mathode pour avour une liste des participants p
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns></returns>
         public static List<Certificat> GetListPerParticipant(int IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -46,7 +62,11 @@ namespace MyApps.Domain.Service
                 return certificat.ToList();
             }
         }
-
+        /// <summary>
+        /// methode pour avoir un certificat
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Certificat GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -55,7 +75,10 @@ namespace MyApps.Domain.Service
                 return certificat;
             }
         }
-
+        /// <summary>
+        /// mettre à jour a liste des certificat
+        /// </summary>
+        /// <param name="certificat"></param>
         public static void Update(Certificat certificat)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -64,7 +87,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// récuperer le nom d'un participant 
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns></returns>
         public static string GetNomParticipant(int? IdParticipant)  
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

@@ -10,12 +10,17 @@ namespace MyApps.Domain.Service
 {
     public class UserService
     {
+     /// <summary>
+    /// methode pour créer un utlisateur
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="motDePasse"></param>
+    /// <param name="userRole"></param>
         public static void Create(string userName, string motDePasse, string userRole) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                //db.Utilisateurs.Add(utilisateur);
-                //db.SaveChanges();
+                //appel d'un procédure stockée pour la création d'un utilisateur 
                 db.SP_RegisterUser(userName, motDePasse, userRole);
             }
         }
@@ -29,7 +34,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// récuperer une liste des utilisateurs
+        /// </summary>
+        /// <returns></returns>
         public static List<Utilisateur> GetAll()
         {
             try
@@ -47,7 +55,11 @@ namespace MyApps.Domain.Service
             }
             
         }
-
+        /// <summary>
+        /// methode pour récuperer un utilisateur
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Utilisateur GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -56,7 +68,10 @@ namespace MyApps.Domain.Service
                 return utilisateur;
             }
         }
-
+        /// <summary>
+        /// méthode pour mettre à jour l'utilisateur
+        /// </summary>
+        /// <param name="utilisateur"></param>
         public static void Update(Utilisateur utilisateur)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -76,7 +91,11 @@ namespace MyApps.Domain.Service
                       
         }
         
-
+        /// <summary>
+        /// méthode pour recupere le nom d'un utilisatuer
+        /// </summary>
+        /// <param name="utilisateurNom"></param>
+        /// <returns></returns>
         public static string GetUtilisateurNom(string utilisateurNom)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -122,6 +141,11 @@ namespace MyApps.Domain.Service
                 return false;
             }
         }
+        /// <summary>
+        /// méthode pour récuperer le role d"un utilisateur
+        /// </summary>
+        /// <param name="utilisateurNom"></param>
+        /// <returns></returns>
         public static string GetUtilisateurUserRole(string utilisateurNom)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -139,6 +163,12 @@ namespace MyApps.Domain.Service
                 return utilisateur.IdUser;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomUser"></param>
+        /// <param name="Motdepasse"></param>
+        /// <returns></returns>
         public static string LoginUserNom(string nomUser, string Motdepasse)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

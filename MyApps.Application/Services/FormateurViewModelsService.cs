@@ -29,6 +29,11 @@ namespace MyApps.Application.Services
 
             return Liste;
         }
+        /// <summary>
+        /// méthode pour afficher dans le résultat trouvé par la recherche
+        /// </summary>
+        /// <param name="searchName"></param>
+        /// <returns></returns>
         public static List<ViewModels.FormateurViewModel> SearchFormateurByName(string searchName)
         {
             List<ViewModels.FormateurViewModel> Liste = new List<ViewModels.FormateurViewModel>();
