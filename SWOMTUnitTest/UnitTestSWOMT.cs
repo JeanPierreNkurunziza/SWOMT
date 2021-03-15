@@ -17,7 +17,7 @@ namespace SWOMTUnitTest
            
             // Arrange
             //var utilisateur = UserService.GetAll();
-            string UserName = "christine";
+            string UserName = "Uwamahoro Christine";
             string MotDePasse = "1010";
             string reponseExcepted = UserName;
             // Act

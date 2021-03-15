@@ -77,35 +77,34 @@
     <Compile Include="Converter\MyBoolConverter.cs" />
     <Compile Include="Converter\MyBoolConverterPresentAbsent.cs" />
     <Compile Include="Converter\MyBoolConverterReussiEchoue.cs" />
-    <Compile Include="MyExtensionChangingTrueOrFalseDisplays.cs" />
     <Compile Include="TableauDeBord.xaml.cs">
       <DependentUpon>TableauDeBord.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Certificats.xaml.cs">
       <DependentUpon>Certificats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Exames.xaml.cs">
+    <Compile Include="Views\OtherViews\Exames.xaml.cs">
       <DependentUpon>Exames.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FormateurModules.xaml.cs">
       <DependentUpon>FormateurModules.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Formateurs.xaml.cs">
+    <Compile Include="Views\OtherViews\Formateurs.xaml.cs">
       <DependentUpon>Formateurs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Formations.xaml.cs">
+    <Compile Include="Views\OtherViews\Formations.xaml.cs">
       <DependentUpon>Formations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GestionParticipant.xaml.cs">
+    <Compile Include="Views\OtherViews\GestionParticipant.xaml.cs">
       <DependentUpon>GestionParticipant.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Inscriptions.xaml.cs">
       <DependentUpon>Inscriptions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Modules.xaml.cs">
+    <Compile Include="Views\OtherViews\Modules.xaml.cs">
       <DependentUpon>Modules.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Participants.xaml.cs">
+    <Compile Include="Views\OtherViews\Participants.xaml.cs">
       <DependentUpon>Participants.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlanningFormations.xaml.cs">
@@ -141,7 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Exames.xaml">
+    <Page Include="Views\OtherViews\Exames.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,15 +148,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Formateurs.xaml">
+    <Page Include="Views\OtherViews\Formateurs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Formations.xaml">
+    <Page Include="Views\OtherViews\Formations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GestionParticipant.xaml">
+    <Page Include="Views\OtherViews\GestionParticipant.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,11 +164,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Modules.xaml">
+    <Page Include="Views\OtherViews\Modules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Participants.xaml">
+    <Page Include="Views\OtherViews\Participants.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

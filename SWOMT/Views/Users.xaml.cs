@@ -54,7 +54,11 @@ namespace SWOMT.Views
         {
 
         }
-
+        /// <summary>
+        /// affichage de données après leur sélection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListUser_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
             if (ListUser.SelectedItem is MyApps.Application.ViewModels.UserViewModel donnee)
@@ -66,15 +70,16 @@ namespace SWOMT.Views
 
             }
         }
-
+        /// <summary>
+        /// méthode pour activer l'ajout d'un utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
            
-            //IdUser.Text = "";
-            //UserName.Text = "";
-            //MotDePasse.Text = "";
-            //UserRole.Text = "";
+          
             UserName.IsEnabled = true;
             MotDePasse.IsEnabled = true;
             ComboBoxUserRole.IsEnabled = true;
@@ -83,7 +88,11 @@ namespace SWOMT.Views
             MotDePasse.Text = "";
             ComboBoxUserRole.Text = "";
         }
-
+        /// <summary>
+        /// activation des modification
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Modifier_Click(object sender, RoutedEventArgs e)
         {
             if (IdUser.Text == "")
@@ -98,7 +107,11 @@ namespace SWOMT.Views
             ComboBoxUserRole.IsEnabled = true;
 
         }
-
+        /// <summary>
+        /// méthode pour supprimer un utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
             if (IdUser.Text == "")
@@ -118,6 +131,11 @@ namespace SWOMT.Views
             MotDePasse.Text = "";
             ComboBoxUserRole.Text = "";
         }
+        /// <summary>
+        /// méthode pour mettre à jour les données des utilisateurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             //Utilisateur element = new Utilisateur();
@@ -141,7 +159,7 @@ namespace SWOMT.Views
                 element.UserRole= ComboBoxUserRole.Text;
                 foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
                 {
-                    if ((element.UserName == donne.UserName) && (element.MotDePasse == donne.MotDePasse)) // if the items has both ids then rejects
+                    if (element.UserName == donne.UserName)
                     {
                         MessageBox.Show("les données existé déjà ! dans la base de données");
                         return;
@@ -190,7 +208,11 @@ namespace SWOMT.Views
             ListUserRole.DataContext = listeItems;
         }
 
-        
+        /// <summary>
+        /// méthode pour afficher les données après une selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void ListUserRole_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
@@ -201,7 +223,11 @@ namespace SWOMT.Views
                
             }
         }
-
+        /// <summary>
+        /// créer un role
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AjouterRole_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
@@ -212,7 +238,11 @@ namespace SWOMT.Views
             UserRoleName.Text = "";
            
         }
-
+        /// <summary>
+        /// activation de modification
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModifierRole_Click(object sender, RoutedEventArgs e)
         {
             if (IdUserRole.Text == "")
@@ -225,7 +255,11 @@ namespace SWOMT.Views
            
 
         }
-
+        /// <summary>
+        /// méthode pour supprimer un role
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SupprimerRole_Click(object sender, RoutedEventArgs e)
         {
             if (IdUserRole.Text == "")
@@ -244,6 +278,11 @@ namespace SWOMT.Views
             this.SelectedRolesusers(); 
 
         } 
+        /// <summary>
+        /// mettre à jour les données de roles 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MettreAjourRole_Click(object sender, RoutedEventArgs e) 
         {
           
@@ -293,6 +332,10 @@ namespace SWOMT.Views
             ComboBoxUserRole.Items.Clear();
             this.SelectedRolesusers();
         }
+        /// <summary>
+        /// récuperer le role de l'utilisateur
+        /// </summary>
+        /// <returns></returns>
         private List<MyApps.Application.ViewModels.UserRolesViewModel> SelectedRolesusers()
         {
 
