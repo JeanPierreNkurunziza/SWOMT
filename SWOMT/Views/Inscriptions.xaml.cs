@@ -72,14 +72,11 @@ namespace SWOMT.Views
             };
             ListElement.DataContext = listeItems;
         }
-        private void PopulateAndBindModulePerParticipant(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListSiteModule.DataContext = listeItems;
-        }
+        /// <summary>
+        /// binding la liste des inscriptions en attente 
+        /// </summary>
+        /// <param name="listeItems"></param>
+       
         private void PopulateAndBindAttente(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
         {
             Binding monBinding = new Binding
@@ -88,7 +85,10 @@ namespace SWOMT.Views
             };
             ListElementAttente.DataContext = listeItems;
         }
-
+        /// <summary>
+        /// binding la liste des participants
+        /// </summary>
+        /// <param name="listeCompetences"></param>
         private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.ParticipantViewModel> listeCompetences) 
         {
             Binding monBinding = new Binding
@@ -98,6 +98,10 @@ namespace SWOMT.Views
             ListParticipant.DataContext = listeCompetences;
 
         }
+        /// <summary>
+        /// méthode pour faire remplir le combobox le liste de modules
+        /// </summary>
+        /// <returns></returns>
         private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
         {
             
@@ -177,11 +181,13 @@ namespace SWOMT.Views
                     IdParticipants.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
 
             }
-            //listeModulePerParticipant.Clear();
-            //listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
-            //PopulateAndBindModulePerParticipant(listeModulePerParticipant);
+           
         }
-
+        /// <summary>
+        /// méthode pour ajouter un elements
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             //enregistre = "Ajouter";
@@ -341,6 +347,23 @@ namespace SWOMT.Views
            
 
         }
+        /// <summary>
+        /// binding la liste des inscriptions dans des modules
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindModulePerParticipant(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListSiteModule.DataContext = listeItems;
+        }
+        /// <summary>
+        /// méthode pour porter les changements en cas de selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBoxIdSiteModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IdSiteModule.SelectedItem == null)
@@ -750,7 +773,11 @@ namespace SWOMT.Views
             listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
             PopulateAndBindModulePerParticipant(listeModulePerParticipant);
         }
-
+        /// <summary>
+        /// méthode pour valider la réference de module
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             if (IdSiteModuleRechercher.Text == "")

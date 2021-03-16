@@ -140,7 +140,7 @@
                     <GroupBox x:Name="ModuleSiteTextBox" Header="Inscrire un participant dans un module" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
                         <StackPanel Grid.Column="0">
                             <WrapPanel>
-                                <Label Content="Réf Id Site Module"></Label>
+                                <Label Content="Référence Module"></Label>
                                 <TextBox FontWeight="ExtraBold" Background="White" Margin="40,2" Name="IdSiteModuleRechercher" Text="{Binding Path=IdSiteModule}"  Width="70" MaxLength="10" TextAlignment="Center"></TextBox>
                                 <Button   Name="Valider" Content="Valider" Click="Valider_Click"></Button> 
                             </WrapPanel>
