@@ -43,51 +43,17 @@ namespace MyApps.Application.Services
         /// <returns></returns>
         public static List<ViewModels.PresenceViewModel> GetListParticipantPresentPerModule( int IdSiteModule)
         {
-            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+           
             var GetListe = PresenceService.GetListParticipantPresentPerModule(IdSiteModule);
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.PresenceViewModel vm = new ViewModels.PresenceViewModel()
-                {
-                    IdPresence = itemList.IdPresence,
-                    IdSiteModule = itemList.IdSiteModule,
-                    IdParticipant = itemList.IdParticipant,
-                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
-                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
-                    DateHeureDePresence = itemList.DateHeureDePresence,
-                    EstPresent = itemList.EstPresent,
-                    DateDebutModule = PresenceService.GetDateDebut(itemList.IdSiteModule),
-                    DateDeFinModule = PresenceService.GetDateFin(itemList.IdSiteModule),
-                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            return GetListPresencess(GetListe);
         }
         public static List<ViewModels.PresenceViewModel> GetListParticipantAbsentPerModule(int IdSiteModule)
         {
-            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+           
             var GetListe = PresenceService.GetListParticipantAbsentPerModule(IdSiteModule); 
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.PresenceViewModel vm = new ViewModels.PresenceViewModel()
-                {
-                    IdPresence = itemList.IdPresence,
-                    IdSiteModule = itemList.IdSiteModule,
-                    IdParticipant = itemList.IdParticipant,
-                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
-                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
-                    DateHeureDePresence = itemList.DateHeureDePresence,
-                    EstPresent = itemList.EstPresent,
-                    DateDebutModule=PresenceService.GetDateDebut(itemList.IdSiteModule),
-                    DateDeFinModule=PresenceService.GetDateFin(itemList.IdSiteModule),
-                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
-                };
-                Liste.Add(vm);
-            }
+           
 
-            return Liste;
+            return GetListPresencess(GetListe);
         }
         /// <summary>
         /// afficher selon le résultat de la recherche
@@ -106,6 +72,30 @@ namespace MyApps.Application.Services
             }
 
             return assets.ToList();
+        }
+        public static List<ViewModels.PresenceViewModel> GetListPresencess(List<Infrastructure.DB.Presence> listElement)
+        {
+            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+           
+            foreach (var itemList in listElement)
+            {
+                ViewModels.PresenceViewModel vm = new ViewModels.PresenceViewModel()
+                {
+                    IdPresence = itemList.IdPresence,
+                    IdSiteModule = itemList.IdSiteModule,
+                    IdParticipant = itemList.IdParticipant,
+                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
+                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
+                    DateHeureDePresence = itemList.DateHeureDePresence,
+                    EstPresent = itemList.EstPresent,
+                    DateDebutModule = PresenceService.GetDateDebut(itemList.IdSiteModule),
+                    DateDeFinModule = PresenceService.GetDateFin(itemList.IdSiteModule),
+                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
         }
     }
 }

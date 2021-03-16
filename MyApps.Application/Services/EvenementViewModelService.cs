@@ -15,22 +15,9 @@ namespace MyApps.Application.Services
         /// <returns> returne un liste des évenements </returns>
         public static List<ViewModels.EvenementViewModel> GetEvenements() 
         {
-            List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();
+          
             var GetListe = EvenementService.GetAll();
-            foreach (var itemList in GetListe)
-            {
-                ViewModels.EvenementViewModel vm = new ViewModels.EvenementViewModel()
-                {
-                    IdEvenement = itemList.IdEvenement,
-                    IdFormateur = itemList.IdFormateur,
-                    Evenement1 = itemList.Evenement1,
-                    DateOfEvent = itemList.DateOfEVent,
-                    NomFormateur = EvenementService.GetNomFormateur(itemList.IdFormateur)
-                };
-                Liste.Add(vm);
-            }
-
-            return Liste;
+            return GetEvenements(GetListe);
         }
 
         /// <summary>
@@ -39,9 +26,16 @@ namespace MyApps.Application.Services
         /// <returns></returns>
         public static List<ViewModels.EvenementViewModel> GetCurrentEvenementsWithin90Days() 
         {
-            List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();
+           
             var GetListe = EvenementService.GetListOfCurrentEvenement();
-            foreach (var itemList in GetListe)
+           
+            return GetEvenements(GetListe);
+        }
+        public static List<ViewModels.EvenementViewModel> GetEvenements(List<Infrastructure.DB.Evenement> eventlist)
+        {
+            List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();
+           
+            foreach (var itemList in eventlist)
             {
                 ViewModels.EvenementViewModel vm = new ViewModels.EvenementViewModel()
                 {
