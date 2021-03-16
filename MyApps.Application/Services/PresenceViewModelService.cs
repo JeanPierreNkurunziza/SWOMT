@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
     public class PresenceViewModelService
     {
+        /// <summary>
+        /// mappées les données de presence 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.PresenceViewModel> GetPresences()
         {
             List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
@@ -23,13 +27,85 @@ namespace MyApps.Application.Services
                     NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
                     NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
                     DateHeureDePresence = itemList.DateHeureDePresence,
-                    EstPresent = itemList.EstPresent, 
+                    EstPresent = itemList.EstPresent,
+                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
 
                 };
                 Liste.Add(vm);
             }
 
             return Liste;
+        }
+        /// <summary>
+        /// récuperer les participants present par module
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
+        public static List<ViewModels.PresenceViewModel> GetListParticipantPresentPerModule( int IdSiteModule)
+        {
+            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+            var GetListe = PresenceService.GetListParticipantPresentPerModule(IdSiteModule);
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.PresenceViewModel vm = new ViewModels.PresenceViewModel()
+                {
+                    IdPresence = itemList.IdPresence,
+                    IdSiteModule = itemList.IdSiteModule,
+                    IdParticipant = itemList.IdParticipant,
+                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
+                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
+                    DateHeureDePresence = itemList.DateHeureDePresence,
+                    EstPresent = itemList.EstPresent,
+                    DateDebutModule = PresenceService.GetDateDebut(itemList.IdSiteModule),
+                    DateDeFinModule = PresenceService.GetDateFin(itemList.IdSiteModule),
+                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+        public static List<ViewModels.PresenceViewModel> GetListParticipantAbsentPerModule(int IdSiteModule)
+        {
+            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+            var GetListe = PresenceService.GetListParticipantAbsentPerModule(IdSiteModule); 
+            foreach (var itemList in GetListe)
+            {
+                ViewModels.PresenceViewModel vm = new ViewModels.PresenceViewModel()
+                {
+                    IdPresence = itemList.IdPresence,
+                    IdSiteModule = itemList.IdSiteModule,
+                    IdParticipant = itemList.IdParticipant,
+                    NomModule = InscriptionService.GetNomModule(itemList.IdSiteModule),
+                    NomParticipant = InscriptionService.GetNomParticipant(itemList.IdParticipant),
+                    DateHeureDePresence = itemList.DateHeureDePresence,
+                    EstPresent = itemList.EstPresent,
+                    DateDebutModule=PresenceService.GetDateDebut(itemList.IdSiteModule),
+                    DateDeFinModule=PresenceService.GetDateFin(itemList.IdSiteModule),
+                    IdNational = PresenceService.GetIdNational(itemList.IdParticipant)
+                };
+                Liste.Add(vm);
+            }
+
+            return Liste;
+        }
+        /// <summary>
+        /// afficher selon le résultat de la recherche
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        public static List<ViewModels.PresenceViewModel> SearchMethodByName(string searchString)
+        {
+            List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();
+            var GetListe = GetPresences();
+            var assets = from s in GetListe
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                assets = assets.Where(s => s.NomParticipant.ToUpper().Contains(searchString.ToUpper()) || s.DateHeureDePresence.ToString().Contains(searchString.ToString()));
+            }
+
+            return assets.ToList();
         }
     }
 }

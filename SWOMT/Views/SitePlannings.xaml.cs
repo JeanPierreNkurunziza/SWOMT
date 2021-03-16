@@ -25,17 +25,23 @@ namespace SWOMT.Views
         List<MyApps.Application.ViewModels.SitePlanningViewModel> clearListe = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
         List<MyApps.Application.ViewModels.SiteViewModel> listeSite = new List<MyApps.Application.ViewModels.SiteViewModel>();
+        List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeFormateurModule = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
+
 
         int idSiteSelected;
         int idModuleSelected = 0;
+        int idFormateurModuleSelected;
         string enregistre;
+        
         public SitePlannings()
         {
             InitializeComponent(); 
             liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
             listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites(); 
+            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
+          
             PopulateAndBindSites(listeSite);
+            PopulateAndBindModule(listeModule);
             this.SelectedNomModule();
             this.SelectedNomSite();
 
@@ -53,6 +59,7 @@ namespace SWOMT.Views
             };
             ListModuleSite.DataContext = listeItems;
         }
+       
         /// <summary>
         /// Biding the list of the sites
         /// </summary>
@@ -78,6 +85,18 @@ namespace SWOMT.Views
             }
 
             return listeModule;
+        }
+        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> SelectedNomFormateurPerModule ()
+        {
+            listeFormateurModule = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
+            foreach (var module in listeFormateurModule)
+            {
+                
+                IdFormateurModule.Items.Add(module.NomFormateur + " : " + module.IdFormateurModule);
+            }
+           
+
+            return listeFormateurModule; 
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID
@@ -111,6 +130,7 @@ namespace SWOMT.Views
                 //NomSite.Text = donnee.NomSite.ToString();
                 DateDebutModule.Text = donnee.DateDebutModule.ToString();
                 DateFinModule.Text = donnee.DateFinModule.ToString();
+                IdFormateurModule.SelectedItem = donnee.NomFormateur.ToString() + " : " + donnee.IdFormateurModule.ToString();  
 
             }
         }
@@ -124,7 +144,7 @@ namespace SWOMT.Views
            
             if (IdSite.SelectedItem == null)
             {
-                MessageBox.Show("Please select the name of site");
+                MessageBox.Show("Veuillez selectionner le nom de site");
                 return;
             }
             IdSiteModule.IsEnabled = false;
@@ -142,6 +162,7 @@ namespace SWOMT.Views
             //NomModule.Text = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.IsEnabled = true;
 
             ModeIsEnabledTrue();
         }
@@ -157,7 +178,12 @@ namespace SWOMT.Views
 
             if (IdModule.Text == "")
             {
-                MessageBox.Show("Click on the Ajouter button to add the Datas or select the datas to modify in the list ");
+                MessageBox.Show("Un simple clic sur le bouton 'Ajouter' où bien selectionner un élément de mettre à jour dans la liste ");
+                return;
+            }
+            if (IdFormateurModule.Text == "")
+            {
+                MessageBox.Show(" veuillez sélectionner un formateur ");
                 return;
             }
 
@@ -169,7 +195,19 @@ namespace SWOMT.Views
                 element.IdModule = (short)(idModuleSelected);
                
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text).Date;
+                if (element.DateDebutModule < DateTime.Now)
+                {
+                    MessageBox.Show("La date de début est inférieur à la date currente");
+                    return;
+                }
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                if (element.DateFinModule < element.DateDebutModule)
+                {
+                    MessageBox.Show("La date de fin est inférieur à la date de début");
+                    return;
+                }
+               
+                element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Create(element);
 
@@ -182,7 +220,18 @@ namespace SWOMT.Views
                 element.IdSite = (short)(idSiteSelected);
                 element.IdModule = (short)(idModuleSelected);              
                 element.DateDebutModule = DateTime.Parse(DateDebutModule.Text);
+                if (element.DateDebutModule < DateTime.Now)
+                {
+                    MessageBox.Show("La date de début est inférieur à la date currente");
+                    return;
+                }
                 element.DateFinModule = DateTime.Parse(DateFinModule.Text).Date;
+                if (element.DateFinModule < element.DateDebutModule)
+                {
+                    MessageBox.Show("La date de fin est inférieur à la date de début");
+                    return;
+                }
+                element.IdFormateurModule = (short)(idFormateurModuleSelected);
 
                 MyApps.Domain.Service.SitePlanningService.Update(element);
             }
@@ -195,6 +244,7 @@ namespace SWOMT.Views
             IdModule.SelectedValue = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.SelectedValue = "";
             ModeIsEnabledFalse();
         }
         /// <summary>
@@ -212,6 +262,7 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             ModeIsEnabledTrue();
+            IdFormateurModule.IsEnabled = true;
 
 
         }
@@ -223,10 +274,10 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e) 
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            
             if (IdSiteModule.Text == "")
             {
-                MessageBox.Show("Please select the the items in the list to delete");
+                MessageBox.Show("Veuillez selectionner un élément à supprimer");
                 return;
             }
 
@@ -244,6 +295,7 @@ namespace SWOMT.Views
             IdModule.SelectedValue = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
+            IdFormateurModule.Text = "";
         }
         private void ClearFormValues()
         {
@@ -288,6 +340,7 @@ namespace SWOMT.Views
                 Id.Text = donnee.IdSite.ToString();
                 Nom.Text = donnee.NomSite.ToString();
                 AdresseSite.Text = donnee.AdresseSite.ToString();
+                IdSite.SelectedItem = donnee.NomSite.ToString(); 
 
             }
         }
@@ -308,10 +361,19 @@ namespace SWOMT.Views
                     idModuleSelected = module.IdModule;
                 }
             }
+            IdFormateurModule.Items.Clear(); 
+            this.SelectedNomFormateurPerModule();
+            
+            
+
         }
 
         private void IdSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (IdSite.SelectedItem == null)
+            {
+                return;
+            }
             string nomSiteSelected = IdSite.SelectedValue.ToString();
 
             foreach (var site in listeSite)
@@ -355,7 +417,7 @@ namespace SWOMT.Views
 
             if (Nom.Text == "")
             {
-                MessageBox.Show("Please type the name of the site");
+                MessageBox.Show("Veuillez entrer le nom de site ");
                 return;
             }
 
@@ -398,6 +460,8 @@ namespace SWOMT.Views
             Nom.Text = "";
             AdresseSite.Text = ""; 
             ModeIsEnabledFalseSite();
+            IdSite.Items.Clear();
+            this.SelectedNomSite();
 
         }
         /// <summary>
@@ -429,7 +493,7 @@ namespace SWOMT.Views
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
             if (Id.Text == "")
             {
-                MessageBox.Show("Please select the site to delete");
+                MessageBox.Show("Veuillez selectionner un élément à supprimer");
                 return;
             }
             // to avoid the suppression of the site that has already assigned the module to manage 
@@ -437,7 +501,7 @@ namespace SWOMT.Views
             {
                 if ((short.Parse(Id.Text) == donne.IdSite))
                 {
-                    MessageBox.Show("The site has the modules to manage ! Delete first the modules");
+                    MessageBox.Show("Le site gere des module ! Veuillez supprimer d'abord les modules concernées dans le site planning ");
                     ClearFormValuesSite(); 
                     return; 
                 }
@@ -451,7 +515,8 @@ namespace SWOMT.Views
             listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
             PopulateAndBindSites(listeSite);
             ClearFormValuesSite();
-
+            IdSite.Items.Clear();
+            this.SelectedNomSite();
         }
         private void ClearFormValuesSite()
         {
@@ -473,6 +538,103 @@ namespace SWOMT.Views
             Nom.IsEnabled = false;
             AdresseSite.IsEnabled = false;
 
+        }
+
+        //******************************************************************************************************************************
+        //***************************************** la gestion des modules et site par module*******************************************
+        //******************************************************************************************************************************
+        /// <summary>
+        /// biding la liste de modules
+        /// </summary>
+        /// <param name="listeModules"></param>
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElementModule.DataContext = listeItems;
+        }
+        private void PopulateAndBindSitePerModule(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListSitePerModule.DataContext = listeItems;
+        }
+
+
+        /// <summary>
+        /// afffichage apres la selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListElementModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
+            {
+                Id.Text = donnee.IdModule.ToString();
+                //IdFormation.Text = donnee.NomFormation.ToString();
+                //NomModule.Text = donnee.NomModule.ToString();
+                //// NomFormation.Text = donnee.NomFormation.ToString();
+                //CreditModule.Text = donnee.CreditModule.ToString();
+                //NombrePrévu.Text = donnee.NombrePrévu.ToString();
+                IdModule.SelectedItem = donnee.NomModule.ToString();
+            }
+            //if (enregistre != "Ajouter")
+            //{
+            //    IdFormateur.SelectedValue = "";
+            //}
+            liste.Clear();
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePerModule((short)(idModuleSelected));
+            PopulateAndBindSitePerModule(liste); 
+
+        }
+        private void RechercherModule_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NomRechercherModule.Text == "")
+            {
+                MessageBox.Show("Entrer le nom à rechercher");
+
+                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+                PopulateAndBindModule(listeModule);
+                return;
+
+            }
+
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
+        }
+        private void ReSetListModule_Click(object sender, RoutedEventArgs e)
+        {
+            NomRechercherModule.Text = "";
+            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(listeModule);
+        }
+        /// <summary>
+        /// Combobox pour séléctionner le nom de formateur par module 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IdFormateurModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IdFormateurModule.SelectedItem == null)
+            {
+                return;
+            }
+            string nomFormateurModuleSelected = IdFormateurModule.SelectedValue.ToString();
+
+            foreach (var module in MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected))) 
+            {
+                if (nomFormateurModuleSelected == module.NomFormateur + " : " + module.IdFormateurModule) 
+                {
+                    idFormateurModuleSelected = module.IdFormateurModule; 
+                    
+                }
+            }
+           
         }
     }
 }

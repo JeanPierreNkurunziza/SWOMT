@@ -14,7 +14,9 @@ namespace MyApps.Application.ViewModels
         public string NomModule { get; set; }
         public string NomParticipant { get; set; }  
         public int? Points { get; set; }   
-        public bool EstPresent { get; set; }
+        public bool EstPresent { get ; set; }
         public bool ParticipantRéussi { get; set; }  
+
+       
     }
 }

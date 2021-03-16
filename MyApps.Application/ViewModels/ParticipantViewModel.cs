@@ -17,5 +17,6 @@ namespace MyApps.Application.ViewModels
         public string SecteurParticipant { get; set; }
         public string DistrictParticipant { get; set; }
         public DateTime DateEncodage { get; set; } 
+       
     }
 }

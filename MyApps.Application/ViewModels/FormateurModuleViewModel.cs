@@ -8,6 +8,7 @@ namespace MyApps.Application.ViewModels
 {
    public class FormateurModuleViewModel
     {
+        public int IdFormateurModule { get; set; }  
         public int IdFormateur { get; set; }
         public int IdModule { get; set; }
         public string NomModule { get; set; }

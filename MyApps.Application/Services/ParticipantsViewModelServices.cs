@@ -36,6 +36,35 @@ namespace MyApps.Application.Services
 
             return ParticipantsListe;
         }
+        /// <summary>
+        /// afficher la liste selon le résultat de la recherche
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        public static List<ParticipantViewModel> GetParticipantByMethodeSearch(string searchString) 
+        {
+            List<ViewModels.ParticipantViewModel> ParticipantsListe = new List<ViewModels.ParticipantViewModel>();
+            var ListeParticipant = ParticipantService.SearchParticipantByName(searchString); 
+            foreach (var participant in ListeParticipant)
+            {
+                ViewModels.ParticipantViewModel vm = new ViewModels.ParticipantViewModel()
+                {
+                    IdParticipant = participant.IdParticipant,
+                    NomParticipant = participant.NomParticipant,
+                    DateNaissance = participant.DateNaissance,
+                    IdNational = participant.IdNational,
+                    TelParticipant = participant.TélParticipant,
+                    EmailParticipant = participant.EmailParticipant,
+                    SecteurParticipant = participant.SecteurParticipant,
+                    DistrictParticipant = participant.DistrictParticipant,
+                    DateEncodage = participant.DateEncodage,
+
+                };
+                ParticipantsListe.Add(vm);
+            }
+
+            return ParticipantsListe;
+        }
 
     }
 }

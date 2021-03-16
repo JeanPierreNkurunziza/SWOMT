@@ -11,6 +11,10 @@ namespace MyApps.Domain.Service
 {
    public class SitePlanningService  
     {
+        /// <summary>
+        /// méthode pour créeer un planning de site
+        /// </summary>
+        /// <param name="sitePlanning"></param>
         public static void Create(SiteModule sitePlanning)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -19,7 +23,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour supprimer un planning
+        /// </summary>
+        /// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -29,7 +36,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// méthode pour récuperer la lsite des planning
+        /// </summary>
+        /// <returns></returns>
         public static List<SiteModule> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -38,7 +48,11 @@ namespace MyApps.Domain.Service
                 return sitePlanning.ToList(); 
             }
         }
-
+        /// <summary>
+        /// avec l'identifiant on récuper un élément
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static SiteModule GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -48,6 +62,10 @@ namespace MyApps.Domain.Service
             }
         }
 
+        /// <summary>
+        /// mettre à jour la site planning
+        /// </summary>
+        /// <param name="sitePlanning"></param>
         public static void Update(SiteModule sitePlanning)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -56,6 +74,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// méthode pour récuperer un nom de module via site planning
+        /// </summary>
+        /// <param name="IdModule"></param>
+        /// <returns></returns>
         public static string GetNomModule(int? IdModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -66,6 +89,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// méthode pour récuperer un nom d'un seul site
+        /// </summary>
+        /// <param name="IdSite"></param>
+        /// <returns></returns>
         public static string GetNomSite(int? IdSite) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -73,6 +101,23 @@ namespace MyApps.Domain.Service
 
                 var GetName = db.Sites.Find(IdSite);
                 return GetName.NomSite; 
+
+            }
+        }
+        /// <summary>
+        /// récuper un nom de formateur 
+        /// </summary>
+        /// <param name="IdFormateurModule"></param>
+        /// <returns></returns>
+        public static string GetNomFormateur(int? IdFormateurModule) 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var GetIdFormateurModule = db.FormateurModules.Find(IdFormateurModule);
+                var IdFormateur = GetIdFormateurModule.IdFormateur;  
+                var nomFormateur = db.Formateurs.Find(IdFormateur);
+                return nomFormateur.NomFormateur; 
 
             }
         }
@@ -84,5 +129,43 @@ namespace MyApps.Domain.Service
                 return moduleSite;
             }
         }
+
+        public static List<SiteModule> GetListSitePerModule(int IdModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.IdModule == IdModule).ToList();
+                return moduleSite;
+            }
+        }
+        public static List<SiteModule> GetListSitePerFormateur(int IdFormateur)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.IdFormateurModule == IdFormateur).ToList(); 
+                return moduleSite;
+            }
+        }
+        public static List<SiteModule> GetListModuleEncours()
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.DateFinModule >= DateTime.Now && a.DateDebutModule <=DateTime.Now).ToList();
+                return moduleSite;
+            }
+        }
+        /// <summary>
+        /// méthode pour récuperer la liste des module planifiés
+        /// </summary>
+        /// <returns></returns>
+        public static List<SiteModule> GetListModulePlanifies() 
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                var moduleSite = db.SiteModules.Where(a => a.DateDebutModule >= DateTime.Now).ToList();
+                return moduleSite;
+            }
+        }
+
     }
 }

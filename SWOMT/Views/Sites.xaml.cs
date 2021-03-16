@@ -21,156 +21,163 @@ namespace SWOMT.Views
     /// </summary>
     public partial class Sites : Page
     {
-        List<MyApps.Application.ViewModels.SiteViewModel> liste = new List<MyApps.Application.ViewModels.SiteViewModel>();
+        List<MyApps.Application.ViewModels.SitePlanningViewModel> listeEncours = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
+        List<MyApps.Application.ViewModels.SitePlanningViewModel> listePlanifies = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
+        List<MyApps.Application.ViewModels.PlanningViewModel> listeFormation = new List<MyApps.Application.ViewModels.PlanningViewModel>();
+        List<MyApps.Application.ViewModels.EvenementViewModel> listeEvenement = new List<MyApps.Application.ViewModels.EvenementViewModel>();
 
-        string enregistre;
-        public Sites() 
+        string roleNameSelected;
+        string nomUserSelected;
+        /// <summary>
+        /// le constructeur de la classe Sites
+        /// </summary>
+        /// <param name="roleName"></param>
+        public Sites(string roleName, string username) 
         {
             InitializeComponent();
-            liste = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-            PopulateAndBind(liste);
+            listeEncours = MyApps.Application.Services.SitePlanningViewModelService.GetListModuleEncours();
+            listePlanifies = MyApps.Application.Services.SitePlanningViewModelService.GetListeModulesPlanifiesProchainement();
+            listeFormation = MyApps.Application.Services.PlanningsFormation.GetPlanningFormationThisYearAndNextYear();
+            listeEvenement=MyApps.Application.Services.EvenementViewModelService.GetCurrentEvenementsWithin90Days();
+           
+            PopulateAndBindListEncours(listeEncours);
+            PopulateAndBindFormationsPlanifié(listeFormation);
+            PopulateAndBindListPlanifié(listePlanifies);
+            PopulateAndBindEvenement(listeEvenement);
 
+            roleNameSelected = (string)roleName;
+            nomUserSelected = username;
+
+            if ((string)roleName != "Admin")
+            {
+                //BoutonInscription.IsEnabled=false;
+                supprimer.Visibility = Visibility.Hidden; 
+            }
         }
 
 
 
         /// <summary>
-        /// biding la liste de sites
+        /// biding la liste de modules encours 
         /// </summary>
-        /// <param name="listeFormation"></param>
-        private void PopulateAndBind(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindListEncours(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
                 Path = new PropertyPath("Value")
             };
-            ListElement.DataContext = listeItems;
+            ListModuleEncours.DataContext = listeItems;
+        }
+        /// <summary>
+        /// binding la liste de modules planifiés  
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindListPlanifié(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListModulePlanifies.DataContext = listeItems;
         }
 
-
-
+        /// <summary>
+        /// binding la liste des formations planifiées 
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindFormationsPlanifié(List<MyApps.Application.ViewModels.PlanningViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListFormation.DataContext = listeItems;
+        }
 
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListElement_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        private void PopulateAndBindEvenement(List<MyApps.Application.ViewModels.EvenementViewModel> listeItems)
         {
-            if (ListElement.SelectedItem is MyApps.Application.ViewModels.SiteViewModel donnee)
+            Binding monBinding = new Binding
             {
-                IdSite.Text = donnee.IdSite.ToString();
-                NomSite.Text = donnee.NomSite.ToString();
-                AdresseSite.Text = donnee.AdresseSite.ToString();
-
-            }
-        }
-
-        private void Ajouter_Click(object sender, RoutedEventArgs e)
-        {
-            enregistre = "Ajouter";
-            ClearFormValues();
-            ModeIsEnabledTrue();
+                Path = new PropertyPath("Value")
+            };
+            ListEvenement.DataContext = listeItems;
         }
         /// <summary>
-        /// méthode pour mettre à jour et ajouter  une site
+        /// la méthode qui permettre de sélectionner un élément dans la liste des événements
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MettreAjour_Click(object sender, RoutedEventArgs e)
+        private void Evenement_SelectinChanged(object sender, SelectionChangedEventArgs e)
         {
-            Site element = new Site();
-            //Competence competence = new Competence();
-
-            //if (NomCompetence.Text == "")
-            //{
-            //    MessageBox.Show("Il faut saisir le nom de la competence");
-            //    return;
-            //}
-
-
-
-            if (enregistre == "Ajouter")
+            if (ListEvenement.SelectedItem is MyApps.Application.ViewModels.EvenementViewModel donnee)
             {
-                element.NomSite = NomSite.Text;
-                element.AdresseSite = AdresseSite.Text;
-
-                MyApps.Domain.Service.SiteService.Create(element);
-
+                //pour eviter le système de cracher quant on selectionne le vide
+                if (donnee.IdEvenement == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
+              
             }
-
-            if (enregistre == "Modifier")
-            {
-
-                element.IdSite = short.Parse(IdSite.Text);
-                element.NomSite = NomSite.Text;
-                element.AdresseSite = AdresseSite.Text;
-
-                MyApps.Domain.Service.SiteService.Update(element);
-            }
-
-
-            ModeIsEnabledFalse();
-            liste.Clear();
-            liste = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-            PopulateAndBind(liste);
-
         }
         /// <summary>
-        /// méthode pour liberer le schamps à modifier une formation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Modifier_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (IdSite.Text == "")
-            {
-                MessageBox.Show("Entrer la formation à modifier");
-                return;
-            }
-            enregistre = "Modifier";
-            ModeIsEnabledTrue();
-
-
-        }
-
-        /// <summary>
-        /// méthode pour supprimer une  competence
+        /// Méthode qui permet de supprimer un élément sélectionner dans la liste des événements 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Supprimer_Click(object sender, RoutedEventArgs e)
         {
-            //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
+            if (ListEvenement.SelectedItem is MyApps.Application.ViewModels.EvenementViewModel donnee)
+            {
+                //pour eviter le système de cracher quant on selectionne le vide
+                if (donnee.IdEvenement == 0)
+                {
+                    MessageBox.Show("Séléctionner un élément dans la liste");
+                    return;
+                    //IdSite.Text = "";   
+                }
 
-            MyApps.Domain.Service.SiteService.Delete(short.Parse(IdSite.Text));
-
-            ClearFormValues();
-            liste.Clear();
-            liste = MyApps.Application.Services.SitesViewModelsServices.GetSites(); 
-            PopulateAndBind(liste);
-
+                MyApps.Domain.Service.EvenementService.Delete(donnee.IdEvenement);
+                listeEvenement.Clear();
+                listeEvenement = MyApps.Application.Services.EvenementViewModelService.GetEvenements();
+                PopulateAndBindEvenement(listeEvenement);
+            }
         }
-        private void ClearFormValues()
-        {
-            IdSite.Text = "";
-            NomSite.Text = "";
-            AdresseSite.Text = "";
 
-        }
-        private void ModeIsEnabledTrue()
+        private void ValiderInscription_Click(object sender, RoutedEventArgs e)
         {
-            IdSite.IsEnabled = true;
-            NomSite.IsEnabled = true;
-            AdresseSite.IsEnabled = true;
+            password.Visibility = Visibility;
+            UpDatePassord.Visibility = Visibility;
+        }
 
-        }
-        private void ModeIsEnabledFalse()
+        private void UpDatePassword_Click(object sender, RoutedEventArgs e)
         {
-            IdSite.IsEnabled = false;
-            NomSite.IsEnabled = false;
-            AdresseSite.IsEnabled = false;
+            Utilisateur element = new Utilisateur();
+            if (password.Password == "")
+            {
+                MessageBox.Show("Veuillez entrer le mot de passe SVP!");
+                password.Visibility = Visibility.Hidden;
+                UpDatePassord.Visibility = Visibility.Hidden;
+                return;
+            }
+
+
+            
+            element.UserName = nomUserSelected;
+            element.MotDePasse = password.Password;
+            element.UserRole = roleNameSelected;
+            element.IdUser = MyApps.Domain.Service.UserService.GetUtilisateurUserId(nomUserSelected);
+            MyApps.Domain.Service.UserService.MetàJourUser(element.IdUser,element.UserName, element.MotDePasse, element.UserRole);
+            password.Password = "";
+            password.Visibility = Visibility.Hidden;
+            UpDatePassord.Visibility = Visibility.Hidden;
 
         }
     }

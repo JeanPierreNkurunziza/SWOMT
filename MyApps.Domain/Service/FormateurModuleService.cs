@@ -11,32 +11,30 @@ namespace MyApps.Domain.Service
 {
    public class FormateurModuleService 
     {
+        /// <summary>
+        /// méthode pour affecter le module à un formateur
+        /// </summary>
+        /// <param name="formateurModule"></param>
         public static void Create(FormateurModule formateurModule)
         {
-            try
-            {
+           
                 using (TrainingDBEntities db = new TrainingDBEntities())
                 {
 
                     db.FormateurModules.Add(formateurModule);
                     db.SaveChanges();
                 }
-            }
-            catch (Exception e)
-            {
-                if (CheckIfItemsExists(formateurModule.IdFormateur, formateurModule.IdModule))
-                {
-                    Environment.Exit(-1); 
-                }
-            }
-            
+                       
         }
-
-        public static void Delete(int idFormateur, int idModule)
+        /// <summary>
+        /// méthode pour supprimer un élément dans formateur module planning
+        /// </summary>
+        /// <param name="idFormateurModule"></param>
+        public static void Delete(int idFormateurModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var formateurModule = db.FormateurModules.Find(idFormateur, idModule);
+                var formateurModule = db.FormateurModules.Find(idFormateurModule); 
                 if(formateurModule != null)
                 {
                     db.FormateurModules.Remove(formateurModule);
@@ -46,7 +44,10 @@ namespace MyApps.Domain.Service
                
             }
         }
-
+        /// <summary>
+        /// méthode pour afficher la liste des modules et formateurs
+        /// </summary>
+        /// <returns></returns>
         public static List<FormateurModule> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -55,6 +56,11 @@ namespace MyApps.Domain.Service
                 return formateurModule.ToList();
             }
         }
+        /// <summary>
+        /// récuperer un formateur par module
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public static FormateurModule GetOne(int id)
         {
@@ -64,7 +70,10 @@ namespace MyApps.Domain.Service
                 return formateurModule;
             }
         }
-
+        /// <summary>
+        /// mettre à jour la liste des formateur par module
+        /// </summary>
+        /// <param name="formateurModule"></param>
         public static void Update(FormateurModule formateurModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -73,6 +82,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// récuperer un nom de module
+        /// </summary>
+        /// <param name="IdModule"></param>
+        /// <returns></returns>
         public static string GetNomModule(int? IdModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -83,6 +97,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// récuperer un nom de formateur via l'identiant dans la table formateur
+        /// </summary>
+        /// <param name="IdFormateur"></param>
+        /// <returns></returns>
         public static string GetNomFormateur(int? IdFormateur) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -94,6 +113,11 @@ namespace MyApps.Domain.Service
             }
         }
 
+        /// <summary>
+        /// récuperer une liste des moudules par formateur
+        /// </summary>
+        /// <param name="IdFormateur"></param>
+        /// <returns></returns>
         public static List<FormateurModule> GetListModulesPerFormateur(int IdFormateur)
         { 
             using(TrainingDBEntities db= new TrainingDBEntities())
@@ -103,15 +127,15 @@ namespace MyApps.Domain.Service
             }
         }
 
-        // méthode qui ne fonctionne pas !!!!! à vérifier pour l'utiliser dans la classe de xmal
-        public static bool CheckIfItemsExists(int idFormateur, int idModule)
+        public static List<FormateurModule> GetListFormateurPerModules(int IdModule) 
         {
-            using(TrainingDBEntities db= new TrainingDBEntities())
+            using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var items = db.FormateurModules.Where((a => a.IdFormateur == idFormateur && a.IdModule == idModule));
-                return true;
+                var formateurModule = db.FormateurModules.Where(a => a.IdModule == IdModule).ToList(); 
+                return formateurModule;
             }
-           
         }
+
+
     }
 }

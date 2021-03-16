@@ -5,17 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SWOMT.Views"
         mc:Ignorable="d"
-       Title="Login" Height="350" Width="550" FontSize="14" Background="#04c582">
+       Title="Login" Height="650" Width="650" FontSize="14" Background="#04c582" WindowStartupLocation="CenterScreen">
     <Border Background="#2e3137" CornerRadius="20" Margin="20">
         <StackPanel Margin="20">
-            <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
+           
+            <Label Content="Se Connecter" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
             <Separator></Separator>
-            <Label Content="UserName" Foreground="White"></Label>
-            <TextBox x:Name="username" Background="#545d6a" FontSize="18" Foreground="White"></TextBox>
-            <Label Content="Password" Foreground="White"></Label>
-            <TextBox x:Name="password" Background="#545d6a" FontSize="18" Foreground="White"></TextBox>
-            <Button x:Name="submit" Click="LoginSubmit" Content="Submit" Margin="60 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
-        </StackPanel>
+            <Button x:Name="RegiserUser" HorizontalAlignment="Right" Width="170" Click="RegisterUser_Click" Content="Créer un compte" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+
+            <Label Content="Nom Utilisateur" Foreground="White"></Label>
+            <TextBox Margin="0,10,10,10" x:Name="username" Background="#545d6a"  MaxLength="50" FontSize="18" Foreground="White"></TextBox>
+            <Label Content="Mot de Passe" Foreground="White"></Label>
+            <PasswordBox Margin="0,10,10,10" x:Name="password" Background="#545d6a"  MaxLength="20" FontSize="18" Foreground="White" PasswordChar="*" LostFocus="ValiderCharacterNumbers"></PasswordBox>
+            <Label Visibility="Hidden" x:Name="LabelRoleUtilisateur" Content="Role Utilisateur" Foreground="White"></Label>
+            <ComboBox Visibility="Hidden" Margin="0,20,10,20"  x:Name="ComboBoxUserRole" Background="#545d6a" FontSize="18" Foreground="White" ></ComboBox>
+
+            <WrapPanel HorizontalAlignment="Left">
+                <Button x:Name="ValiderInscription" Visibility="Hidden"  Width="120" Click="ValiderInscription_Click" Content="Enregistrer" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+             
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Right">
+                <Button x:Name="submit" Width="120" Click="LoginSubmit" Content="Valider" Margin="40 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+                <Button Name="btnAnnuler"  Width="120" Content="Annuler" Click="btnAnnuler_Click" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+
+            </WrapPanel>
+              </StackPanel>
 
 
     </Border>

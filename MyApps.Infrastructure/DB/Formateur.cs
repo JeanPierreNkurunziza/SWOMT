@@ -17,6 +17,7 @@ namespace MyApps.Infrastructure.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Formateur()
         {
+            this.Evenements = new HashSet<Evenement>();
             this.FormateurModules = new HashSet<FormateurModule>();
         }
     
@@ -27,6 +28,8 @@ namespace MyApps.Infrastructure.DB
         public string EmailFormateur { get; set; }
         public System.DateTime DateEncodage { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Evenement> Evenements { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormateurModule> FormateurModules { get; set; }
     }

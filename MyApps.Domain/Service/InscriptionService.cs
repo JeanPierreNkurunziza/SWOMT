@@ -11,6 +11,10 @@ namespace MyApps.Domain.Service
 {
     public class InscriptionService 
     {
+        /// <summary>
+        /// Méthode pour créer un inscription
+        /// </summary>
+        /// <param name="inscription"></param>
         public static void Create(ModuleInscription inscription)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -20,6 +24,10 @@ namespace MyApps.Domain.Service
             }
         }
 
+        /// <summary>
+        /// Méthode pour supprimer une inscription
+        /// </summary>
+        /// <param name="id"> identifiant d'un élement à supprimer </param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -29,7 +37,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Méthode pour récuperer la liste des inscriptions 
+        /// </summary>
+        /// <returns> la liste </returns>
         public static List<ModuleInscription> GetAll()
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -38,7 +49,11 @@ namespace MyApps.Domain.Service
                 return inscription.ToList();
             }
         }
-
+        /// <summary>
+        /// Méthode pour récuperer une inscription 
+        /// </summary>
+        /// <param name="id"> à partir d'un identifiant affiche une inscription</param>
+        /// <returns>une inscription d'un participant </returns>
         public static ModuleInscription GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -47,7 +62,10 @@ namespace MyApps.Domain.Service
                 return inscription;
             }
         }
-
+        /// <summary>
+        /// Méthode pour mettre à jour une inscription
+        /// </summary>
+        /// <param name="inscription"></param>
         public static void Update(ModuleInscription inscription)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -56,6 +74,11 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// Méthode pour récuperer le nom de module 
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns> nom de module </returns>
         public static string GetNomModule(int? IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -69,6 +92,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// Méthode pour récuperer le nom de participant à inscrire 
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns> le nom de participant</returns>
         public static string GetNomParticipant(int? IdParticipant) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -79,6 +107,11 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// Méthode qui récupere l'identité national de participant
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns></returns>
         public static long? GetIdNational(int? IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -89,24 +122,39 @@ namespace MyApps.Domain.Service
 
             }
         }
+        /// <summary>
+        /// Méthode pour récuperer la liste des modules par participant 
+        /// </summary>
+        /// <param name="IdParticipant"></param>
+        /// <returns> la liste des modules </returns>
         public static List<ModuleInscription> GetListModulePerParticipant(int IdParticipant)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdParticipant == IdParticipant).ToList();
+                var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdParticipant == IdParticipant ).ToList();
                 return moduleParticipant;
             }
         }
+        /// <summary>
+        /// Méthode pour récuperer la liste des participants par module  
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
         public static List<ModuleInscription> GetListParticipantPerModule(int IdSiteModule) 
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                //var siteplanning = db.SiteModules.Find(IdSiteModule);
-               // var idSiteModule = siteplanning.IdSiteModule;
+                
                 var moduleParticipant = db.ModuleInscriptions.Where(a => a.IdSiteModule == IdSiteModule && a.EstSurListeAttente==false).ToList();
                 return moduleParticipant;
             }
         }
+
+        /// <summary>
+        /// la liste des participants inscrits sur une liste d'attente
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
         public static List<ModuleInscription> GetListAttenteParticipantPerModule(int IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -117,6 +165,11 @@ namespace MyApps.Domain.Service
                 return moduleParticipant;
             }
         }
+        /// <summary>
+        /// calculer le nombre total des participant par module 
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns> le nombre total </returns>
         public static int GetNbreParticipantParModule(int IdSiteModule)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -125,6 +178,22 @@ namespace MyApps.Domain.Service
                 var TotalParticipant = db.ModuleInscriptions.Where(a => a.IdSiteModule == IdSiteModule);
                  int total = TotalParticipant.Where(a => a.EstSurListeAttente == true).Count();
                
+                return total;
+            }
+        }
+        /// <summary>
+        /// méthode pour calculer le nombre total des participant par module
+        /// </summary>
+        /// <param name="IdSiteModule"></param>
+        /// <returns></returns>
+        public static int GetNbreTotalParticipantParModule(int IdSiteModule)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+
+                var TotalParticipant = db.ModuleInscriptions.Where(a => a.IdSiteModule == IdSiteModule);
+                int total = TotalParticipant.Count();
+
                 return total;
             }
         }

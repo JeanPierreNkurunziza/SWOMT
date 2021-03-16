@@ -10,6 +10,10 @@ namespace MyApps.Domain.Service
 {
     public class SiteService 
     {
+        /// <summary>
+        /// Méthode pour créer une site service 
+        /// </summary>
+        /// <param name="site"></param>
         public static void Create(Site site)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -18,7 +22,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
-
+/// <summary>
+/// méthode pour supprimer un service site
+/// </summary>
+/// <param name="id"></param>
         public static void Delete(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -28,6 +35,10 @@ namespace MyApps.Domain.Service
                 db.SaveChanges();
             }
         }
+        /// <summary>
+        /// récuperer la liste des sites
+        /// </summary>
+        /// <returns></returns>
 
         public static List<Site> GetAll()
         {
@@ -37,7 +48,11 @@ namespace MyApps.Domain.Service
                 return db.Sites.ToList();
             }
         }
-
+        /// <summary>
+        /// récuperer un site via don identifiant
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Site GetOne(int id)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
@@ -46,7 +61,10 @@ namespace MyApps.Domain.Service
                 return site;
             }
         }
-
+        /// <summary>
+        /// mettre à jour un site service
+        /// </summary>
+        /// <param name="site"></param>
         public static void Update(Site site)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

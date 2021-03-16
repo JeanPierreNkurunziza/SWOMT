@@ -21,14 +21,14 @@ namespace MyApps.Infrastructure.DB
         }
     
         public int IdModuleInscription { get; set; }
+        public int IdSiteModule { get; set; }
         public int IdParticipant { get; set; }
         public System.DateTime DateInscription { get; set; }
         public bool EstSurListeAttente { get; set; }
-        public int IdSiteModule { get; set; }
     
         public virtual Participant Participant { get; set; }
+        public virtual SiteModule SiteModule { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resultat> Resultats { get; set; }
-        public virtual SiteModule SiteModule { get; set; }
     }
 }

@@ -5,84 +5,186 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SWOMT.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="760" d:DesignWidth="1600"
       Title="PlanningFormations">
-
-    <Grid >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid >
         <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="240"></RowDefinition>
+
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center" FontSize="25" 
-                   Background="AliceBlue" FontWeight="Bold"></Label>
+                   Background="AliceBlue" FontWeight="ExtraBold" Foreground="Black"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
-                <Label Name="listes" Content="Listes des Plannings" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
+                <Label Name="listes" Content="Gestion de Planing Formation" FontSize="28" FontWeight="Bold" HorizontalContentAlignment="Center" ></Label>
             </StackPanel>
 
         </Grid>
         <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="520"></ColumnDefinition>
+                <ColumnDefinition Width="460"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <Grid Grid.Column="0" Width="520">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="440"></RowDefinition>
+                    <RowDefinition Height="190"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border  Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
+                    <GroupBox x:Name="formationBox"  HorizontalAlignment="Left" Height="430" Width="500" VerticalAlignment="Top" >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste de Formation"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercher" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="Rechercher" Content="Rechercher" Click="Rechercher_Click"></Button>
+                                <Button   Name="ReSet" Content="SetList" Click="ReSetList_Click"></Button>
 
-            <Grid Grid.Column="0" Width="700">
-                <Border BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <DataGrid Grid.Row="1" x:Name="ListElement" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick">
-                        <DataGrid.Columns >
-                            <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
-                            <DataGridTextColumn Header="IdFormationPlanning"  FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
-                            <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation}"></DataGridTextColumn>
+                            </StackPanel>
+                        </GroupBox.Header>
+                            <DataGrid Grid.Row="1" x:Name="ListFormation" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListFormation_MouseDoubleClick">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Description"  FontSize="15" Binding="{Binding Path=Description}"></DataGridTextColumn>
 
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                    </GroupBox>
                 </Border>
+                <Grid Grid.Row="1" >
+
+                    <GroupBox x:Name="FormationTextBox" Header="Créer une Formation" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
+                        <StackPanel Grid.Column="0" >
+
+                            <WrapPanel >
+                                <Label Name="LabelIdFormation" Content="Identifiant" ></Label>
+                                <TextBox  FontWeight="ExtraBlack" Margin="65,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelNomFormation" Content="Nom " ></Label>
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="89,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDescription" Content="Description" ></Label>
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="58,2" x:Name="Description" Text="{Binding Path=Description}"  Width="250"  IsEnabled="False"  ></TextBox>
+                            </WrapPanel>
+
+                            <WrapPanel>
+
+                                <Button   Name="AjouterFormation" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="AjouterFormation_Click"></Button>
+                                <Button  Name="modifierFormation" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="ModifierFormation_Click"></Button>
+                                <Button  Name="supprimerFormation" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="SupprimerFormation_Click"></Button>
+                                <Button  Name="mettreAjourFormation" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjourFormation_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"></RowDefinition>
+                    <RowDefinition Height="390"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                       
+                    </Grid.ColumnDefinitions>
+                    <GroupBox x:Name="ModuleSiteTextBox" Header="Sélectionner une Formation à programmer" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                        <StackPanel Grid.Column="0">
+
+                            <WrapPanel Visibility="Collapsed">
+                                <Label  Name="LabelIdPlanning" Content="Identifiant" ></Label>
+                                <TextBox  FontWeight="Regular" Margin="45,2" Name="IdPlanning" Text="{Binding Path=IdPlanning}"  Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel  Visibility="Collapsed">
+                                <Label Name="LabelId" Content="Id Formation" ></Label>
+                                <TextBox  FontWeight="ExtraBold" Margin="30,2" Name="Id" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelNom" Content="Nom " ></Label>
+                                <TextBox Background="White" FontWeight="ExtraBlack" Margin="67,2" x:Name="Nom" Text="{Binding Path=NomFormation}" Width="250" IsEnabled="False" />
+                            </WrapPanel>
+                            <WrapPanel >
+                                <Label Name="LabelDateFormation" Content="Planning Date" ></Label>
+                                <DatePicker Background="White" FontWeight="ExtraBlack" Margin="23,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                            </WrapPanel>
+
+
+                            <WrapPanel>
+
+                                <Button   Name="ajouter" Content="Ajouter" Width="70" Margin="10,10,20,20"  FontSize="10" Click="Ajouter_Click"></Button>
+                                <Button  Name="modifier" Content="Modifier" Width="75" Margin="0,10,20,20"  FontSize="10" Click="Modifier_Click"></Button>
+                                <Button  Name="supprimer" Content="Supprimer" Width="80" Margin="0,10,20,20"  FontSize="10" Click="Supprimer_Click"></Button>
+                                <Button  Name="mettreAjour" Content="Enregistrer" Width="85" Margin="0,10,20,20"  FontSize="10" Click="MettreAjour_Click"></Button>
+                            </WrapPanel>
+
+                        </StackPanel>
+
+                    </GroupBox>
+                    
+                </Grid>
+                <Grid Grid.Row="1">
+                    <GroupBox x:Name="ParticipantModuleTextBox2" Height="365" Header="Les Formations programmées au cour de l'année" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                        
+                        <StackPanel Grid.Column="1">
+
+                            <DataGrid Name="ListElement"  ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPlanning}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="IdFormationPlanning" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Planning Date"  FontSize="15" Binding="{Binding Path=DateFormation, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+
+            </Grid>
+            <Grid Grid.Column="2">
+                
+                <Grid Grid.Row="0">
+                    <GroupBox x:Name="ParticipantListBox" HorizontalAlignment="Left" Height="613" Width="490" VerticalAlignment="Top" Margin="10,10,0,0">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="La liste de Module"></Label>
+                                <TextBox FontWeight="ExtraBold" Background="White" Margin="10,2" Name="NomRechercherModule" Text="{Binding Path=NomParticipant}"  Width="150" MaxLength="30" TextAlignment="Center"></TextBox>
+                                <Button   Name="RechercherModule" Content="Rechercher" Click="RechercherModule_Click"></Button>
+                                <Button   Name="ReSetModule" Content="SetList" Click="ReSetListModule_Click"></Button>
+
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <DataGrid Grid.Row="0" x:Name="ListElementModule" ItemsSource="{Binding}"   AutoGenerateColumns="False" >
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"  FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
+                                <DataGridTextColumn Visibility="Hidden" Header="IdFormation"  FontSize="15" Binding="{Binding Path=IdFormation}" ></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Module"  FontSize="15" Binding="{Binding Path=NomModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nom Formation"  FontSize="15" Binding="{Binding Path=NomFormation}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Credit Module"  FontSize="15" Binding="{Binding Path=CreditModule}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Nombre Prévu"  FontSize="15" Binding="{Binding Path=NombrePrévu}"></DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+                
             </Grid>
 
         </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="550"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <GroupBox x:Name="PlanningtextBox" Header="Planning" HorizontalAlignment="Left" Height="160" Margin="10,10,0,0" VerticalAlignment="Top" Width="500">
-                <StackPanel Grid.Column="0">
-
-                    <WrapPanel >
-                        <Label Name="LabelIdPlanning" Content="Identifiant" ></Label>
-                        <TextBox  Margin="70,2" Name="IdPlanning" Text="{Binding Path=IdPlanning}"  Width="250" IsEnabled="False" ></TextBox>
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelIdFormation" Content="Id Formation" ></Label>
-                        <TextBox  Margin="70,2" Name="IdFormation" Text="{Binding Path=IdFormation}"  Width="250" IsEnabled="False" ></TextBox>
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelNom" Content="Nom " ></Label>
-                        <TextBox  Margin="54,2" x:Name="NomFormation" Text="{Binding Path=NomFormation}" Width="255" IsEnabled="False" />
-                    </WrapPanel>
-                    <WrapPanel >
-                        <Label Name="LabelDateFormation" Content="Planning Date" ></Label>
-                        <DatePicker  Margin="34,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
-                    </WrapPanel>
-
-                </StackPanel>
-            </GroupBox>
-
-            <StackPanel Grid.Column="1" >
-
-                <Button   Name="ajouter" Content="Ajouter" Width="150" Margin="20,20,20,20"  FontSize="18" Click="Ajouter_Click"></Button>
-                <Button  Name="modifier" Content="Modifier" Width="150" Margin="20,0,20,20"  FontSize="18" Click="Modifier_Click"></Button>
-                <Button  Name="supprimer" Content="Supprimer" Width="150" Margin="20,0,20,20"  FontSize="18" Click="Supprimer_Click"></Button>
-                <Button  Name="mettreAjour" Content="Enregistrer" Width="150" Margin="20,0,20,20"  FontSize="18" Click="MettreAjour_Click"></Button>
-            </StackPanel>
-
-
-        </Grid>
-
 
     </Grid>
+
+    </ScrollViewer>
+   
 </Page>
