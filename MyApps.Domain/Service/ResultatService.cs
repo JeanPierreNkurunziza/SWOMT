@@ -88,13 +88,14 @@ namespace MyApps.Domain.Service
                 if (idExamen == null)
                 {
                     throw new System.NullReferenceException();
-                    
+
                 }
                 var IdExamen = db.Examen.Find(idExamen);                
-                var GetIdSiteModule = db.Modules.Find(IdExamen.IdSiteModule);  
+                var GetIdSiteModule = IdExamen.IdSiteModule;  
                
-                var GetName = db.SiteModules.Find(GetIdSiteModule.IdModule);
-                var GetNomModule = db.Modules.Find(GetName.IdModule);
+                var GetName = db.SiteModules.Find(GetIdSiteModule);
+                var idModule = GetName.IdModule;
+                var GetNomModule = db.Modules.Find(idModule);
                 return GetNomModule.NomModule;
 
             }

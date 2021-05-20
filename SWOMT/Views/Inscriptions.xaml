@@ -25,7 +25,7 @@
         <Grid Grid.Row="0">
             <Label Name="entete" Content="SWOMT" HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center" FontSize="25" 
-                   Background="AliceBlue" FontWeight="Bold"></Label>
+                   Background="AliceBlue" FontWeight="ExtraBold" Foreground="Black"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
@@ -60,13 +60,13 @@
                             <DataGrid.Columns >
                                 <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Nom"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date Naissance"  FontSize="15" Binding="{Binding Path=DateNaissance, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Id National"  FontSize="15" Binding="{Binding Path=IdNational}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Téléphone"  FontSize="15" Binding="{Binding Path=TelParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Email"  FontSize="15" Binding="{Binding Path=EmailParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Secteur"  FontSize="15" Binding="{Binding Path=SecteurParticipant}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="District"  FontSize="15" Binding="{Binding Path=DistrictParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date d'encodage"  FontSize="15" Binding="{Binding Path=DateEncodage, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
 
 
                             </DataGrid.Columns>
@@ -88,7 +88,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateNaissance" Content="Date de Naissance" ></Label>
-                                <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="26,2" x:Name="DateNaissance" Text="{Binding Path=DateNaissance}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="26,2" x:Name="DateNaissance" Text="{Binding Path=DateNaissance, StringFormat='{}{0:dd/MM/yyyy }'}"  Width="250"  IsEnabled="False"  ></DatePicker>
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelIdNational" Content="ID National" ></Label>
@@ -112,7 +112,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateEncodage" Content="Date d'encodage" ></Label>
-                                <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="32,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="250"  IsEnabled="False" ></DatePicker>
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="32,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage, StringFormat='{}{0:dd/MM/yyyy }'}"  Width="250"  IsEnabled="False" ></DatePicker>
                             </WrapPanel>
 
                             <WrapPanel>
@@ -167,7 +167,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateInscription" Content="Date Inscription" ></Label>
-                                <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="52,2" x:Name="DateInscription" Text="{Binding Path=DateInscription}" Width="200" IsEnabled="False" />
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="52,2" x:Name="DateInscription" Text="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}" Width="200" IsEnabled="False" />
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelEstSurListeAttente" Content="EstSurListeAttente" ></Label>
@@ -213,13 +213,13 @@
                                     <Label Name="LabelDateDebut" Content="Date Début" FontSize="12"></Label>
                                </WrapPanel>
                                 <WrapPanel>
-                                    <TextBox Name="DateDébut" Margin="0,2" Height="20" Text="{Binding DateDebut}" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                        <TextBox Name="DateDébut" Margin="0,2" Height="20" Text="{Binding DateDebut, StringFormat='{}{0:dd/MM/yyyy }'}" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
                                </WrapPanel>
                                 <WrapPanel>
                                     <Label Name="LabelDateFin" Content="Date Fin" FontSize="12"></Label>
                                 </WrapPanel>
                                 <WrapPanel>
-                                    <TextBox Name="DateFin" Margin="0,2"  Height="20" Text="{Binding DateFin}" Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                        <TextBox Name="DateFin" Margin="0,2"  Height="20" Text="{Binding DateFin, StringFormat='{}{0:dd/MM/yyyy }'}" Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
                                 </WrapPanel>
                             </StackPanel>
                         </GroupBox>
@@ -236,7 +236,7 @@
                                     <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                         <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente, Converter={StaticResource MyConverter }}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -267,7 +267,7 @@
                                         <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" ></DataGridTextColumn>
                                         <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
                                         <DataGridTextColumn Header="Nom Participant"  FontSize="15" Binding="{Binding Path=NomParticipant}" Visibility="Hidden"></DataGridTextColumn>
-                                        <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Date Inscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                         <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente, Converter={StaticResource MyConverter }}" ></DataGridTextColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
@@ -287,7 +287,7 @@
                                 <DataGridTextColumn Header="NomModule" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
                                 <DataGridTextColumn Header="IdParticipant"  FontSize="15" Binding="{Binding Path=IdParticipant}" Visibility="Hidden" ></DataGridTextColumn>
                                 <DataGridTextColumn Header="NomParticipant"  FontSize="15" Binding="{Binding Path=NomParticipant}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="DateInscription"  FontSize="15" Binding="{Binding Path=DateInscription, StringFormat='{}{0:dd/MM/yyyy }'}"></DataGridTextColumn>
                                         <DataGridTextColumn Header="EstSurListeAttente"  FontSize="15" Binding="{Binding Path=EstSurListeAttente, Converter={StaticResource MyConverter }}" ></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>

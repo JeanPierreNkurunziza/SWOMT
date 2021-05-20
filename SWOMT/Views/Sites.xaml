@@ -23,10 +23,14 @@
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
                 <WrapPanel>
-                    <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" Margin="450,0,50,0" ></Label>
+                    <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" Margin="50,0,50,0" ></Label>
 
-                    <Button Visibility="Hidden"  Name="UpDatePassord" HorizontalAlignment="Right" Content="Valider" Width="90" Margin="0,0,10,0"  FontSize="18" Click="UpDatePassword_Click"></Button>
-                    <PasswordBox Visibility="Hidden" Margin="0,10,10,10" x:Name="password" Width="170" Background="#545d6a" MaxLength="20" FontSize="18" Foreground="White" PasswordChar="*"></PasswordBox>
+                        <Button Visibility="Hidden"  Name="UpDatePassord" HorizontalAlignment="Right" Content="Valider" Width="90" Margin="55,0,10,0"  FontSize="18" Click="UpDatePassword_Click"></Button>
+                        <Label Name="Ancien" Visibility="Hidden" Content="Ancien" FontSize="18" Margin="0,10,10,10" ></Label>
+                        <PasswordBox Visibility="Hidden" Margin="0,10,10,10" x:Name="OldPassWord" Width="170" Background="#545d6a" MaxLength="20" FontSize="18" Foreground="White" PasswordChar="*"></PasswordBox>
+                        <Button Visibility="Hidden"  Name="ValiderOldPassWord" HorizontalAlignment="Right" Content="Vérifier" Width="90" Margin="0,0,10,0"  FontSize="18" Click="CheckOldPassWord"></Button>
+
+                        <PasswordBox Visibility="Hidden" Margin="0,10,10,10" x:Name="password" Width="170" Background="#545d6a" MaxLength="20" FontSize="18" Foreground="White" PasswordChar="*"></PasswordBox>
                     <Button x:Name="Valider"  Width="220" Click="ValiderInscription_Click" Content="Changer Mot de Passe" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
 
                 </WrapPanel>
@@ -77,8 +81,8 @@
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="IdEvenement" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdEvenement}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdFormateur" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Formateur" FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Evenement" Foreground="SpringGreen" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Expéditeur" FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Evénement" Foreground="SpringGreen" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date" FontSize="15" Binding="{Binding Path=DateOfEvent, StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>

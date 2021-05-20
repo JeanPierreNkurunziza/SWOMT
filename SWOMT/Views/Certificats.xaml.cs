@@ -21,30 +21,17 @@ namespace SWOMT.Views
     /// </summary>
     public partial class Certificats : Page
     {
-        List<MyApps.Application.ViewModels.CertificatViewModel> liste = new List<MyApps.Application.ViewModels.CertificatViewModel>();
-        List<MyApps.Application.ViewModels.ParticipantViewModel> listeParticipant = new List<MyApps.Application.ViewModels.ParticipantViewModel>();
-        List<MyApps.Application.ViewModels.ResultatViewModel> ListeModulesEchoues = new List<MyApps.Application.ViewModels.ResultatViewModel>();
-        List<MyApps.Application.ViewModels.ResultatViewModel> ListeModulesReussis = new List<MyApps.Application.ViewModels.ResultatViewModel>();
-
-
-        string enregistre;
        
+        string enregistre;
+        List<MyApps.Application.ViewModels.CertificatViewModel> liste = new List<MyApps.Application.ViewModels.CertificatViewModel>();
         public Certificats(string roleName)
         {
             InitializeComponent();
-            liste = MyApps.Application.Services.CertificatViewModelService.GetCertificats();
-         
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-            PopulateAndBindParticipant(listeParticipant);
-            ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
-            ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetResultats();
+            liste = MyApps.Application.Services.CertificatViewModelService.GetParticipants();        
+            PopulateAndBindParticipant(liste);
             if ((string)roleName != "Admin")
             {
-
-               
-                // FormateurtextBox.Content=false;
                 CertificatTextBox.IsEnabled = false;
-
             }
             if ((string)roleName != "Secrétaire" && (string)roleName != "Admin" && (string)roleName != "Formateur")
             {
@@ -56,8 +43,6 @@ namespace SWOMT.Views
             }
 
         }
-
-
 
         /// <summary>
         /// biding la liste de sites
@@ -71,10 +56,6 @@ namespace SWOMT.Views
             };
             ListElement.DataContext = listeItems;
         }
-
-
-
-
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
@@ -87,7 +68,6 @@ namespace SWOMT.Views
                 IdCertificat.Text = donnee.IdCertificat.ToString();
                 IdParticipant.Text = donnee.IdParticipant.ToString();
                 NomParticipant.Text = donnee.NomParticipant.ToString();
-                //DateDelivrance.Text = donnee.DateDelivrance.ToString();
 
             }
            
@@ -111,7 +91,6 @@ namespace SWOMT.Views
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             Certificat element = new Certificat();
-            //Competence competence = new Competence();
 
             if (IdParticipant.Text == "")
             {
@@ -192,8 +171,6 @@ namespace SWOMT.Views
             }
 
             MyApps.Domain.Service.CertificatService.Delete(short.Parse(IdCertificat.Text));
-
-          
             
             liste.Clear();
             liste = MyApps.Application.Services.CertificatViewModelService.GetCertificatsPerParticipant(short.Parse(IdParticipant.Text));
@@ -209,14 +186,7 @@ namespace SWOMT.Views
             DateDelivrance.Text = "";
 
         }
-        private void ModeIsEnabledTrue()
-        {
-            IdCertificat.IsEnabled = true;
-            IdParticipant.IsEnabled = true;
-            NomParticipant.IsEnabled = true;
-            DateDelivrance.IsEnabled = true;
-
-        }
+      
         private void ModeIsEnabledFalse()
         {
             IdCertificat.IsEnabled = false;
@@ -227,8 +197,7 @@ namespace SWOMT.Views
         }
         //************************************************************************************************************************************************
         //************************************** LA LISTE DES PARTICIPANT PARTIE DE DROITE ***************************************************************
-
-        private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.ParticipantViewModel> listeCompetences)
+        private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.CertificatViewModel> listeCompetences)
         {
             Binding monBinding = new Binding
             {
@@ -240,17 +209,14 @@ namespace SWOMT.Views
         }
         private void ListParticipant_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.ParticipantViewModel donnee)
+            if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.CertificatViewModel donnee)
             {
 
                 IdParticipant.Text = donnee.IdParticipant.ToString();
-                ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(short.Parse(IdParticipant.Text));
-                //ListeModulesReussis = MyApps.Application.Services.ResultatsVieModelService.GetListModulesRéussis(
-                //     MyApps.Domain.Service.ResultatService.GetIdInscription(donnee.IdParticipant));
+                var ListeModulesReussis = MyApps.Application.Services.CertificatViewModelService.GetListModulesRéussis(short.Parse(IdParticipant.Text));
                 PopulateAndBindRéussis(ListeModulesReussis);
                 TotalRéussi.Text = ListeModulesReussis.Count().ToString();
-
-                ListeModulesEchoues = MyApps.Application.Services.ResultatsVieModelService.GetListModulesEchoué(short.Parse(IdParticipant.Text));
+                var ListeModulesEchoues = MyApps.Application.Services.CertificatViewModelService.GetListModulesEchoué(short.Parse(IdParticipant.Text));
                 PopulateAndBindParticipantFailed(ListeModulesEchoues);
                 TotalEchoué.Text = ListeModulesEchoues.Count().ToString(); 
 
@@ -262,37 +228,31 @@ namespace SWOMT.Views
                 PopulateAndBind(liste);
             }
 
-           
-
         }
         private void Rechercher_Click(object sender, RoutedEventArgs e)
         {
-
+            var  listeParticipant = MyApps.Application.Services.CertificatViewModelService.GetParticipants();
             if (NomRechercher.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
-                listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
                 PopulateAndBindParticipant(listeParticipant);
                 return;
-
             }
 
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            listeParticipant = MyApps.Application.Services.CertificatViewModelService.GetParticipantByMethodeSearch(NomRechercher.Text);
             PopulateAndBindParticipant(listeParticipant);
         }
         private void ReSetList_Click(object sender, RoutedEventArgs e)
         {
             NomRechercher.Text = "";
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
+            var listeParticipant = MyApps.Application.Services.CertificatViewModelService.GetParticipantByMethodeSearch(NomRechercher.Text);
             PopulateAndBindParticipant(listeParticipant);
         }
 
         //************************************************************************************************************************************
         //************************************* Partie à gauche : les liste des participant réussis et échoués********************************
 
-      
-        
-        private void PopulateAndBindRéussis(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        private void PopulateAndBindRéussis(List<MyApps.Application.ViewModels.CertificatViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -305,7 +265,7 @@ namespace SWOMT.Views
         /// binding la liste des participant echoués
         /// </summary>
         /// <param name="listeItems"></param>
-        private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.CertificatViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -316,7 +276,7 @@ namespace SWOMT.Views
         private void ListParticipantRéussi_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
 
-            if (ListParticipantRéussi.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
+            if (ListParticipantRéussi.SelectedItem is MyApps.Application.ViewModels.CertificatViewModel donnee)
             {
                 if (donnee.IdExamen == 0)
                 {
@@ -328,17 +288,13 @@ namespace SWOMT.Views
                 NomParticipant.Text = donnee.NomParticipant.ToString();
                 DateDelivrance.Text = DateTime.Now.ToString();
 
-
-
             }
-
-
         }
 
         private void ListParticipantFailed_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
 
-            if (ListParticipantFailed.SelectedItem is MyApps.Application.ViewModels.ResultatViewModel donnee)
+            if (ListParticipantFailed.SelectedItem is MyApps.Application.ViewModels.CertificatViewModel donnee)
             {
                 if (donnee.IdExamen == 0)
                 {
@@ -356,5 +312,16 @@ namespace SWOMT.Views
 
         }
 
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = new DatePicker();
+            datePicker.SetBinding(ToolTipProperty, "Date");
+            datePicker.SelectedDateChanged += (s, ea) =>
+             {
+                 DateTime? date = datePicker.SelectedDate;
+                 string value = date != null ? date.Value.ToString("dd-MM-yyyy") : null;
+                 datePicker.ToolTip = value;
+             };
+        }
     }
 }

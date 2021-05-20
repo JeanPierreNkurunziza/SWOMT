@@ -115,7 +115,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateFormation" Content="Planning Date" ></Label>
-                                <DatePicker Background="White" FontWeight="ExtraBlack" Margin="23,2" x:Name="DateFormation" Text="{Binding Path=DateFormation}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                                    <DatePicker Background="White" FontWeight="ExtraBlack" Margin="23,2" x:Name="DateFormation" Text="{Binding Path=DateFormation, StringFormat='{}{0:dd/MM/yyyy }'}"  Width="250"  IsEnabled="False"  ></DatePicker>
                             </WrapPanel>
 
 

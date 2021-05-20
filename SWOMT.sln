@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWOMTUnitTest", "SWOMTUnitT
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SWMOTSetup", "SWMOTSetup\SWMOTSetup.vdproj", "{0BD5A4D7-F27D-416B-8483-90B35E4FFA6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{A7D75C1A-4C46-4088-A47C-B8CB9B255101}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{57C93502-1395-464D-9574-1E9F393F7904}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BD5A4D7-F27D-416B-8483-90B35E4FFA6C}.Debug|Any CPU.ActiveCfg = Debug
 		{0BD5A4D7-F27D-416B-8483-90B35E4FFA6C}.Release|Any CPU.ActiveCfg = Release
+		{A7D75C1A-4C46-4088-A47C-B8CB9B255101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D75C1A-4C46-4088-A47C-B8CB9B255101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D75C1A-4C46-4088-A47C-B8CB9B255101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D75C1A-4C46-4088-A47C-B8CB9B255101}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

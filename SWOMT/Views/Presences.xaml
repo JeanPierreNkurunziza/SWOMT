@@ -46,8 +46,8 @@
                     <RowDefinition Height="640"></RowDefinition>
                     
                 </Grid.RowDefinitions>
-                <Border  Margin="10,10,0,0" Width="500" HorizontalAlignment="Left">
-                    <GroupBox x:Name="ExamenListBox"  HorizontalAlignment="Left" Height="630" Width="500" VerticalAlignment="Top" >
+                <Border  Margin="10,10,0,0" Width="510" HorizontalAlignment="Left">
+                    <GroupBox x:Name="ExamenListBox"  HorizontalAlignment="Left" Height="630" Width="510" VerticalAlignment="Top" >
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="La liste de Module"></Label>
@@ -57,7 +57,7 @@
 
                             </StackPanel>
                         </GroupBox.Header>
-                        <DataGrid Grid.Row="0" x:Name="ListElementModule" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElementModule_MouseDoubleClick">
+                            <DataGrid Grid.Row="0" x:Name="ListElementModule" ItemsSource="{Binding}"   AutoGenerateColumns="False" SelectionChanged="ListElementModule_MouseDoubleClick">
                             <DataGrid.Columns >
                            
                                     <!--<DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
@@ -103,7 +103,7 @@
                      
                             <WrapPanel >
                                 <Label Name="LabelDateHeureDePresence" Content="Date de presence" ></Label>
-                                <DatePicker Background="#545d6a" FontWeight="ExtraBlack" Margin="9,2" x:Name="DateHeureDePresence" Text="{Binding Path=DateHeureDePresence}" Width="250" IsEnabled="False" />
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBlack" Margin="9,2" x:Name="DateHeureDePresence" Text="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}" Width="250" IsEnabled="False" />
                             </WrapPanel>
 
                             <WrapPanel >
@@ -160,13 +160,13 @@
                                     <Label Name="LabelDateDebut" Content="Date Début" FontSize="12"></Label>
                                 </WrapPanel>
                                 <WrapPanel>
-                                    <TextBox Name="DateDébut" Margin="0,2" Height="20" Text="{Binding DateDebut}" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                        <TextBox Name="DateDébut" Margin="0,2" Height="20" Text="{Binding DateDebut, StringFormat='{}{0:dd/MM/yyyy }'}" Width="110" FontSize="10" IsEnabled="False" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <Label Name="LabelDateFin" Content="Date Fin" FontSize="12"></Label>
                                 </WrapPanel>
                                 <WrapPanel>
-                                    <TextBox Name="DateFin" Margin="0,2"  Height="20" Text="{Binding DateFin}" Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
+                                        <TextBox Name="DateFin" Margin="0,2"  Height="20" Text="{Binding DateFin, StringFormat='{}{0:dd/MM/yyyy }'}" Width="110" IsEnabled="False" FontSize="10" Background="Black" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center"></TextBox>
                                 </WrapPanel>
                             </StackPanel>
                         </GroupBox>
@@ -178,16 +178,28 @@
                             <StackPanel  Orientation="Horizontal">
 
                                 <Label Content="Les Participants inscrits par Module"></Label>
-                                <Button  Name="Valider" Content="Valider" Width="90" Margin="240,0,0,0"  FontSize="16" Click="ValiderPresence_Click"></Button>
+                                    <!--<CheckBox  Name="CheckAll"  Width="50" Margin="30,0,0,0" Foreground="White" FontSize="16" Click="CheckAll_Click" Background="Wheat"></CheckBox>-->
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBlack" FontSize="16" Margin="110,0,0,0" x:Name="DateDePresenceValiderTous" Text="{Binding Path=DateHeureDePresence, StringFormat='{}{0:dd/MM/yyyy }'}" Width="120" IsEnabled="False" SelectedDateChanged="SelectedDateChanged_DateDePresence" />
+
+                                    <Button  Name="Valider" Content="Valider" Width="90" Margin="10,0,0,0"  FontSize="16" Click="ValiderPresence_Click"></Button>
                             </StackPanel>
                         </GroupBox.Header>
 
 
                         <StackPanel Grid.Column="1">
 
-                            <DataGrid Name="ListElement" Height="295" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
+                            <DataGrid Name="ListElement" Height="295" ItemsSource="{Binding}" SelectionMode="Extended" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                    <!--<DataGridCheckBoxColumn Header="Oui" IsThreeState="True" x:Name="CheckBoxEstPresent" Binding="{Binding EstPresent}" />-->
+                                        <DataGridCheckBoxColumn x:Name="CheckBoxEstPresent" Binding="{Binding Path=CheckBoxEstPresent}">
+
+                                            <DataGridCheckBoxColumn.Header>
+                                                
+                                                <CheckBox  Name="CheckAll" Width="20"  Foreground="White" FontSize="16" Click="CheckAll_Click" Background="Wheat"></CheckBox>
+
+                                            </DataGridCheckBoxColumn.Header>
+                                           
+                                         
+                                    </DataGridCheckBoxColumn>
                                     <DataGridTextColumn Header="Id"  FontSize="15" Binding="{Binding Path=IdModuleInscription}" Visibility="Hidden" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSiteModule"  FontSize="15" Binding="{Binding Path=IdSiteModule}" Visibility="Hidden"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Nom Module" FontSize="15" Binding="{Binding Path=NomModule}" Visibility="Hidden"></DataGridTextColumn>
@@ -239,11 +251,17 @@
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ListeAttenteBox" Header="Liste des participants absent par module " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
-                        
-                        <StackPanel Grid.Column="1">
-
-                            <DataGrid Name="ListParticipantAbsent" Height="210" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListParticipantAbsent_MouseDoubleClick" >
+                  
+                    <GroupBox x:Name="ListeAttenteBox"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                <Label Content="Liste des participants absent par module"></Label>
+                                <Button Name="Print" Content="Print" Click="Print_Click" Margin="130,0,0,0"></Button>
+                                </StackPanel>
+                            </GroupBox.Header>  
+                            <StackPanel Grid.Column="1">
+                               
+                                <DataGrid  Name="ListParticipantAbsent" Height="210" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListParticipantAbsent_MouseDoubleClick" >
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdPresence}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>

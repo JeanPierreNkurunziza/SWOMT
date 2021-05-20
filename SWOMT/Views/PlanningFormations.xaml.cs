@@ -20,21 +20,16 @@ namespace SWOMT.Views
     /// Logique d'interaction pour PlanningFormations.xaml
     /// </summary>
     public partial class PlanningFormations : Page
-    {
-        List<MyApps.Application.ViewModels.PlanningViewModel> liste = new List<MyApps.Application.ViewModels.PlanningViewModel>();
-        List<MyApps.Application.ViewModels.FormationViewModel> listeFormation = new List<MyApps.Application.ViewModels.FormationViewModel>();
-        List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
-
-        string enregistre;
+    {  
+       string enregistre;
+       List<MyApps.Application.ViewModels.PlanningViewModel> liste = new List<MyApps.Application.ViewModels.PlanningViewModel>();
         public PlanningFormations(string roleName) 
         {
             InitializeComponent();
             liste = MyApps.Application.Services.PlanningsFormation.GetPlanningFormation();
             PopulateAndBind(liste);
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
-            PopulateAndBindFormation(listeFormation);
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            PopulateAndBindModule(listeModule);
+            liste = MyApps.Application.Services.PlanningsFormation.GetFormations();
+            PopulateAndBindFormation(liste);
             if ((string)roleName != "Admin")
             {
                 
@@ -43,11 +38,9 @@ namespace SWOMT.Views
                 ModuleSiteTextBox.IsEnabled = false;
               
             }
-
+            var listeModule = MyApps.Application.Services.PlanningsFormation.GetModules();
+            PopulateAndBindModule(listeModule);
         }
-
-
-
         /// <summary>
         /// biding la liste de sites
         /// </summary>
@@ -60,10 +53,6 @@ namespace SWOMT.Views
             };
             ListElement.DataContext = listeItems;
         }
-
-
-
-
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
@@ -80,8 +69,7 @@ namespace SWOMT.Views
                 Id.Text = donnee.IdFormation.ToString();
                 Nom.Text = donnee.NomFormation.ToString();
             }
-        }
-
+        }       
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
@@ -96,16 +84,11 @@ namespace SWOMT.Views
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             Planning element = new Planning();
-
-
             if (Id.Text == "")
             {
                 MessageBox.Show("Il faut saisir l'identifiant de formation");
                 return;
             }
-
-
-
             if (enregistre == "Ajouter")
             {
                 element.IdFormation =short.Parse( Id.Text);
@@ -123,10 +106,7 @@ namespace SWOMT.Views
                 element.DateFormation = DateTime.Parse( DateFormation.Text).Date;
 
                 MyApps.Domain.Service.PlanningService.Update(element);
-            }
-
-
-           
+            }          
             liste.Clear();
             liste = MyApps.Application.Services.PlanningsFormation.GetPlanningFormation();
             PopulateAndBind(liste);
@@ -147,8 +127,6 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             ModeIsEnabledTrue();
-
-
         }
 
         /// <summary>
@@ -204,7 +182,7 @@ namespace SWOMT.Views
         /// biding la liste de formations
         /// </summary>
         /// <param name="listeFormation"></param>
-        private void PopulateAndBindFormation(List<MyApps.Application.ViewModels.FormationViewModel> listeFormations)
+        private void PopulateAndBindFormation(List<MyApps.Application.ViewModels.PlanningViewModel> listeFormations)
         {
             Binding monBinding = new Binding
             {
@@ -212,10 +190,6 @@ namespace SWOMT.Views
             };
             ListFormation.DataContext = listeFormations;
         }
-
-
-
-
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
@@ -223,7 +197,8 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListFormation_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListFormation.SelectedItem is MyApps.Application.ViewModels.FormationViewModel donnee)
+            var listeModule = MyApps.Application.Services.PlanningsFormation.GetModules();
+            if (ListFormation.SelectedItem is MyApps.Application.ViewModels.PlanningViewModel donnee)
             {
                 if (donnee == null)
                 {
@@ -241,7 +216,7 @@ namespace SWOMT.Views
             try
             {
                 listeModule.Clear();
-                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModulesPerFormation(short.Parse(IdFormation.Text));
+                listeModule = MyApps.Application.Services.PlanningsFormation.GetModulesPerFormation(short.Parse(IdFormation.Text));
                 PopulateAndBindModule(listeModule);
             }
             catch(Exception)
@@ -250,8 +225,7 @@ namespace SWOMT.Views
                 return;
             }
             
-        }
-
+        }        
         private void AjouterFormation_Click(object sender, RoutedEventArgs e)
         {
             enregistre = "Ajouter";
@@ -306,18 +280,15 @@ namespace SWOMT.Views
                 formation.Description = Description.Text;
 
                 MyApps.Domain.Service.FormationService.Update(formation);
-            }
-
-
-            listeFormation.Clear();
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
-            PopulateAndBindFormation(listeFormation);
+            }           
+            liste.Clear();
+            liste = MyApps.Application.Services.PlanningsFormation.GetFormations();
+            PopulateAndBindFormation(liste);
             IdFormation.Text = "";
             NomFormation.Text = "";
             Description.Text = "";
             ModeIsEnabledFalseFormation();
-           
-
+         
         }
         /// <summary>
         /// méthode pour liberer le schamps à modifier une formation
@@ -335,8 +306,6 @@ namespace SWOMT.Views
             enregistre = "Modifier";
             ModeIsEnabledTrueFormation();
             IdFormation.IsEnabled = false;
-
-
         }
 
         /// <summary>
@@ -355,9 +324,9 @@ namespace SWOMT.Views
             MyApps.Domain.Service.FormationService.Delete(short.Parse(IdFormation.Text));
 
             ClearFormValuesFormation();
-            listeFormation.Clear();
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
-            PopulateAndBindFormation(listeFormation);
+            liste.Clear();
+            liste = MyApps.Application.Services.PlanningsFormation.GetFormations();
+            PopulateAndBindFormation(liste);
 
         }
         private void ClearFormValuesFormation()
@@ -372,20 +341,18 @@ namespace SWOMT.Views
             IdFormation.IsEnabled = true;
             NomFormation.IsEnabled = true;
             Description.IsEnabled = true;
-
         }
         private void ModeIsEnabledFalseFormation()
         {
             IdFormation.IsEnabled = false;
             NomFormation.IsEnabled = false;
             Description.IsEnabled = false;
-
         }
 
         //****************************************************************************************************************************
         //************************************ code de la partie a droite : gérer la liste des modules********************************
 
-        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.PlanningViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -404,41 +371,41 @@ namespace SWOMT.Views
             {
                 MessageBox.Show("Entrer le nom à rechercher");
 
-                listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
-                PopulateAndBindFormation(listeFormation);
+                liste = MyApps.Application.Services.PlanningsFormation.GetFormations();
+                PopulateAndBindFormation(liste);
                 return;
 
             }
 
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetSearchByName(NomRechercher.Text);
-            PopulateAndBindFormation(listeFormation);
+            liste = MyApps.Application.Services.PlanningsFormation.GetSearchByName(NomRechercher.Text);
+            PopulateAndBindFormation(liste);
         }
         private void ReSetList_Click(object sender, RoutedEventArgs e)
         {
             NomRechercher.Text = "";
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetSearchByName(NomRechercher.Text); 
-            PopulateAndBindFormation(listeFormation);
+            liste = MyApps.Application.Services.PlanningsFormation.GetSearchByName(NomRechercher.Text); 
+            PopulateAndBindFormation(liste);
         }
         private void RechercherModule_Click(object sender, RoutedEventArgs e)
         {
-
+            var listeModule = MyApps.Application.Services.PlanningsFormation.GetModules();
             if (NomRechercherModule.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
 
-                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+              
                 PopulateAndBindModule(listeModule);
                 return;
 
             }
 
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            listeModule = MyApps.Application.Services.PlanningsFormation.SearchModuleByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModule);
         }
         private void ReSetListModule_Click(object sender, RoutedEventArgs e)
         {
             NomRechercherModule.Text = "";
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            var listeModule = MyApps.Application.Services.PlanningsFormation.SearchModuleByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModule);
         }
     }

@@ -90,7 +90,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDateEncodage" Content="Date d'encodage" ></Label>
-                                <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="33,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage}"  Width="255"  IsEnabled="False" ></DatePicker>
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="33,2" x:Name="DateEncodage" Text="{Binding Path=DateEncodage, StringFormat='{}{0:dd/MM/yyyy }'}"  Width="255"  IsEnabled="False" ></DatePicker>
                             </WrapPanel>
                             <WrapPanel>
 
@@ -128,8 +128,9 @@
 
                         <WrapPanel Margin="0,20,0,0">
                             <Label Name="LabelModuleVersion" Content="Module Version" ></Label>
-                                <DatePicker Background="#545d6a" Margin="30,2" x:Name="VersionModule" Text="{Binding Path=VersionModule}" Width="250" FontWeight="ExtraBold" IsEnabled="False" />
-                        </WrapPanel>
+                                    <DatePicker Background="#545d6a"  Margin="30,2" x:Name="VersionModule" Text="{Binding Path=VersionModule,StringFormat='{}{0:dd-MM-yyyy }'}" Width="250" FontWeight="ExtraBold" IsEnabled="False" />
+                                   
+                                </WrapPanel>
 
                         <WrapPanel>
 

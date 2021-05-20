@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,6 @@ namespace SWOMT.Views
     /// </summary>
     public partial class UserLogin : Window
     {
-        List<MyApps.Application.ViewModels.UserViewModel> liste = new List<MyApps.Application.ViewModels.UserViewModel>();
         List<MyApps.Application.ViewModels.UserRolesViewModel> UserRoleList = new List<MyApps.Application.ViewModels.UserRolesViewModel>();
 
         public UserLogin()
@@ -28,8 +28,6 @@ namespace SWOMT.Views
             InitializeComponent();
             try
             {
-                liste = MyApps.Application.Services.UserViewModelService.GetUsers();
-
                 UserRoleList = MyApps.Application.Services.UserRolesViewModelService.GetUsersRoles();
 
                 this.SelectedRolesusers();
@@ -62,24 +60,32 @@ namespace SWOMT.Views
                 return;
             }
 
+            string nomExiste = MyApps.Domain.Service.UserService.GetUtilisateurNom(username.Text);
+            if (nomExiste == null)
+            {
+                MessageBox.Show("Le nom d'utilisateur saisie n'existe pas !!!", username.Text);
+                return;
+            }
             //appel d'un méthode pour vérifier si le nom et le mot de passe correspond et réturne le nom d'utilisateur
-            string utilisateurValidé = MyApps.Domain.Service.UserService.LoginUserNom(username.Text, password.Password);
-            
+            // string utilisateurValidé = MyApps.Domain.Service.UserService.LoginUserNom(username.Text, password.Password);
 
-            if (utilisateurValidé == null)
+            string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.verifyCrypto(password.Password, username.Text);
+            if (utilisateurValidé == null) 
             {
                 MessageBox.Show("Le nom d'utilisateur et le mot de passe ne correspondent pas SVP!");
                 return;
             }
-           
-            //récupérer le role d'un utilisateur 
-            string utilisateurUserRole = MyApps.Domain.Service.UserService.GetUtilisateurUserRole(utilisateurValidé);
+            else if(utilisateurValidé != null) 
+            {
+                //récupérer le role d'un utilisateur 
+                string utilisateurUserRole = MyApps.Domain.Service.UserService.GetUtilisateurUserRole(utilisateurValidé);
 
-            TableauDeBord accueil = new TableauDeBord(utilisateurValidé.ToString() ,utilisateurUserRole.ToString());   
-            accueil.Show();
-            username.Text = "";
-            password.Password = "";
-       
+                TableauDeBord accueil = new TableauDeBord(utilisateurValidé.ToString(), utilisateurUserRole.ToString());
+                accueil.Show();
+                username.Text = "";
+                password.Password = "";
+            }
+                  
         }
         /// <summary>
         /// bouton pour annuler la page de login
@@ -116,24 +122,20 @@ namespace SWOMT.Views
             if (username.Text == "")
             {
                 MessageBox.Show("Veuillez entrer l'utilisateur SVP!");
+                LabelRoleUtilisateur.Visibility = Visibility.Hidden;
+                ComboBoxUserRole.Visibility = Visibility.Hidden;
+                ValiderInscription.Visibility = Visibility.Hidden;
                 return;
             }
 
-            if (password.Password == "")
-            {
-                MessageBox.Show("Veuillez entrer le mot de passe SVP!");
+            if (ValidatePassword(password.Password, out string ErrorMessage)!=true)
+            {          
+                MessageBox.Show(ErrorMessage);
                 return;
             }
-
-           // string utilisateurNom = MyApps.Domain.Service.UserService.GetUtilisateurNom(username.Text);
-
-            if (username.Text == "")
-            {
-                MessageBox.Show("L'utilisateur n'existe pas dans la base de données SVP");
-                return;
-            }
+           
             element.UserName = username.Text;
-            element.MotDePasse = password.Password;
+            element.MotDePasse =MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.CreateHash(password.Password);
             element.UserRole = ComboBoxUserRole.Text;
             foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
             {
@@ -144,7 +146,7 @@ namespace SWOMT.Views
                 }
             }
 
-            MyApps.Domain.Service.UserService.Create(element.UserName, element.MotDePasse, element.UserRole);
+            MyApps.Domain.Service.UserService.Ajouter(element); 
             username.Text = "";
             password.Password = "";
             LabelRoleUtilisateur.Visibility = Visibility.Hidden;
@@ -154,7 +156,7 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.UserRolesViewModel> SelectedRolesusers()
         {
 
-            foreach (var items in UserRoleList.Where(f => f.UserRoleName != "Admin" && f.UserRoleName != "Secrétaire"))
+            foreach (var items in UserRoleList.Where(f => f.UserRoleName != "Personnel" && f.UserRoleName != "Secrétaire"))
             {
                 ComboBoxUserRole.Items.Add(items.UserRoleName);
             }
@@ -168,10 +170,64 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ValiderCharacterNumbers(object sender, RoutedEventArgs e)
         {
-            if (((PasswordBox)sender).Password.Length < 4)
+            if (((PasswordBox)sender).Password.Length < 8)
             {
-                MessageBox.Show("Il faut au moins 4 lettres ou chiffres");  
+                MessageBox.Show("Il faut au moins 8 lettres ou chiffres");   
                 return; 
+            }
+        }
+
+        /// <summary>
+        /// La validation de mot de passe 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="ErrorMessage"></param>
+        /// <returns></returns>
+        private bool ValidatePassword(string password, out string ErrorMessage)
+        {
+            var input = password;
+            ErrorMessage = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new Exception("Le mot de passe ne doit pas être vide");
+            }
+
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasMiniMaxChars = new Regex(@".{8,15}");
+            var hasLowerChar = new Regex(@"[a-z]+");
+            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+
+            if (!hasLowerChar.IsMatch(input))
+            {
+                ErrorMessage = "Le mot de passe doit contenir au moins une lettre minuscule ";
+                return false;
+            }
+            else if (!hasUpperChar.IsMatch(input))
+            {
+                ErrorMessage = "Le mot de passe doit contenir au moins une lettre majuscule ";
+                return false;
+            }
+            else if (!hasMiniMaxChars.IsMatch(input))
+            {
+                ErrorMessage = "Le mot de passe ne doit pas être inférieur à 8 ou supérieur à 15 caractères ";
+                return false;
+            }
+            else if (!hasNumber.IsMatch(input))
+            {
+                ErrorMessage = "Le mot de passe doit contenir au moins une valeur numérique ";
+                return false;
+            }
+
+            else if (!hasSymbols.IsMatch(input))
+            {
+                ErrorMessage = "Le mot de passe doit contenir au moins un caractère spécial ";
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

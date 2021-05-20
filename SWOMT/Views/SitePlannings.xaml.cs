@@ -21,30 +21,24 @@ namespace SWOMT.Views
     /// </summary>
     public partial class SitePlannings : Page
     {
-        List<MyApps.Application.ViewModels.SitePlanningViewModel> liste = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
-        List<MyApps.Application.ViewModels.SitePlanningViewModel> clearListe = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
-        List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
-        List<MyApps.Application.ViewModels.SiteViewModel> listeSite = new List<MyApps.Application.ViewModels.SiteViewModel>();
-        List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeFormateurModule = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
-
-
+        
         int idSiteSelected;
         int idModuleSelected = 0;
         int idFormateurModuleSelected;
         string enregistre;
-        
+        List<MyApps.Application.ViewModels.SitePlanningViewModel> liste = new List<MyApps.Application.ViewModels.SitePlanningViewModel>();
         public SitePlannings()
         {
             InitializeComponent(); 
-            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-          
-            PopulateAndBindSites(listeSite);
-            PopulateAndBindModule(listeModule);
+            //récuperer les modules programmé selon le site   
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetModules();
+            PopulateAndBindModule(liste);
+            //les sites enregistrés dans le système 
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+            PopulateAndBindSites(liste);
             this.SelectedNomModule();
             this.SelectedNomSite();
-
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
         }
 
         /// <summary>
@@ -64,7 +58,7 @@ namespace SWOMT.Views
         /// Biding the list of the sites
         /// </summary>
         /// <param name="listeItems"></param>
-        private void PopulateAndBindSites(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
+        private void PopulateAndBindSites(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -76,41 +70,43 @@ namespace SWOMT.Views
         /// Biding la liste des noms de modules
         /// </summary>
         /// <returns></returns>
-        private List<MyApps.Application.ViewModels.ModuleViewModel> SelectedNomModule()
+        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
         {
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetModules();
            
-            foreach (var module in listeModule)
+            foreach (var module in liste)
             {
                 IdModule.Items.Add(module.NomModule);
             }
 
-            return listeModule;
+            return liste;
         }
-        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> SelectedNomFormateurPerModule ()
+        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomFormateurPerModule ()
         {
-            listeFormateurModule = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
-            foreach (var module in listeFormateurModule)
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetFormateurPerModule((short)(idModuleSelected));
+            foreach (var module in liste)
             {
                 
                 IdFormateurModule.Items.Add(module.NomFormateur + " : " + module.IdFormateurModule);
             }
            
 
-            return listeFormateurModule; 
+            return liste; 
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID
         /// </summary>
         /// <returns></returns>
-        private List<MyApps.Application.ViewModels.SiteViewModel> SelectedNomSite()
+        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomSite()
         {
-
-            foreach (var site in listeSite)
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+          
+            foreach (var site in liste)
             {
                 IdSite.Items.Add(site.NomSite);
             }
 
-            return listeSite;
+            return liste;
         }
 
 
@@ -126,8 +122,6 @@ namespace SWOMT.Views
                 IdSiteModule.Text = donnee.IdSiteModule.ToString();
                 IdSite.Text = donnee.NomSite.ToString();
                 IdModule.Text = donnee.NomModule.ToString();
-                //NomModule.Text = donnee.NomModule.ToString();
-                //NomSite.Text = donnee.NomSite.ToString();
                 DateDebutModule.Text = donnee.DateDebutModule.ToString();
                 DateFinModule.Text = donnee.DateFinModule.ToString();
                 IdFormateurModule.SelectedItem = donnee.NomFormateur.ToString() + " : " + donnee.IdFormateurModule.ToString();  
@@ -150,16 +144,11 @@ namespace SWOMT.Views
             IdSiteModule.IsEnabled = false;
             IdSite.IsEnabled = true;
             IdModule.IsEnabled = false;
-            //NomSite.IsEnabled = false;
-            //NomModule.IsEnabled = false;
             DateDebutModule.IsEnabled = false;
             DateFinModule.IsEnabled = false;
             enregistre = "Ajouter";
             IdSiteModule.IsEnabled =false;
-            //IdSite.Text = "";
             IdModule.Text = "";
-            //NomSite.Text = "";
-            //NomModule.Text = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
             IdFormateurModule.IsEnabled = true;
@@ -189,8 +178,6 @@ namespace SWOMT.Views
 
             if (enregistre == "Ajouter")
             {
-
-                //element.IdSiteModule = short.Parse(IdSiteModule.Text);
                 element.IdSite = (short)(idSiteSelected);
                 element.IdModule = (short)(idModuleSelected);
                
@@ -302,8 +289,6 @@ namespace SWOMT.Views
             IdSiteModule.Text = "";
             IdModule.Text = "";
             IdSite.Text = "";
-            //NomModule.Text = "";
-            //NomSite.Text = "";
             DateDebutModule.Text = "";
             DateFinModule.Text = "";
 
@@ -312,9 +297,7 @@ namespace SWOMT.Views
         {
             IdSiteModule.IsEnabled = false;
             IdSite.IsEnabled = true;
-            IdModule.IsEnabled = true;
-            //NomSite.IsEnabled = true;
-            //NomModule.IsEnabled = true;          
+            IdModule.IsEnabled = true;       
             DateDebutModule.IsEnabled = true;
             DateFinModule.IsEnabled = true;
 
@@ -324,9 +307,6 @@ namespace SWOMT.Views
             IdSiteModule.IsEnabled = false;
             IdSite.IsEnabled = true;
             IdModule.IsEnabled = false;
-           
-            //NomModule.IsEnabled = false;
-            //NomSite.IsEnabled =false;
             DateDebutModule.IsEnabled = false;
             DateFinModule.IsEnabled = false;
 
@@ -335,7 +315,7 @@ namespace SWOMT.Views
         private void ListElement_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
 
-            if (ListElement.SelectedItem is MyApps.Application.ViewModels.SiteViewModel donnee)
+            if (ListElement.SelectedItem is MyApps.Application.ViewModels.SitePlanningViewModel donnee)
             {
                 Id.Text = donnee.IdSite.ToString();
                 Nom.Text = donnee.NomSite.ToString();
@@ -347,6 +327,8 @@ namespace SWOMT.Views
 
         private void IdModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetModules();
+           
             if (IdModule.SelectedItem == null)
             {
                 //MessageBox.Show("Please select the name of the module");
@@ -354,7 +336,7 @@ namespace SWOMT.Views
                 //IdModule.SelectedValue = "";
             }
             string nomModuleSelected = IdModule.SelectedValue.ToString();
-            foreach (var module in listeModule)
+            foreach (var module in liste)
             {
                 if (module.NomModule == nomModuleSelected)
                 {
@@ -363,20 +345,19 @@ namespace SWOMT.Views
             }
             IdFormateurModule.Items.Clear(); 
             this.SelectedNomFormateurPerModule();
-            
-            
-
         }
 
         private void IdSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+            
             if (IdSite.SelectedItem == null)
             {
                 return;
             }
             string nomSiteSelected = IdSite.SelectedValue.ToString();
 
-            foreach (var site in listeSite)
+            foreach (var site in liste)
             {
                 if (site.NomSite == nomSiteSelected)
                 {
@@ -390,7 +371,7 @@ namespace SWOMT.Views
             DateFinModule.Text = "";
             
             liste.Clear();
-            ListModuleSite.DataContext = clearListe;
+           // ListModuleSite.DataContext = clearListe;
             IdSiteModule.IsEnabled = false;
             IdModule.IsEnabled = false;
             DateFinModule.IsEnabled = false;
@@ -412,6 +393,8 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void MettreAjourSite_Click(object sender, RoutedEventArgs e)
         {
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+            
             Site element = new Site();
             //Competence competence = new Competence();
 
@@ -421,13 +404,11 @@ namespace SWOMT.Views
                 return;
             }
 
-
-
             if (enregistre == "Ajouter")
             {
                 element.NomSite = Nom.Text;
                 element.AdresseSite = AdresseSite.Text;
-                foreach (var donne in MyApps.Application.Services.SitesViewModelsServices.GetSites())
+                foreach (var donne in liste)
                 {
                     //avoid the duplicate datas in the liste of sites 
                     if ((element.NomSite == donne.NomSite) && (element.AdresseSite == donne.AdresseSite)) // if already the items exist then rejects
@@ -453,9 +434,9 @@ namespace SWOMT.Views
 
 
             //ModeIsEnabledFalseSite();
-            listeSite.Clear();
-            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-            PopulateAndBindSites(listeSite);
+            liste.Clear();
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+            PopulateAndBindSites(liste);
             Id.Text = "";
             Nom.Text = "";
             AdresseSite.Text = ""; 
@@ -490,6 +471,8 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void SupprimerSite_Click(object sender, RoutedEventArgs e)
         {
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+           
             //le code pour signaler la presence de l'idParticipant dans la table Inscription on doit d'abord faire une vérification
             if (Id.Text == "")
             {
@@ -511,9 +494,9 @@ namespace SWOMT.Views
             Id.IsEnabled = true;
             Nom.Text = "";
             AdresseSite.Text = "";
-            listeSite.Clear();
-            listeSite = MyApps.Application.Services.SitesViewModelsServices.GetSites();
-            PopulateAndBindSites(listeSite);
+            liste.Clear();
+            liste = MyApps.Application.Services.SitePlanningViewModelService.GetSites();
+            PopulateAndBindSites(liste);
             ClearFormValuesSite();
             IdSite.Items.Clear();
             this.SelectedNomSite();
@@ -547,7 +530,7 @@ namespace SWOMT.Views
         /// biding la liste de modules
         /// </summary>
         /// <param name="listeModules"></param>
-        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -572,20 +555,12 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListElementModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
+            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.SitePlanningViewModel donnee)
             {
                 Id.Text = donnee.IdModule.ToString();
-                //IdFormation.Text = donnee.NomFormation.ToString();
-                //NomModule.Text = donnee.NomModule.ToString();
-                //// NomFormation.Text = donnee.NomFormation.ToString();
-                //CreditModule.Text = donnee.CreditModule.ToString();
-                //NombrePrévu.Text = donnee.NombrePrévu.ToString();
                 IdModule.SelectedItem = donnee.NomModule.ToString();
             }
-            //if (enregistre != "Ajouter")
-            //{
-            //    IdFormateur.SelectedValue = "";
-            //}
+
             liste.Clear();
             liste = MyApps.Application.Services.SitePlanningViewModelService.GetSitePerModule((short)(idModuleSelected));
             PopulateAndBindSitePerModule(liste); 
@@ -597,21 +572,21 @@ namespace SWOMT.Views
             if (NomRechercherModule.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
-
-                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-                PopulateAndBindModule(listeModule);
+                liste = MyApps.Application.Services.SitePlanningViewModelService.GetModules();
+                PopulateAndBindModule(liste);
+               
                 return;
 
             }
 
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
-            PopulateAndBindModule(listeModule);
+            liste = MyApps.Application.Services.SitePlanningViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(liste);
         }
         private void ReSetListModule_Click(object sender, RoutedEventArgs e)
         {
             NomRechercherModule.Text = "";
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
-            PopulateAndBindModule(listeModule);
+            liste = MyApps.Application.Services.SitePlanningViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            PopulateAndBindModule(liste);
         }
         /// <summary>
         /// Combobox pour séléctionner le nom de formateur par module 

@@ -12,6 +12,30 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Button" x:Key="FrenchButton">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush>
+                            <GradientStop Offset="0" Color="Blue"></GradientStop>
+                            <GradientStop Offset="0.5" Color="White"></GradientStop>
+                            <GradientStop Offset="1" Color="Red"></GradientStop>
+
+                        </LinearGradientBrush>
+                    </Setter.Value>
+
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1.2" ScaleY="1.2" CenterX="75" CenterY="30"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
-    </Application.Resources> 
+        
+    </Application.Resources>
+   
 </Application>

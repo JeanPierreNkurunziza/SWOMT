@@ -103,7 +103,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelDate" Content="Date Délivrance" ></Label>
-                                <DatePicker FontSize="15" Background="#545d6a" FontWeight="ExtraBold" Margin="20,2" Name="DateDelivrance" Text="{Binding Path=DateDelivrance}"  Width="170" IsEnabled="False" DisplayDate="{Binding DateTime.Now}" ></DatePicker>
+                                    <DatePicker FontSize="15" SelectedDateChanged="DatePicker_SelectedDateChanged" Background="#545d6a" FontWeight="ExtraBold" Margin="20,2" Name="DateDelivrance" Text="{Binding Path=DateDelivrance, StringFormat='{}{0:dd/MM/yyyy }' }"  Width="170" IsEnabled="False" DisplayDate="{Binding DateTime.Now}" ></DatePicker>
                             </WrapPanel>
                             <WrapPanel>
 
@@ -148,7 +148,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ListeCertificatTextBox2" Header="Les certificats délivrés par Participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="450">
+                    <GroupBox x:Name="ListeCertificatTextBox2" Header="Les certificats délivrés à un Participant" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="450">
                         <StackPanel Grid.Column="1">
 
                             <DataGrid Name="ListElement" Height="280" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >

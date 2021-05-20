@@ -20,45 +20,29 @@ namespace SWOMT.Views
     /// Logique d'interaction pour FormateurModules.xaml
     /// </summary>
     public partial class FormateurModules : Page 
-    {
-        List<MyApps.Application.ViewModels.FormateurViewModel> Emptyliste = new List<MyApps.Application.ViewModels.FormateurViewModel>();
-        List<MyApps.Application.ViewModels.FormateurViewModel> liste = new List<MyApps.Application.ViewModels.FormateurViewModel>();
-        List<MyApps.Application.ViewModels.FormateurModuleViewModel> clearList = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>(); 
-        List<MyApps.Application.ViewModels.FormateurModuleViewModel> liste2 = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
-        List<MyApps.Application.ViewModels.FormateurViewModel> listeFormateur = new List<MyApps.Application.ViewModels.FormateurViewModel>();
-        List<MyApps.Application.ViewModels.ModuleViewModel> listeModule = new List<MyApps.Application.ViewModels.ModuleViewModel>();
-        List<MyApps.Application.ViewModels.FormationViewModel> listeFormation = new List<MyApps.Application.ViewModels.FormationViewModel>(); 
+    {     
         int idModuleSelected=0; 
         int idFormateurSelected;
         int idFormationSelected;
         string enregistre;
+        List<MyApps.Application.ViewModels.FormateurModuleViewModel> FormateurModuleListe = new List<MyApps.Application.ViewModels.FormateurModuleViewModel>();
         public FormateurModules(string roleName)  
         {
             InitializeComponent();
-            liste= MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-            listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
-            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetFormatuerModules();
-           
-            
+            FormateurModuleListe = MyApps.Application.Services.FormateurModuleViewModelService.GetFormatuerModules();          
             this.selectedNomModule();
             this.selectedNomFormateur();
             this.selectedNomFormation();
-
+            var  listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs();
             PopulateAndBindFormateurs(listeFormateur);
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
             PopulateAndBindModule(listeModule);
-            // PopulateAndBind(liste);
             if ((string)roleName != "Admin")
             {
-                //BoutonInscription.IsEnabled=false;
                 FormateurtextBox.IsEnabled=false;
-                // FormateurtextBox.Content=false;
                 ModuleFormateurtextBox.IsEnabled = false;
-                GroupBoxModuleTextBox.IsEnabled = false;
-                
+                GroupBoxModuleTextBox.IsEnabled = false;               
             }
-
 
         }
 
@@ -66,10 +50,10 @@ namespace SWOMT.Views
         /// La méthode qui assigne le nom du formateur à partir de son identifiant 
         /// </summary>
         /// <returns>liste de noms </returns>
-        private List<MyApps.Application.ViewModels.FormateurViewModel> selectedNomFormateur()
+        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> selectedNomFormateur()
         {
             //var listeView = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-            liste = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs(); 
+           var liste = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs(); 
             foreach (var formateur in liste)
             {
                 IdFormateur.Items.Add(formateur.NomFormateur);
@@ -82,10 +66,10 @@ namespace SWOMT.Views
         /// récuperation le nom de module à partir de son identifiant
         /// </summary>
         /// <returns> liste module</returns>
-        private List<MyApps.Application.ViewModels.ModuleViewModel> selectedNomModule()
+        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> selectedNomModule()
         {
             //var listeView = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
             foreach (var module in listeModule)
             {
                 IdModule.Items.Add(module.NomModule);
@@ -99,7 +83,7 @@ namespace SWOMT.Views
         /// biding la liste des noms de module
         /// </summary>
         /// <param name="liste"></param>
-        private void PopulateAndBind(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        private void PopulateAndBind(List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -111,7 +95,7 @@ namespace SWOMT.Views
         /// Biding la liste des noms de formateur
         /// </summary>
         /// <param name="formateurBinding"></param>
-        private void FormateurBinding(List<MyApps.Application.ViewModels.FormateurViewModel> formateurBinding)
+        private void FormateurBinding(List<MyApps.Application.ViewModels.FormateurModuleViewModel> formateurBinding)
         {
             Binding monBinding = new Binding
             {
@@ -135,7 +119,7 @@ namespace SWOMT.Views
         /// Biding la liste des formateures
         /// </summary>
         /// <param name="listeItems"></param>
-        private void PopulateAndBindFormateurs(List<MyApps.Application.ViewModels.FormateurViewModel> listeItems)
+        private void PopulateAndBindFormateurs(List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -151,7 +135,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListElement_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListElement.SelectedItem is MyApps.Application.ViewModels.FormateurViewModel donnee)
+            if (ListElement.SelectedItem is MyApps.Application.ViewModels.FormateurModuleViewModel donnee)
             {
                 Id.Text = donnee.IdFormateur.ToString();
                 NomFormateur.Text = donnee.NomFormateur.ToString();
@@ -222,7 +206,7 @@ namespace SWOMT.Views
                         return;
                     }
                 }
-                MyApps.Domain.Service.FormateurModuleService.Create(element); // if the idformateur and idmodule not existed then creat the item
+                MyApps.Domain.Service.FormateurModuleService.Create(element); // if the idformateur and idmodule not existed then create the item
             }
 
             if (enregistre == "Modifier")
@@ -235,10 +219,10 @@ namespace SWOMT.Views
 
                 MyApps.Domain.Service.FormateurModuleService.Update(element); // validate the modification 
             }
-            liste2.Clear();  //rendre la liste vide 
-            //reflesh la liste des formateur Modules 
-            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected));
-            ModulesBinding(liste2);
+            FormateurModuleListe.Clear();  //rendre la liste vide 
+            //reflesh la liste des formateurs et Modules 
+            FormateurModuleListe = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected));
+            ModulesBinding(FormateurModuleListe);
             //aprés validation on n'efface les élements dans la formulaire
             IdModule.SelectedValue = "";
             VersionModule.Text = "";
@@ -285,9 +269,9 @@ namespace SWOMT.Views
             IdFormateur.IsEnabled = true;
             IdModule.SelectedValue = "";
             VersionModule.Text = "";
-            liste2.Clear();
-            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected));
-            ModulesBinding(liste2);
+            FormateurModuleListe.Clear();
+            FormateurModuleListe = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected));
+            ModulesBinding(FormateurModuleListe);
             IdFormateurModule.Text = "";
             IdFormateur.SelectedItem = "";
             IdModule.SelectedValue = "";
@@ -325,6 +309,7 @@ namespace SWOMT.Views
 
         private void IdFormateur_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs();
             if (IdFormateur.SelectedIndex == -1)
             {
                // MessageBox.Show("Selectionner l'identifiant du formateur");
@@ -340,21 +325,14 @@ namespace SWOMT.Views
                     idFormateurSelected = formateur.IdFormateur; 
                 }
             }
-
             IdFormateur.IsEnabled = true;
-            //IdModule.SelectedValue="";
             VersionModule.Text = "";
-            //VersionModule.IsEnabled=false;
-            liste2.Clear();
-            ListModule.DataContext = clearList;
-
+            FormateurModuleListe.Clear();
+            ListModule.DataContext = FormateurModuleListe;
             IdModule.IsEnabled = false;
-
             VersionModule.IsEnabled = false;
-
-            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected)); 
-            ModulesBinding(liste2);
-           
+            FormateurModuleListe = MyApps.Application.Services.FormateurModuleViewModelService.GetModulesPerFormateur((short)(idFormateurSelected)); 
+            ModulesBinding(FormateurModuleListe);          
         }
 
         private void ListModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
@@ -377,16 +355,17 @@ namespace SWOMT.Views
                 //IdModule.SelectedValue = "";
             }
             string nomModuleSelected = IdModule.SelectedValue.ToString();
-            foreach(var module in listeModule)
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
+            foreach (var module in listeModule)
             {
                 if (module.NomModule == nomModuleSelected)
                 {
                     idModuleSelected = module.IdModule;
                 }
             }
-            liste2.Clear();
-            liste2 = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
-            ModulesBinding(liste2);
+            FormateurModuleListe.Clear();
+            FormateurModuleListe = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurPerModule((short)(idModuleSelected));
+            ModulesBinding(FormateurModuleListe);
            
         }
 
@@ -428,8 +407,8 @@ namespace SWOMT.Views
             MyApps.Domain.Service.FormateurService.Delete(short.Parse(Id.Text));
 
             ClearFormValuesFormateur();
-
-            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+            var listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs();
+            // listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             PopulateAndBindFormateurs(listeFormateur);
             IdFormateur.Items.Clear();
             this.selectedNomFormateur();
@@ -446,9 +425,6 @@ namespace SWOMT.Views
                 MessageBox.Show("Il faut mettre les données à enregistrer");
                 return; 
             }
-
-
-
             if (enregistre == "Ajouter")
             {
                 element.NomFormateur = NomFormateur.Text;
@@ -460,7 +436,6 @@ namespace SWOMT.Views
                 MyApps.Domain.Service.FormateurService.Create(element);
                
             }
-
             if (enregistre == "Modifier")
             {
                 element.IdFormateur = short.Parse(Id.Text);
@@ -470,18 +445,15 @@ namespace SWOMT.Views
                 element.EmailFormateur = EmailFormateur.Text;
                 element.DateEncodage = DateTime.Parse(DateEncodage.Text);
 
-                MyApps.Domain.Service.FormateurService.Update(element);
-               
+                MyApps.Domain.Service.FormateurService.Update(element);               
             }
-
             ModeIsEnabledFalseFormateur();
-          
-            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+            var listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs();
+            // listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
             ClearFormValuesFormateur();
             PopulateAndBindFormateurs(listeFormateur);
             IdFormateur.Items.Clear();
-            this.selectedNomFormateur();
-           
+            this.selectedNomFormateur();           
         }
         private void ClearFormValuesFormateur()
         {
@@ -491,7 +463,6 @@ namespace SWOMT.Views
             TelFormateur.Text = "";
             EmailFormateur.Text = "";
             DateEncodage.Text = "";
-
         }
         private void ModeIsEnabledTrueFormateur()
         {
@@ -515,13 +486,13 @@ namespace SWOMT.Views
         }
 
         //*********************************************************************************************************************
-        //**************************** Gestion des modules*********************************************************************
+        //**************************** planification des modules*********************************************************************
         //*********************************************************************************************************************
         /// <summary>
         /// biding la liste de modules
         /// </summary>
         /// <param name="listeModules"></param>
-        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.ModuleViewModel> listeItems)
+        private void PopulateAndBindModule(List<MyApps.Application.ViewModels.FormateurModuleViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -530,10 +501,9 @@ namespace SWOMT.Views
             ListElementModule.DataContext = listeItems;
         }
 
-        private List<MyApps.Application.ViewModels.FormationViewModel> selectedNomFormation()
+        private List<MyApps.Application.ViewModels.FormateurModuleViewModel> selectedNomFormation()
         {
-            //var listeView = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
-
+            var listeFormation = MyApps.Application.Services.FormateurModuleViewModelService.GetFormations();
             foreach (var formateur in listeFormation)
             {
                 IdFormation.Items.Add(formateur.NomFormation); 
@@ -544,11 +514,10 @@ namespace SWOMT.Views
         }
         private void IdFormation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listeFormation = MyApps.Application.Services.FormationViewModelsServices.GetFormations();
             if (IdFormation.SelectedItem == null)
             {
-                //MessageBox.Show("Please select the name of the module");
                 return;
-                //IdModule.SelectedValue = "";
             }
             string nomFormationSelected = IdFormation.SelectedValue.ToString();
             foreach (var formation in listeFormation)
@@ -567,7 +536,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListElementModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.ModuleViewModel donnee)
+            if (ListElementModule.SelectedItem is MyApps.Application.ViewModels.FormateurModuleViewModel donnee)
             {
                 idModule.Text = donnee.IdModule.ToString();
                 IdFormation.Text = donnee.NomFormation.ToString();
@@ -597,10 +566,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void MettreAjourModule_Click(object sender, RoutedEventArgs e)
         {
-            Module element = new Module();
-           
-
-           
+            Module element = new Module();          
             if (!int.TryParse(CreditModule.Text, out int nbr))
             {
                 MessageBox.Show("Format du nombre pour le Crédit de module  est incorrect SVP !");
@@ -614,8 +580,6 @@ namespace SWOMT.Views
 
             if (enregistre == "Ajouter")
             {
-
-               // element.IdModule = short.Parse(IdModule.Text);
                 element.IdFormation = (short)(idFormationSelected);
                 element.NomModule = NomModule.Text;
                 element.CreditModule = short.Parse(CreditModule.Text);
@@ -641,11 +605,8 @@ namespace SWOMT.Views
 
                 MyApps.Domain.Service.ModuleService.Update(element);
             }
-
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
             ModeIsEnabledFalseModule();
-            listeModule.Clear();
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
-          
             PopulateAndBindModule(listeModule);
             ClearFormValuesModule();
             IdModule.SelectedItem = element.NomModule;
@@ -685,10 +646,10 @@ namespace SWOMT.Views
                 return;
             }
             MyApps.Domain.Service.ModuleService.Delete(short.Parse(IdModule.Text));
-
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
             ClearFormValuesModule();
-            listeModule.Clear();
-            listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
+            //listeModule.Clear();
+           // listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
             PopulateAndBind(listeModule);
 
         }
@@ -728,47 +689,47 @@ namespace SWOMT.Views
         //****************************************************************************************************************
         private void Rechercher_Click(object sender, RoutedEventArgs e)
         {
-
+            var listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.GetFormateurs();
             if (NomRechercher.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
 
-                listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
+                //listeFormateur = MyApps.Application.Services.FormateurViewModelsService.GetFormateurs();
                 PopulateAndBindFormateurs(listeFormateur);
                 return;
 
             }
 
-            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.SearchFormateurByName(NomRechercher.Text);
+            listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.SearchFormateurByName(NomRechercher.Text);
             PopulateAndBindFormateurs(listeFormateur);
         }
         private void ReSetList_Click(object sender, RoutedEventArgs e)
         {
             NomRechercher.Text = "";
-            listeFormateur = MyApps.Application.Services.FormateurViewModelsService.SearchFormateurByName(NomRechercher.Text);
+          var  listeFormateur = MyApps.Application.Services.FormateurModuleViewModelService.SearchFormateurByName(NomRechercher.Text);
             PopulateAndBindFormateurs(listeFormateur); 
         }
         private void RechercherModule_Click(object sender, RoutedEventArgs e) 
         {
-
+            var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.GetModules();
             if (NomRechercherModule.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
-
-                listeModule = MyApps.Application.Services.ModuleViewModelService.GetModules();
                 PopulateAndBindModule(listeModule);
                 return;
 
             }
 
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+            listeModule = MyApps.Application.Services.FormateurModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModule);
         }
         private void ReSetListModule_Click(object sender, RoutedEventArgs e)
         {
             NomRechercherModule.Text = "";
-            listeModule = MyApps.Application.Services.ModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
+           var listeModule = MyApps.Application.Services.FormateurModuleViewModelService.SearchModuleByName(NomRechercherModule.Text);
             PopulateAndBindModule(listeModule);
         }
+
+       
     }
 }

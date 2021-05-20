@@ -121,11 +121,11 @@
                         </WrapPanel>
                         <WrapPanel >
                             <Label Name="LabelDateFin" Content="Date fin" ></Label>
-                            <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="63,2" x:Name="DateFinModule" Text="{Binding Path=DateFinModule}"  Width="250"  IsEnabled="False"  ></DatePicker>
+                                    <DatePicker Background="#545d6a" FontWeight="ExtraBold" Margin="63,2" x:Name="DateFinModule" Text="{Binding Path=DateFinModule, StringFormat='{}{0:dd/MM/yyyy }'}"  Width="250"  IsEnabled="False"  ></DatePicker>
                         </WrapPanel>
                         <WrapPanel >
                             <Label Name="LabelNomFormateur" Content="Formateur" ></Label>
-                                <ComboBox Background="#545d6a" FontWeight="ExtraBold" Margin="50,2" x:Name="IdFormateurModule" Text="{Binding Path=IdFormateurModule}" Width="250" IsEnabled="False" SelectionChanged="IdFormateurModule_SelectionChanged"/>
+                                    <ComboBox Background="#545d6a" FontWeight="ExtraBold" Margin="50,2" x:Name="IdFormateurModule" Text="{Binding Path=IdFormateurModule, StringFormat='{}{0:dd/MM/yyyy }'}" Width="250" IsEnabled="False" SelectionChanged="IdFormateurModule_SelectionChanged"/>
                         </WrapPanel>
 
                         <WrapPanel>
@@ -144,7 +144,7 @@
                         <StackPanel Grid.Column="1">
                             <DataGrid Name="ListModuleSite" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="ListModuleSite_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Id" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Code" FontSize="15" Binding="{Binding Path=IdSiteModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdSite}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdModule" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdModule}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="NomSite" Visibility="Hidden" FontSize="15" Binding="{Binding Path=NomSite}"></DataGridTextColumn>

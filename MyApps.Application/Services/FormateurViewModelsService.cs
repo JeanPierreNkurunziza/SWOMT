@@ -11,23 +11,25 @@ namespace MyApps.Application.Services
     {
         public static List<ViewModels.FormateurViewModel> GetFormateurs() 
         {
-          
-            var GetListe = FormateurService.GetAll();
+            var GetListe = FormateurService.GetAll(); 
             return GetFormateurListss(GetListe);
         }
         /// <summary>
-        /// méthode pour afficher dans le résultat trouvé par la recherche
+        /// méthode pour récuperer les données selon la saisie 
         /// </summary>
         /// <param name="searchName"></param>
         /// <returns></returns>
         public static List<ViewModels.FormateurViewModel> SearchFormateurByName(string searchName)
-        {
-           
+        {           
             var GetListe = FormateurService.SearchMethodByName(searchName);
            
-
             return GetFormateurListss(GetListe);
         }
+        /// <summary>
+        /// récuperer les données des formateurs dans la DB
+        /// </summary>
+        /// <param name="listElement"></param>
+        /// <returns></returns>
         public static List<ViewModels.FormateurViewModel> GetFormateurListss(List<Infrastructure.DB.Formateur> listElement )
         {
             List<ViewModels.FormateurViewModel> Liste = new List<ViewModels.FormateurViewModel>();

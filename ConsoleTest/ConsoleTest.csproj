@@ -5,18 +5,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB682B0C-5AD0-48BB-AB66-915C002DCDF7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyApps.Domain</RootNamespace>
-    <AssemblyName>MyApps.Domain</AssemblyName>
+    <ProjectGuid>{A7D75C1A-4C46-4088-A47C-B8CB9B255101}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleTest</RootNamespace>
+    <AssemblyName>ConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,7 +45,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,34 +53,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="SecuriteService\AuthentificationService.cs" />
-    <Compile Include="Service\CertificatService.cs" />
-    <Compile Include="Service\EvenementService.cs" />
-    <Compile Include="Service\ExamenService.cs" />
-    <Compile Include="Service\FormateurModuleService.cs" />
-    <Compile Include="Service\FormateurService.cs" />
-    <Compile Include="Service\FormationService.cs" />
-    <Compile Include="Service\InscriptionService.cs" />
-    <Compile Include="Service\ModuleService.cs" />
-    <Compile Include="Service\ParticipantService.cs" />
-    <Compile Include="Service\PlanningService.cs" />
-    <Compile Include="Service\PresenceService.cs" />
-    <Compile Include="Service\ResultatService.cs" />
-    <Compile Include="Service\SitePlanningService.cs" />
-    <Compile Include="Service\SiteService.cs" />
-    <Compile Include="Service\UserRolesServices.cs" />
-    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyApps.Application\MyApps.Application.csproj">
+      <Project>{98d65fc8-0340-4030-8e1f-d53ed23daf16}</Project>
+      <Name>MyApps.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyApps.Domain\MyApps.Domain.csproj">
+      <Project>{fb682b0c-5ad0-48bb-ab66-915c002dcdf7}</Project>
+      <Name>MyApps.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyApps.Infrastructure\MyApps.Infrastructure.csproj">
-      <Project>{3D12A2E5-4CB1-47D1-B134-8665577D067A}</Project>
+      <Project>{3d12a2e5-4cb1-47d1-b134-8665577d067a}</Project>
       <Name>MyApps.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SWOMT\SWOMT.csproj">
+      <Project>{61997e4d-4d16-4c04-a788-60047ca58082}</Project>
+      <Name>SWOMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

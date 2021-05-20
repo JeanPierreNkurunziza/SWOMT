@@ -10,7 +10,7 @@ namespace MyApps.Application.Services
     public class EvenementViewModelService
     {
         /// <summary>
-        /// méthode pour récuperer la liste des données pour servir notre interface
+        /// méthode pour récuperer la liste des données des évenements postés
         /// </summary>
         /// <returns> returne un liste des évenements </returns>
         public static List<ViewModels.EvenementViewModel> GetEvenements() 
@@ -31,6 +31,11 @@ namespace MyApps.Application.Services
            
             return GetEvenements(GetListe);
         }
+        /// <summary>
+        /// Récuperer les données concernant les évenements postés 
+        /// </summary>
+        /// <param name="eventlist"></param>
+        /// <returns></returns>
         public static List<ViewModels.EvenementViewModel> GetEvenements(List<Infrastructure.DB.Evenement> eventlist)
         {
             List<ViewModels.EvenementViewModel> Liste = new List<ViewModels.EvenementViewModel>();

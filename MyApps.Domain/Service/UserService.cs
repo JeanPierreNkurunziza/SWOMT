@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Windows.Forms;
 
 namespace MyApps.Domain.Service
 {
@@ -21,7 +22,26 @@ namespace MyApps.Domain.Service
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
                 //appel d'un procédure stockée pour la création d'un utilisateur 
+                // Le mot de passe est crypté, hashé les mots de passe avec des « salts »
+                //HASHBYTES('SHA2_512', dbo.F_GetPreSalt() + @MotDePasse + dbo.F_GetPostSalt());    
+               // Revenons à notre exemple de départ en considérant que les mots de passe sont cette fois-ci 
+               // hashés avec cette méthode avant d'être enregistrés en base de données. Le technicien 
+               // malintentionné en intervention sur la base de données pourra essayer de cracker 
+               //les mots de passe à partir d'une rainbow table, il n'y parviendra pas car il ne 
+               //connait pas les graines utilisées et la méthode de cryptage employée. De même, 
+               //s'il reconnait le format MD5 des mots de passe et qu'il enregistre son mot de passe 
+               //sous ce format, celui-ci ne fonctionnera pas au moment de l'identification
+
+
                 db.SP_RegisterUser(userName, motDePasse, userRole);
+            }
+        }
+        public static void Ajouter(Utilisateur utilisateur)
+        {
+            using (TrainingDBEntities db = new TrainingDBEntities())
+            {
+                db.Utilisateurs.Add(utilisateur);
+                db.SaveChanges();
             }
         }
 
@@ -101,6 +121,11 @@ namespace MyApps.Domain.Service
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
                 var utilisateur = db.Utilisateurs.FirstOrDefault(a => a.UserName == utilisateurNom);
+                if (utilisateur == null)
+                {
+                    MessageBox.Show("Utilisateur n'existe pas");
+                    return null;
+                }
                 return utilisateur.UserName; 
             }
         }
@@ -150,11 +175,21 @@ namespace MyApps.Domain.Service
         {
             using (TrainingDBEntities db = new TrainingDBEntities())
             {
-                var utilisateur = db.Utilisateurs.FirstOrDefault(a =>a.UserName == utilisateurNom );  
-                return utilisateur.UserRole; 
+                var utilisateur = db.Utilisateurs.FirstOrDefault(a =>a.UserName == utilisateurNom );   
+                if(utilisateur== null)
+                {
+                    return null;
+                    
+                }
+                else
+                {
+                    return utilisateur.UserRole;
+                }
+                  
             } 
         }
        
+
         public static int GetUtilisateurUserId(string utilisateurNom)
         {
             using (TrainingDBEntities db = new TrainingDBEntities())

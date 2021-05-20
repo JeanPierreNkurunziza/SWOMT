@@ -40,7 +40,6 @@ namespace MyApps.Application.Services
         public static List<ViewModels.ExamenViewModel> SearchByNameModule( string SearchNomModule)
         {
             List<ViewModels.ExamenViewModel> Liste = new List<ViewModels.ExamenViewModel>();
-            //var GetListe = ExamenViewModelService.GetExamens();
             var assets = from s in ExamenViewModelService.GetExamens()
                          select s;
             if (!String.IsNullOrEmpty(SearchNomModule))

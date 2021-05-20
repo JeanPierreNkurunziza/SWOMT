@@ -20,48 +20,26 @@ namespace SWOMT.Views
     /// Logique d'interaction pour Inscriptions.xaml
     /// </summary>
     public partial class Inscriptions : Page
-    {
-        List<MyApps.Application.ViewModels.InscriptionViewModel> listeAttente = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
-        List<MyApps.Application.ViewModels.InscriptionViewModel> listeModulePerParticipant = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
-        List<MyApps.Application.ViewModels.InscriptionViewModel> liste = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
-        List<MyApps.Application.ViewModels.InscriptionViewModel> clearListe = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
-        List<MyApps.Application.ViewModels.ParticipantViewModel> listeParticipant = new List<MyApps.Application.ViewModels.ParticipantViewModel>();
-        List<MyApps.Application.ViewModels.SitePlanningViewModel> listeModule = new List<MyApps.Application.ViewModels.SitePlanningViewModel>(); 
-        List<MyApps.Application.ViewModels.ParticipantViewModel> listeParticipant2 = new List<MyApps.Application.ViewModels.ParticipantViewModel>();
-
+    {    
         int idParticipantSelected =0;
         int idModuleSelected;
         string enregistre;
+        List<MyApps.Application.ViewModels.InscriptionViewModel> liste = new List<MyApps.Application.ViewModels.InscriptionViewModel>();
         public Inscriptions() 
         {
             InitializeComponent();
-           // this.WindowState = WindowState.Maximized;
-            liste = MyApps.Application.Services.InscriptionViewModelService.GetInscriptions();
-            listeAttente = MyApps.Application.Services.InscriptionViewModelService.GetInscriptions();
-            listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetInscriptions();
-
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-            PopulateAndBindParticipant(listeParticipant);
-            listeParticipant2 = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();   
-            //PopulateAndBindParticipantComboBox(listeParticipant2); 
-            listeModule = MyApps.Application.Services.SitePlanningViewModelService.GetSitePlanning();
-            //PopulateAndBindSiteModule(listeModule);
-
+           
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+            PopulateAndBindParticipant(liste);
             this.SelectedNomModule(); 
             this.SelectedNomParticipant();
-            this.SelectedNomParticipantsGetModules(); 
-            
-
-           
+            this.SelectedNomParticipantsGetModules();                      
             EstSurListeAttente.Items.Add("true");
             EstSurListeAttente.Items.Add("false");
-
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetInscriptions();
         }
-
-
-
         /// <summary>
-        /// biding la liste de sites
+        /// biding la liste de sites 
         /// </summary>
         /// <param name="liste"></param>
         private void PopulateAndBind(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
@@ -89,47 +67,44 @@ namespace SWOMT.Views
         /// binding la liste des participants
         /// </summary>
         /// <param name="listeCompetences"></param>
-        private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.ParticipantViewModel> listeCompetences) 
+        private void PopulateAndBindParticipant(List<MyApps.Application.ViewModels.InscriptionViewModel> listeParticipants) 
         {
             Binding monBinding = new Binding
             {
                 Path = new PropertyPath("Value")
             };
-            ListParticipant.DataContext = listeCompetences;
+            ListParticipant.DataContext = listeParticipants;
 
         }
         /// <summary>
         /// méthode pour faire remplir le combobox le liste de modules
         /// </summary>
         /// <returns></returns>
-        private List<MyApps.Application.ViewModels.SitePlanningViewModel> SelectedNomModule()
+        private List<MyApps.Application.ViewModels.InscriptionViewModel> SelectedNomModule()
         {
-            
-            foreach (var module in listeModule.OrderBy(a => a.NomModule))
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetSitePlanning();
+            foreach (var module in liste.OrderBy(a => a.NomModule))
             {
                 
                 IdSiteModule.Items.Add(module.NomModule + " : "+ module.IdSiteModule); 
             }
 
-            return listeModule; 
+            return liste; 
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID
         /// </summary>
         /// <returns></returns>
-        private List<MyApps.Application.ViewModels.ParticipantViewModel> SelectedNomParticipant()
+        private List<MyApps.Application.ViewModels.InscriptionViewModel> SelectedNomParticipant()
         {
-
-            foreach (var participant in listeParticipant.OrderBy(a => a.NomParticipant))
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+            foreach (var participant in liste.OrderBy(a => a.NomParticipant))
             {
                 IdParticipant.Items.Add(participant.NomParticipant + " : " + participant.IdNational.ToString());
             }
 
-            return listeParticipant;
+            return liste;
         }
-
-
-
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
@@ -137,8 +112,6 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListElement_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-
-
             if (ListElement.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
                 if (donnee.IdSiteModule == 0)
@@ -156,9 +129,7 @@ namespace SWOMT.Views
                     EstSurListeAttente.Text = donnee.EstSurListeAttente.ToString();
                     IdParticipants.SelectedItem = donnee.NomParticipant.ToString() + " : " + donnee.IdNational.ToString();
 
-            }
-            
-            
+            }           
         }
         private void ListElementAttente_MouseDoubleClick(object sender, SelectionChangedEventArgs e) 
         {
@@ -190,9 +161,6 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Ajouter_Click(object sender, RoutedEventArgs e)
         {
-            //enregistre = "Ajouter";
-            //ClearFormValues();
-            //ModeIsEnabledTrue();
             if (IdSiteModule.SelectedItem == null)
             {
                 MessageBox.Show("Veuillez selectionner un nom de module");
@@ -227,7 +195,6 @@ namespace SWOMT.Views
         private void MettreAjour_Click(object sender, RoutedEventArgs e)
         {
             ModuleInscription element = new ModuleInscription();
-            //Competence competence = new Competence();
 
             if (IdParticipant.Text == "")
             {
@@ -239,13 +206,9 @@ namespace SWOMT.Views
                 MessageBox.Show("Veuillez préciser si le participant est sur la liste d'attente");
                 return; 
             }
-
-
-
             if (enregistre == "Ajouter")
             {
 
-                //element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
                 element.IdSiteModule = (short)(idModuleSelected);
                 element.IdParticipant = (short)(idParticipantSelected);  
                 element.DateInscription = DateTime.Now; 
@@ -274,21 +237,20 @@ namespace SWOMT.Views
                 element.EstSurListeAttente = bool.Parse(EstSurListeAttente.Text);
 
                 MyApps.Domain.Service.InscriptionService.Update(element);
-            }
-
-
-           
+            }          
             liste.Clear();
+            //Avec l'identifiant de module selectionné on récupere les participants concernés
             liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipantPerModule((short)(idModuleSelected));
             TotalParticipant.Text = liste.Count().ToString();
             PopulateAndBind(liste);
-            listeAttente.Clear();
-            listeAttente = MyApps.Application.Services.InscriptionViewModelService.GetListAttentParticipantPerModule((short)(idModuleSelected));
-            TotalListeAttente.Text = listeAttente.Count().ToString();
-            PopulateAndBindAttente(listeAttente);
-            listeModulePerParticipant.Clear();
-            listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
-            PopulateAndBindModulePerParticipant(listeModulePerParticipant);
+            liste.Clear();
+            //Avec l'identifiant de module selectionné on récupere les participants inscrit sur la liste d'attente
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetListAttentParticipantPerModule((short)(idModuleSelected));
+            TotalListeAttente.Text = liste.Count().ToString();
+            PopulateAndBindAttente(liste);
+            liste.Clear();
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
+            PopulateAndBindModulePerParticipant(liste);
             IdModuleInscription.Text = "";
            // IdModule.SelectedItem = "";
             IdParticipant.SelectedValue = "";
@@ -306,7 +268,6 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Modifier_Click(object sender, RoutedEventArgs e)
         {
-
             if (IdParticipant.Text == "")
             {
                 MessageBox.Show("Entrer un participant à modifier");
@@ -314,8 +275,6 @@ namespace SWOMT.Views
             }
             enregistre = "Modifier";
             ModeIsEnabledTrue();
-
-
         }
 
         /// <summary>
@@ -366,13 +325,14 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ComboBoxIdSiteModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetSitePlanning();
             if (IdSiteModule.SelectedItem == null)
             {
                 return;
             }
             string nomModuleSelected = IdSiteModule.SelectedValue.ToString();
           
-            foreach (var module in listeModule)  
+            foreach (var module in liste)  
             {
                 if (nomModuleSelected == module.NomModule + " : "+ module.IdSiteModule)                   
                 {
@@ -392,7 +352,7 @@ namespace SWOMT.Views
             EstSurListeAttente.Text = "";
 
             liste.Clear();
-            ListElement.DataContext = clearListe;
+            ListElement.DataContext = liste;
             IdModuleInscription.IsEnabled = false;
            // IdModule.IsEnabled = false;
             IdParticipant.IsEnabled = false;
@@ -404,15 +364,13 @@ namespace SWOMT.Views
             liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipantPerModule((short)(idModuleSelected));
             TotalParticipant.Text = liste.Count().ToString();
             PopulateAndBind(liste);
-            listeAttente = MyApps.Application.Services.InscriptionViewModelService.GetListAttentParticipantPerModule((short)(idModuleSelected));
-            TotalListeAttente.Text = listeAttente.Count().ToString();
-            PopulateAndBindAttente(listeAttente);
-
-          
-
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetListAttentParticipantPerModule((short)(idModuleSelected));
+            TotalListeAttente.Text = liste.Count().ToString();
+            PopulateAndBindAttente(liste);
         }
         private void ComboBoxIdParticipant_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
             if (IdParticipant.SelectedItem == null)
             {
                 //MessageBox.Show("Please select the name of the module");
@@ -420,7 +378,7 @@ namespace SWOMT.Views
                 //IdModule.SelectedValue = "";
             }
             string nomParticipantSelected = IdParticipant.SelectedValue.ToString();
-            foreach (var participant in listeParticipant)
+            foreach (var participant in liste)
             {
                 if ( nomParticipantSelected == participant.NomParticipant + " : " + participant.IdNational)
                 {
@@ -429,12 +387,10 @@ namespace SWOMT.Views
                 }
             }
 
-            listeModulePerParticipant.Clear();
-            listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
-            PopulateAndBindModulePerParticipant(listeModulePerParticipant);
+            liste.Clear();
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
+            PopulateAndBindModulePerParticipant(liste);
         }
-     
-
         private void ClearFormValues()
         {
             IdModuleInscription.Text = "";
@@ -444,8 +400,7 @@ namespace SWOMT.Views
             NomParticipant.Text = "";
             DateInscription.Text = "";
             EstSurListeAttente.SelectedValue = "";
-            
-
+           
         }
         private void ModeIsEnabledTrue()
         {
@@ -479,7 +434,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void ListParticipant_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-            if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.ParticipantViewModel donnee)
+            if (ListParticipant.SelectedItem is MyApps.Application.ViewModels.InscriptionViewModel donnee)
             {
                 if (donnee.IdParticipant == 0) 
                 {
@@ -504,8 +459,6 @@ namespace SWOMT.Views
 
             }
 
-            //IdParticipants.SelectedItem = donnee.NomParticipant.ToString();
-
         }
 
         private void AjouterParticipant_Click(object sender, RoutedEventArgs e)
@@ -524,7 +477,7 @@ namespace SWOMT.Views
         private void MettreAjourParticipant_Click(object sender, RoutedEventArgs e)
         {
             Participant participant = new Participant();
-
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
             DateTime ages = DateTime.Now.AddYears(-18);
             if (Nom.Text == "")
             {
@@ -536,12 +489,8 @@ namespace SWOMT.Views
                 MessageBox.Show("Il faut saisir le date de naissance");
                 return;
             }
-
-
-
             if (enregistre == "Ajouter")
             {
-
                 participant.NomParticipant = Nom.Text;
                 participant.DateNaissance = DateTime.Parse(DateNaissance.Text).Date;
                 participant.IdNational = long.Parse(IdNational.Text);
@@ -557,7 +506,7 @@ namespace SWOMT.Views
                     return;
                 }
 
-                foreach (var donne in MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants())
+                foreach (var donne in MyApps.Application.Services.InscriptionViewModelService.GetParticipants())
                 {
                     //avoid the duplicate datas in the liste of sites 
                     if ((participant.NomParticipant == donne.NomParticipant) && (participant.IdNational == donne.IdNational)) // if already the items exist then rejects
@@ -591,9 +540,9 @@ namespace SWOMT.Views
                 MyApps.Domain.Service.ParticipantService.Update(participant);
             }
         
-            listeParticipant.Clear();
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-            PopulateAndBindParticipant(listeParticipant);
+            liste.Clear();
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+            PopulateAndBindParticipant(liste);
             ClearFormValuesParticipant();
             
             ModeIsEnabledFalseParticipant();
@@ -619,8 +568,6 @@ namespace SWOMT.Views
             ModeIsEnabledTrueParticipant();
             Id.IsEnabled = false;
             DateEncodage.IsEnabled = false;
-
-
         }
 
         /// <summary>
@@ -651,9 +598,9 @@ namespace SWOMT.Views
 
             Id.IsEnabled = true;
             ClearFormValuesParticipant();
-            listeParticipant.Clear();
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-            PopulateAndBindParticipant(listeParticipant);
+            liste.Clear();
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+            PopulateAndBindParticipant(liste);
             ClearFormValuesParticipant();
             IdParticipant.Items.Clear();
             this.SelectedNomParticipant();
@@ -666,20 +613,20 @@ namespace SWOMT.Views
             if (NomRechercher.Text == "")
             {
                 MessageBox.Show("Entrer le nom à rechercher");
-                listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipants();
-                PopulateAndBindParticipant(listeParticipant);
+                liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+                PopulateAndBindParticipant(liste); 
                 return;
 
             }
 
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
-            PopulateAndBindParticipant(listeParticipant);
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(liste);
         }
         private void ReSetList_Click(object sender, RoutedEventArgs e)
         {
             NomRechercher.Text = ""; 
-            listeParticipant = MyApps.Application.Services.ParticipantsViewModelServices.GetParticipantByMethodeSearch(NomRechercher.Text);
-            PopulateAndBindParticipant(listeParticipant); 
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipantByMethodeSearch(NomRechercher.Text);
+            PopulateAndBindParticipant(liste); 
         }
         private void ClearFormValuesParticipant()
         {
@@ -719,7 +666,7 @@ namespace SWOMT.Views
         }
 
         //----------------------------------------- The part Three : liste of modules 
-        private void PopulateAndBindParticipantComboBox(List<MyApps.Application.ViewModels.ParticipantViewModel> listeItems)
+        private void PopulateAndBindParticipantComboBox(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
         {
             Binding monBinding = new Binding
             {
@@ -727,32 +674,28 @@ namespace SWOMT.Views
             };
             IdParticipants.DataContext = listeItems;  
         }
-        private List<MyApps.Application.ViewModels.ParticipantViewModel> SelectedNomParticipantsGetModules()
+        private List<MyApps.Application.ViewModels.InscriptionViewModel> SelectedNomParticipantsGetModules()
         {
-
-            foreach (var participant in listeParticipant.OrderBy(a => a.NomParticipant))
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
+            foreach (var participant in liste.OrderBy(a => a.NomParticipant))
             {
                 IdParticipants.Items.Add(participant.NomParticipant + " : " + participant.IdNational);
             }
 
-            return listeParticipant;
+            return liste;
         }
         private void ListSiteModule_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
             if (ListSiteModule.SelectedItem is MyApps.Application.ViewModels.SitePlanningViewModel donnee)
             {
                 IdSiteModule.Text = donnee.IdSiteModule.ToString();
-                //IdFormation.Text = donnee.IdFormation.ToString();
-                //NomModule.Text = donnee.NomModule.ToString();
-                //NomFormation.Text = donnee.NomFormation.ToString();
-                //CreditModule.Text = donnee.CreditModule.ToString();
-                //NombrePrévu.Text = donnee.NombrePrévu.ToString();
-
+  
             }
         }
 
         private void ComboBoxModulesPerParticipant_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetParticipants();
             if (IdParticipants.SelectedItem == null)
             {
                 //MessageBox.Show("Please select the name of the module");
@@ -760,7 +703,7 @@ namespace SWOMT.Views
                 //IdModule.SelectedValue = "";
             }
             string nomParticipantSelected = IdParticipants.SelectedValue.ToString(); 
-            foreach (var participant in listeParticipant)
+            foreach (var participant in liste)
             {
                 if (nomParticipantSelected == participant.NomParticipant + " : " + participant.IdNational)
                 {
@@ -769,9 +712,9 @@ namespace SWOMT.Views
                 }
             }
 
-            listeModulePerParticipant.Clear();
-            listeModulePerParticipant = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
-            PopulateAndBindModulePerParticipant(listeModulePerParticipant);
+            liste.Clear();
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetModulePerParticipant((short)(idParticipantSelected));
+            PopulateAndBindModulePerParticipant(liste);
         }
         /// <summary>
         /// méthode pour valider la réference de module
@@ -780,6 +723,7 @@ namespace SWOMT.Views
         /// <param name="e"></param>
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
+            liste = MyApps.Application.Services.InscriptionViewModelService.GetSitePlanning();
             if (IdSiteModuleRechercher.Text == "")
             {
                 MessageBox.Show("Entrer la réference de site module");
@@ -800,8 +744,8 @@ namespace SWOMT.Views
                 IdSiteModuleRechercher.Text = "";
                 return;
             }
-
-            foreach (var mod in listeModule)
+            
+            foreach (var mod in liste)
             {
                 if (mod.IdSiteModule == module.IdSiteModule)
                 {
