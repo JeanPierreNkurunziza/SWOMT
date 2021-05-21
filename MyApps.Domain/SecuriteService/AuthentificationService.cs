@@ -74,14 +74,14 @@ namespace MyApps.Domain.SecuriteService
                 catch (CryptographicException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Random number generator not available.",
+                        "Générateur de nombres aléatoires non disponible .",
                         ex
                     );
                 }
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Invalid argument given to random number generator.",
+                        "Argument non valide donné au générateur de nombres aléatoires.",
                         ex
                     );
                 }
@@ -114,7 +114,7 @@ namespace MyApps.Domain.SecuriteService
                 if (split.Length != HASH_SECTIONS)
                 {
                     throw new InvalidHashException(
-                        "Fields are missing from the password hash."
+                        "Des champs sont manquants dans le hachage du mot de passe."
                     );
                 }
 
@@ -122,7 +122,7 @@ namespace MyApps.Domain.SecuriteService
                 if (split[HASH_ALGORITHM_INDEX] != "sha1")
                 {
                     throw new CannotPerformOperationException(
-                        "Unsupported hash type."
+                        "Type de hachage non pris en charge."
                     );
                 }
 
@@ -134,21 +134,21 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Invalid argument given to Int32.Parse",
+                        "Argument non valide donné à Int32.Parse",
                         ex
                     );
                 }
                 catch (FormatException ex)
                 {
                     throw new InvalidHashException(
-                        "Could not parse the iteration count as an integer.",
+                        "Impossible d'analyser le nombre d'itérations comme un entier .",
                         ex
                     );
                 }
                 catch (OverflowException ex)
                 {
                     throw new InvalidHashException(
-                        "The iteration count is too large to be represented.",
+                        "Le nombre d'itérations est trop grand pour être représenté.",
                         ex
                     );
                 }
@@ -168,14 +168,14 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Invalid argument given to Convert.FromBase64String",
+                        "Argument non valide donné à Convert.FromBase64String ",
                         ex
                     );
                 }
                 catch (FormatException ex)
                 {
                     throw new InvalidHashException(
-                        "Base64 decoding of salt failed.",
+                        "Échec du décodage du sel en base64.",
                         ex
                     );
                 }
@@ -188,14 +188,14 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Invalid argument given to Convert.FromBase64String",
+                        "Argument non valide donné à Convert.FromBase64String",
                         ex
                     );
                 }
                 catch (FormatException ex)
                 {
                     throw new InvalidHashException(
-                        "Base64 decoding of pbkdf2 output failed.",
+                        "Le décodage en base64 de la sortie pbkdf2 a échoué.",
                         ex
                     );
                 }
@@ -208,21 +208,21 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Invalid argument given to Int32.Parse",
+                        "Argument non valide donné à Int32.Parse",
                         ex
                     );
                 }
                 catch (FormatException ex)
                 {
                     throw new InvalidHashException(
-                        "Could not parse the hash size as an integer.",
+                        "Impossible d'analyser la taille de hachage en tant qu'entier .",
                         ex
                     );
                 }
                 catch (OverflowException ex)
                 {
                     throw new InvalidHashException(
-                        "The hash size is too large to be represented.",
+                        "La taille de hachage est trop grande pour être représentée.",
                         ex
                     );
                 }
