@@ -67,8 +67,7 @@ namespace SWOMT.Views
                 return;
             }
             //appel d'un méthode pour vérifier si le nom et le mot de passe correspond et réturne le nom d'utilisateur
-            // string utilisateurValidé = MyApps.Domain.Service.UserService.LoginUserNom(username.Text, password.Password);
-
+          
             string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.verifyCrypto(password.Password, username.Text);
             if (utilisateurValidé == null) 
             {
@@ -135,6 +134,7 @@ namespace SWOMT.Views
             }
            
             element.UserName = username.Text;
+            //hashage de mot de passe 
             element.MotDePasse =MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.CreateHash(password.Password);
             element.UserRole = ComboBoxUserRole.Text;
             foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
