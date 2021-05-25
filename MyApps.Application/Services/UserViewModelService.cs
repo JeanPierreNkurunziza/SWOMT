@@ -78,7 +78,7 @@ namespace MyApps.Application.Services
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static List<ViewModels.UserViewModel> searchNameIntheList(string userName)
+        public static List<ViewModels.UserViewModel> SearchNameIntheList(string userName)
         {
             List<ViewModels.UserViewModel> Liste = new List<ViewModels.UserViewModel>();
             var items = from s in GetUsers()

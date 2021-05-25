@@ -84,7 +84,7 @@
                                     <DataGridTemplateColumn Header="View"> 
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Name="btnView" Content="View" Click="btnView_Click" />
+                                                <Button Name="btnView" Content="View" Click="BtnView_Click" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

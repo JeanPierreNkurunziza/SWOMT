@@ -26,7 +26,7 @@
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
                 <Button x:Name="submit" Width="120" Click="LoginSubmit" Content="Valider" Margin="40 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
-                <Button Name="btnAnnuler"  Width="120" Content="Annuler" Click="btnAnnuler_Click" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
+                <Button Name="btnAnnuler"  Width="120" Content="Annuler" Click="BtnAnnuler_Click" Margin="0 10" Background="#545d6a" FontSize="18" Foreground="White" ClickMode="Press"></Button>
 
             </WrapPanel>
               </StackPanel>

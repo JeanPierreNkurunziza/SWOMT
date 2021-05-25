@@ -8,9 +8,14 @@ using System.Windows.Forms;
 
 namespace MyApps.Domain.SecuriteService
 {
+    /// <summary>
+    /// Méthode de protection des données sensibles des utilisateurs 
+    /// </summary>
    public class AuthentificationService
     {
-       
+       /// <summary>
+       /// Controle des exceptions 
+       /// </summary>
         public class InvalidHashException : Exception
         {
             public InvalidHashException() { }
@@ -56,7 +61,7 @@ namespace MyApps.Domain.SecuriteService
             /// Méthode pour hash un mot de passe 
             /// </summary>
             /// <param name="password"></param>
-            /// <returns></returns>
+            /// <returns>Mot de passe hashé </returns>
             public static string CreateHash(string password)
             {
                 // Générer le salt au hasard
@@ -81,7 +86,7 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Argument non valide donné au générateur de nombres aléatoires.",
+                        "Argument non valide au générateur de nombres aléatoires.",
                         ex
                     );
                 }
@@ -134,7 +139,7 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Argument non valide donné à Int32.Parse",
+                        "Argument non valide",
                         ex
                     );
                 }
@@ -208,7 +213,7 @@ namespace MyApps.Domain.SecuriteService
                 catch (ArgumentNullException ex)
                 {
                     throw new CannotPerformOperationException(
-                        "Argument non valide donné à Int32.Parse",
+                        "Argument non valide dans Int32.Parse",
                         ex
                     );
                 }
@@ -277,7 +282,7 @@ namespace MyApps.Domain.SecuriteService
             /// <param name="motDePasse"></param>
             /// <param name="nomUser"></param>
             /// <returns> le nom d'utilisateur correspond au mot de passe en parametre </returns>
-            public static string verifyCrypto(string motDePasse, string nomUser)
+            public static string VerifyCrypto(string motDePasse, string nomUser)
             {
                 string nom=null;
              

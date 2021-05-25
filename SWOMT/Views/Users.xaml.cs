@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SWOMT.Views
 {
+
     /// <summary>
     /// Logique d'interaction pour Users.xaml
     /// </summary>
@@ -57,7 +53,7 @@ namespace SWOMT.Views
 
             }
 
-            liste = MyApps.Application.Services.UserViewModelService.searchNameIntheList(NomRechercher.Text); 
+            liste = MyApps.Application.Services.UserViewModelService.SearchNameIntheList(NomRechercher.Text); 
             PopulateAndBind(liste);
         }
 
@@ -419,7 +415,6 @@ namespace SWOMT.Views
                 return true;
             }
         }
-
 
     }
 }

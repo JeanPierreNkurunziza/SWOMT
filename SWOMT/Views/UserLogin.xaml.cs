@@ -67,8 +67,8 @@ namespace SWOMT.Views
                 return;
             }
             //appel d'un méthode pour vérifier si le nom et le mot de passe correspond et réturne le nom d'utilisateur
-          
-            string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.verifyCrypto(password.Password, username.Text);
+            // le mot de passé saisié est verfié via la méthode verifyCrypto 
+            string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.VerifyCrypto(password.Password, username.Text);
             if (utilisateurValidé == null) 
             {
                 MessageBox.Show("Le nom d'utilisateur et le mot de passe ne correspondent pas SVP!");
@@ -92,7 +92,7 @@ namespace SWOMT.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private void btnAnnuler_Click(object sender, RoutedEventArgs e)
+        private void BtnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -134,7 +134,7 @@ namespace SWOMT.Views
             }
            
             element.UserName = username.Text;
-            //hashage de mot de passe 
+            //hashage de mot de passe pour l'encoder dans la DB à l'aide de la méthode CreateHash 
             element.MotDePasse =MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.CreateHash(password.Password);
             element.UserRole = ComboBoxUserRole.Text;
             foreach (var donne in MyApps.Application.Services.UserViewModelService.GetUsers())
@@ -178,7 +178,7 @@ namespace SWOMT.Views
         }
 
         /// <summary>
-        /// La validation de mot de passe 
+        /// La validation de mot de passe qui doit respecter aux exigences de la complexité du mot de passe 
         /// </summary>
         /// <param name="password"></param>
         /// <param name="ErrorMessage"></param>

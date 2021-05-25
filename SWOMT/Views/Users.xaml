@@ -80,7 +80,7 @@
                             </WrapPanel>
                             <WrapPanel >
                                 <Label Name="LabelMotDePasse" Content="Mot De Passe" ></Label> 
-                                    <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="46,2" MaxLength="20" x:Name="MotDePasse" Text="{Binding Path=MotDePasse}" Width="250"  IsEnabled="False"  />
+                                    <TextBox Background="#545d6a" FontWeight="ExtraBold" Margin="46,2" MaxLength="20" x:Name="MotDePasse" Text="{Binding Path=MotDePasse}" Width="250" IsEnabled="False"  />
                             </WrapPanel>
                             <WrapPanel > 
                                 <Label Name="LabelUserRole" Content="Role" ></Label>

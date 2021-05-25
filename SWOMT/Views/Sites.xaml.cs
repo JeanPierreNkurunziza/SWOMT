@@ -172,6 +172,7 @@ namespace SWOMT.Views
 
 
             element.UserName = nomUserSelected;
+            // hashé le mot de passe avant de le modifier 
             element.MotDePasse =MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.CreateHash(password.Password);
             element.UserRole = roleNameSelected;
             element.IdUser = MyApps.Domain.Service.UserService.GetUtilisateurUserId(nomUserSelected);
@@ -240,13 +241,13 @@ namespace SWOMT.Views
         }
 
         /// <summary>
-        /// la vérificatino de l'ancien mot de passé avant de le modifier 
+        /// la vérification de l'ancien mot de passé avant de le modifier 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CheckOldPassWord(object sender, RoutedEventArgs e)
         {
-            string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.verifyCrypto(OldPassWord.Password, nomUserSelected);
+            string utilisateurValidé = MyApps.Domain.SecuriteService.AuthentificationService.PasswordSecurity.VerifyCrypto(OldPassWord.Password, nomUserSelected);
             if (utilisateurValidé == null)
             {
                 MessageBox.Show("Le nom d'utilisateur et le mot de passe ne correspondent pas SVP!");
@@ -268,7 +269,12 @@ namespace SWOMT.Views
                     
             }
         }
-        private void btnView_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// visualiser les détails d'un evenement  
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnView_Click(object sender, RoutedEventArgs e)
         {
             try
             {
