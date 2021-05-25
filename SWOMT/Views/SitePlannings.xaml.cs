@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SWOMT.Views
 {
@@ -55,18 +50,6 @@ namespace SWOMT.Views
         }
        
         /// <summary>
-        /// Biding the list of the sites
-        /// </summary>
-        /// <param name="listeItems"></param>
-        private void PopulateAndBindSites(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListElement.DataContext = listeItems;
-        }
-        /// <summary>
         /// Biding la liste des noms de modules
         /// </summary>
         /// <returns></returns>
@@ -92,6 +75,19 @@ namespace SWOMT.Views
            
 
             return liste; 
+        }
+
+        /// <summary>
+        /// Biding the list of the sites
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindSites(List<MyApps.Application.ViewModels.SitePlanningViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElement.DataContext = listeItems;
         }
         /// <summary>
         /// Method of assigning the name of the site by its ID

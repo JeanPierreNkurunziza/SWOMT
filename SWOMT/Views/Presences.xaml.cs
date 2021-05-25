@@ -9,15 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.IO;
-
-
 
 namespace SWOMT.Views
 {
@@ -61,31 +52,7 @@ namespace SWOMT.Views
             EstPresent.Items.Add("False");
 
         }
-        /// <summary>
-        /// biding la liste de sites
-        /// </summary>
-        /// <param name="liste"></param>
-        private void PopulateAndBindParticipantPresent(List<MyApps.Application.ViewModels.PresenceViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListParticipantPresent.DataContext = listeItems;
-        }
-        /// <summary>
-        /// Méthode pour binding la liste de participants absents
-        /// </summary>
-        /// <param name="listeItems"></param>
-        private void PopulateAndBindParticipantAbsent(List<MyApps.Application.ViewModels.PresenceViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListParticipantAbsent.DataContext = listeItems;
-        }
-
+       
         /// <summary>
         /// Binding the liste of the participant inscrit dans un module 
         /// </summary>
@@ -148,6 +115,18 @@ namespace SWOMT.Views
             //ModeIsEnabledTrue();
             DateHeureDePresence.IsEnabled = true;
             EstPresent.IsEnabled = true;
+        }
+        /// <summary>
+        /// Méthode pour binding la liste de participants absents
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindParticipantAbsent(List<MyApps.Application.ViewModels.PresenceViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListParticipantAbsent.DataContext = listeItems;
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une site
@@ -348,6 +327,20 @@ namespace SWOMT.Views
             DateHeureDePresence.Text = "";
             EstPresent.Text = "";
         }
+        /// <summary>
+        /// biding la liste de sites
+        /// </summary>
+        /// <param name="liste"></param>
+        private void PopulateAndBindParticipantPresent(List<MyApps.Application.ViewModels.PresenceViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListParticipantPresent.DataContext = listeItems;
+        }
+
+
         private void ModeIsEnabledTrue()
         {
             IdPresence.IsEnabled = false;

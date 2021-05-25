@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SWOMT.Views
 {
@@ -50,19 +45,7 @@ namespace SWOMT.Views
             };
             ListElement.DataContext = listeItems;
         }
-        /// <summary>
-        /// binding la liste des inscriptions en attente 
-        /// </summary>
-        /// <param name="listeItems"></param>
-       
-        private void PopulateAndBindAttente(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListElementAttente.DataContext = listeItems;
-        }
+        
         /// <summary>
         /// binding la liste des participants
         /// </summary>
@@ -186,6 +169,19 @@ namespace SWOMT.Views
             EstSurListeAttente.Text = "";
 
             ModeIsEnabledTrue();
+        }
+        /// <summary>
+        /// binding la liste des inscriptions en attente 
+        /// </summary>
+        /// <param name="listeItems"></param>
+
+        private void PopulateAndBindAttente(List<MyApps.Application.ViewModels.InscriptionViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElementAttente.DataContext = listeItems;
         }
         /// <summary>
         /// méthode pour mettre à jour et ajouter  une site

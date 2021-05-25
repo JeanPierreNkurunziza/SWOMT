@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SWOMT.Views
 {
@@ -87,28 +82,7 @@ namespace SWOMT.Views
             ListParticipantRéussi.DataContext = listeItems;
         }
 
-        /// <summary>
-        /// binding la liste des participant echoués
-        /// </summary>
-        /// <param name="listeItems"></param>
-        private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-           
-            ListParticipantFailed.DataContext = listeItems;            
-        }
-        private void PopulateAndBindListeInscription(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListElement.DataContext = listeItems;
-            
-        }
+    
         /// <summary>
         /// the method to fill in the combobox of the list items for selection 
         /// </summary>
@@ -348,6 +322,19 @@ namespace SWOMT.Views
             ParticipantRéussi.Text = "";
 
         }
+        /// <summary>
+        /// binding la liste des participant echoués
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindParticipantFailed(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+
+            ListParticipantFailed.DataContext = listeItems;
+        }
         private void ModeIsEnabledTrue()
         {
             //IdResultat.IsEnabled =false;
@@ -358,6 +345,15 @@ namespace SWOMT.Views
             Points.IsEnabled = true;
             EstPresent.IsEnabled = true;
             ParticipantRéussi.IsEnabled =true;
+
+        }
+        private void PopulateAndBindListeInscription(List<MyApps.Application.ViewModels.ResultatViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListElement.DataContext = listeItems;
 
         }
         private void ModeIsEnabledFalse()

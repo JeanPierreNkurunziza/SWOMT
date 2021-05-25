@@ -55,32 +55,7 @@ namespace SWOMT.Views
             };
             ListModuleEncours.DataContext = listeItems;
         }
-        /// <summary>
-        /// binding la liste de modules planifiés  
-        /// </summary>
-        /// <param name="listeItems"></param>
-        private void PopulateAndBindListPlanifié(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListModulePlanifies.DataContext = listeItems;
-        }
-
-        /// <summary>
-        /// binding la liste des formations planifiées 
-        /// </summary>
-        /// <param name="listeItems"></param>
-        private void PopulateAndBindFormationsPlanifié(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
-        {
-            Binding monBinding = new Binding
-            {
-                Path = new PropertyPath("Value")
-            };
-            ListFormation.DataContext = listeItems;
-        }
-
+       
         /// <summary>
         /// afffichage apres la selection
         /// </summary>
@@ -136,6 +111,20 @@ namespace SWOMT.Views
                 PopulateAndBindEvenement(liste);
             }
         }
+
+        /// <summary>
+        /// binding la liste des formations planifiées 
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindFormationsPlanifié(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListFormation.DataContext = listeItems;
+        }
+
         /// <summary>
         /// activer les schamps de modification de mot de passe
         /// </summary>
@@ -292,5 +281,18 @@ namespace SWOMT.Views
                 MessageBox.Show(ex.Message.ToString());
             }
         }
+        /// <summary>
+        /// binding la liste de modules planifiés  
+        /// </summary>
+        /// <param name="listeItems"></param>
+        private void PopulateAndBindListPlanifié(List<MyApps.Application.ViewModels.SiteViewModel> listeItems)
+        {
+            Binding monBinding = new Binding
+            {
+                Path = new PropertyPath("Value")
+            };
+            ListModulePlanifies.DataContext = listeItems;
+        }
+
     }
 }
