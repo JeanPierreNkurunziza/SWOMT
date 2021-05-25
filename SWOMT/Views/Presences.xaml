@@ -36,18 +36,18 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="520"></ColumnDefinition>
+                <ColumnDefinition Width="500"></ColumnDefinition>
                 <ColumnDefinition Width="560"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Width="520">
+            <Grid Grid.Column="0" Width="500">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="640"></RowDefinition>
                     
                 </Grid.RowDefinitions>
                 <Border  Margin="10,10,0,0" Width="510" HorizontalAlignment="Left">
-                    <GroupBox x:Name="ExamenListBox"  HorizontalAlignment="Left" Height="630" Width="510" VerticalAlignment="Top" >
+                    <GroupBox x:Name="ExamenListBox"  HorizontalAlignment="Left" Height="630" Width="490" VerticalAlignment="Top" >
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="La liste de Module"></Label>
@@ -190,7 +190,7 @@
 
                             <DataGrid Name="ListElement" Height="295" ItemsSource="{Binding}" SelectionMode="Extended" AutoGenerateColumns="False" SelectionChanged="ListElement_MouseDoubleClick" >
                                 <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn x:Name="CheckBoxEstPresent" Binding="{Binding Path=CheckBoxEstPresent}">
+                                    <DataGridCheckBoxColumn x:Name="CheckBoxEstPresent" Binding="{Binding Path=CheckBoxEstPresent}">
 
                                             <DataGridCheckBoxColumn.Header>
                                                 

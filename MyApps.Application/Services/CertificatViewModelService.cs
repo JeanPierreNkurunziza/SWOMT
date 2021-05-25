@@ -136,6 +136,11 @@ namespace MyApps.Application.Services
             var GetListe = ResultatService.GetListModuleRéussis(idModuleInscription);
             return GetResultatsList(GetListe);
         }
+        /// <summary>
+        /// Méthode pour faire une recherche selon le string passe en paramétre 
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns>retrourne le participant recherché </returns>
         public static List<ViewModels.CertificatViewModel> GetParticipantByMethodeSearch(string searchString)
         {
 

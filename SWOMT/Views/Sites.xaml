@@ -23,7 +23,7 @@
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
                 <WrapPanel>
-                    <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" Margin="50,0,50,0" ></Label>
+                    <Label Name="listes" Content="Application de Gestion des Formations" FontSize="28" FontWeight="Bold" Margin="10,0,50,0" ></Label>
 
                         <Button Visibility="Hidden"  Name="UpDatePassord" HorizontalAlignment="Right" Content="Valider" Width="90" Margin="55,0,10,0"  FontSize="18" Click="UpDatePassword_Click"></Button>
                         <Label Name="Ancien" Visibility="Hidden" Content="Ancien" FontSize="18" Margin="0,10,10,10" ></Label>
@@ -42,7 +42,7 @@
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="580"></ColumnDefinition>
+                <ColumnDefinition Width="520"></ColumnDefinition>
                 <ColumnDefinition Width="365"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -78,16 +78,26 @@
                             </StackPanel>
                         </GroupBox.Header>
                             <DataGrid Name="ListEvenement"  ItemsSource="{Binding}" AutoGenerateColumns="False"  Height="240" SelectionChanged="Evenement_SelectinChanged">
+
+
                                 <DataGrid.Columns >
+                                    <DataGridTemplateColumn Header="View"> 
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnView" Content="View" Click="btnView_Click" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="IdEvenement" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdEvenement}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="IdFormateur" Visibility="Hidden" FontSize="15" Binding="{Binding Path=IdFormateur}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Expéditeur" FontSize="15" Binding="{Binding Path=NomFormateur}" ></DataGridTextColumn>
                                     <DataGridTextColumn Header="Evénement" Foreground="SpringGreen" FontSize="15" Binding="{Binding Path=Evenement1}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Date" FontSize="15" Binding="{Binding Path=DateOfEvent, StringFormat='{}{0:dd/MM/yyyy }'}" ></DataGridTextColumn>
                                 </DataGrid.Columns>
+                               
                             </DataGrid>
-                       
-                    </GroupBox>
+                           
+                        </GroupBox>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1">
@@ -95,7 +105,7 @@
 
                     <StackPanel>
                         
-                        <Image Name="imgConnection" Width="340" Height="650" HorizontalAlignment="Left" Source="/Views/Image/frontiers2.png" Margin="0,0,-8,-5">
+                        <Image Name="imgConnection" Width="340" Height="650" HorizontalAlignment="Left" Source="/Views/Image/frontiers2.png" Margin="20,0,-8,-5">
 
                         </Image>
                     </StackPanel>
@@ -108,7 +118,7 @@
                     <RowDefinition Height="320"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <GroupBox x:Name="ListeModule" Header="Liste des Modules en cours" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="570">
+                    <GroupBox x:Name="ListeModule" Header="Liste des Modules en cours" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="600">
                         <StackPanel Grid.Column="0">
                             <DataGrid Name="ListModuleEncours"  Height="260" ItemsSource="{Binding}" AutoGenerateColumns="False"  >
                                 <DataGrid.Columns>
@@ -127,7 +137,7 @@
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <GroupBox x:Name="ListeAttenteBox" Header="Liste des prochains Modules prévus"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="570">
+                    <GroupBox x:Name="ListeAttenteBox" Header="Liste des prochains Modules prévus"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="600">
                         <StackPanel Grid.Column="1">
                             <DataGrid Name="ListModulePlanifies" Height="255" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>

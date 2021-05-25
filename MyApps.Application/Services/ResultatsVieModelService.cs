@@ -10,7 +10,7 @@ namespace MyApps.Application.Services
    public class ResultatsVieModelService
     {
         /// <summary>
-        /// récuperer la liste des éléments à traiter
+        /// récuperer la liste des éléments 
         /// </summary>
         /// <param name="listeElement"></param>
         /// <returns></returns>

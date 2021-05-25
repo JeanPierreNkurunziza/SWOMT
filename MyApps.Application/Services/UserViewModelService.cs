@@ -74,7 +74,7 @@ namespace MyApps.Application.Services
             return Liste; 
         }
         /// <summary>
-        /// Méthode pour faire une recherche via le nom d'utilisateur 
+        /// Méthode pour faire une recherche selon le nom d'utilisateur 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>

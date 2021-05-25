@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MyApps.Application.ViewModels
 {
+    /// <summary>
+    /// View Model pour les inscriptions
+    /// </summary>
    public class InscriptionViewModel
     {
         public int IdModuleInscription { get; set; }
@@ -18,8 +18,7 @@ namespace MyApps.Application.ViewModels
         public bool EstSurListeAttente { get; set; } 
         public int TotalParticipantPerModule { get; set; }
         public bool CheckBoxEstPresent { get; set; }
-        public DateTime DateNaissance { get; set; }
-    
+        public DateTime DateNaissance { get; set; }    
         public string TelParticipant { get; set; }
         public string EmailParticipant { get; set; }
         public string SecteurParticipant { get; set; }
@@ -27,8 +26,7 @@ namespace MyApps.Application.ViewModels
         public DateTime DateEncodage { get; set; }
         public int IdSite { get; set; }
         public string NomSite { get; set; }
-        public int IdModule { get; set; }
-    
+        public int IdModule { get; set; }    
         public DateTime? DateDebutModule { get; set; }
         public DateTime? DateFinModule { get; set; }
         public Nullable<int> IdFormateurModule { get; set; }

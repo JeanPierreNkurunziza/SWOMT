@@ -156,7 +156,7 @@ namespace MyApps.Application.Services
         /// <returns></returns>
         public static List<ViewModels.SitePlanningViewModel> GetModules() 
         {
-            //List<ViewModels.ModuleViewModel> Liste = new List<ViewModels.ModuleViewModel>();
+           
             var GetListe = ModuleService.GetAll();
             return GetModulesList(GetListe);
         }
@@ -167,7 +167,6 @@ namespace MyApps.Application.Services
         /// <returns></returns>
         public static List<ViewModels.SitePlanningViewModel> SearchModuleByName(string searchString)
         {
-            // List<ViewModels.ModuleViewModel> Liste = new List<ViewModels.ModuleViewModel>();
             var GetListe = ModuleService.SearchMethodByName(searchString);
             return GetModulesList(GetListe);
         }

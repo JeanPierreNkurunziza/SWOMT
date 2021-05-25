@@ -10,7 +10,7 @@ namespace MyApps.Application.Services
     public class PresenceViewModelService
     {
         /// <summary>
-        /// mappées les données de presence 
+        /// Récuperer les données de presence 
         /// </summary>
         /// <returns></returns>
         public static List<ViewModels.PresenceViewModel> GetPresences()
@@ -142,6 +142,11 @@ namespace MyApps.Application.Services
             var GetListe = ModuleService.GetAll();
             return GetModulesList(GetListe);
         }
+        /// <summary>
+        /// chaque formateur passe en parametre on récupere ses modules
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public static List<ViewModels.PresenceViewModel> AfficherModulePerFormateur(string searchString)
         {
             List<ViewModels.PresenceViewModel> Liste = new List<ViewModels.PresenceViewModel>();

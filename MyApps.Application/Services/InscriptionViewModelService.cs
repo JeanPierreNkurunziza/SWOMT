@@ -85,6 +85,10 @@ namespace MyApps.Application.Services
            
             return GetListElement(GetListe);
         }
+        /// <summary>
+        /// récuperer les participants 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.InscriptionViewModel> GetParticipants()
         {
 

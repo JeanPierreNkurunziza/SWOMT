@@ -8,6 +8,7 @@ namespace MyApps.Application.ViewModels
 {
     public class EvenementViewModel
     {
+        //ViewModel pour la publication des évenements 
         public int IdEvenement { get; set; }
         public int IdFormateur { get; set; }
         public string Evenement1 { get; set; }

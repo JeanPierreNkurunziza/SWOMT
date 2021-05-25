@@ -9,6 +9,10 @@ namespace MyApps.Application.Services
 {
    public class FormateurViewModelsService
     {
+        /// <summary>
+        /// récuperer les données des formateurs 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.FormateurViewModel> GetFormateurs() 
         {
             var GetListe = FormateurService.GetAll(); 

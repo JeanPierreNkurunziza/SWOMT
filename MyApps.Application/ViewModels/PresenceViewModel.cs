@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyApps.Application.ViewModels
 {
+    /// <summary>
+    /// View Models pour les présences 
+    /// </summary>
    public class PresenceViewModel
     {
         public int IdPresence { get; set; }

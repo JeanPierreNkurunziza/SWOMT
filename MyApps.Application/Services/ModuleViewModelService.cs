@@ -10,7 +10,7 @@ namespace MyApps.Application.Services
    public class ModuleViewModelService 
     {
         /// <summary>
-        /// 
+        /// récuperer les modules
         /// </summary>
         /// <param name="listeElement"></param>
         /// <returns></returns>

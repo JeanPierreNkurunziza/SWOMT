@@ -1,19 +1,12 @@
 ﻿using MyApps.Infrastructure.DB;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SWOMT.Views
 {
@@ -117,7 +110,7 @@ namespace SWOMT.Views
                     return;
                     //IdSite.Text = "";   
                 }
-              
+               
             }
         }
         /// <summary>
@@ -273,6 +266,24 @@ namespace SWOMT.Views
                     UpDatePassord.Visibility = Visibility;
                     ValiderOldPassWord.Visibility = Visibility.Hidden; 
                     
+            }
+        }
+        private void btnView_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+              
+                MyApps.Application.ViewModels.SiteViewModel dataRowViews = (MyApps.Application.ViewModels.SiteViewModel)((Button)e.Source).DataContext;
+                String FormateurName = dataRowViews.NomFormateur.ToString();
+                String MessageDescription = dataRowViews.Evenement1.ToString();
+                string DateEvenement = dataRowViews.DateOfEvent.ToString();
+                MessageBox.Show("Publié par : " + FormateurName + "\r\nDéscription : " + MessageDescription + "\r\nDate de Publication : " + DateEvenement);
+               
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
             }
         }
     }

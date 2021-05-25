@@ -38,7 +38,7 @@ namespace MyApps.Application.Services
         /// <summary>
         /// méthode pour récupere les données des formateurs et leurs modules concernés 
         /// </summary>
-        /// <returns></returns>
+        /// <returns> les formateurs et leurs modules </returns>
         public static List<ViewModels.FormateurModuleViewModel> GetFormatuerModules()
         {
            
@@ -55,12 +55,11 @@ namespace MyApps.Application.Services
 
         public static List<ViewModels.FormateurModuleViewModel> GetModulesPerFormateur(int IdFormateur) 
         {
-           // List<ViewModels.FormateurModuleViewModel> Liste = new List<ViewModels.FormateurModuleViewModel>();
             var GetListe = FormateurModuleService.GetListModulesPerFormateur(IdFormateur);
             return GetFormateursModules(GetListe);
         }
         /// <summary>
-        /// méthode pour récuperer les formateur selon le module ciblé 
+        /// méthode pour récuperer les formateurs selon le module ciblé 
         /// </summary>
         /// <param name="IdModule"></param>
         /// <returns></returns>
@@ -112,6 +111,10 @@ namespace MyApps.Application.Services
             var GetListe = ModuleService.SearchMethodByName(searchString);
             return GetModulesList(GetListe);
         }
+        /// <summary>
+        /// la liste des participants 
+        /// </summary>
+        /// <returns></returns>
         public static List<ViewModels.FormateurModuleViewModel> GetFormateurs()
         {
 

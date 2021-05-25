@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MyApps.Application.ViewModels
 {
@@ -12,7 +9,6 @@ namespace MyApps.Application.ViewModels
         public int IdSiteModule { get; set; } 
         public string NomModule { get; set; } 
         public DateTime DateExamen { get; set; }
-
         public string NomFormateur { get; set; }  
     }
 }

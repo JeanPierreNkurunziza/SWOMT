@@ -156,7 +156,7 @@ namespace SWOMT.Views
         private List<MyApps.Application.ViewModels.UserRolesViewModel> SelectedRolesusers()
         {
 
-            foreach (var items in UserRoleList.Where(f => f.UserRoleName != "Personnel" && f.UserRoleName != "Secrétaire"))
+            foreach (var items in UserRoleList.Where(f => f.UserRoleName != "Admin" && f.UserRoleName != "Secrétaire"))
             {
                 ComboBoxUserRole.Items.Add(items.UserRoleName);
             }

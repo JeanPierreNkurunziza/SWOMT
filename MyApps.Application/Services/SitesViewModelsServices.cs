@@ -81,7 +81,7 @@ namespace MyApps.Application.Services
             return Liste;
         }
         /// <summary>
-        /// Récuperer les formations planifiés concernant l'année encours 
+        /// Récuperer les formations planifiés pour l'année encours 
         /// </summary>
         /// <returns></returns>
         public static List<ViewModels.SiteViewModel> GetPlanningFormationThisYearAndNextYear()

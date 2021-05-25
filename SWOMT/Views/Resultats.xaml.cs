@@ -202,11 +202,11 @@ namespace SWOMT.Views
                 element.IdExamen = short.Parse(IdExamens.Text);
                 element.IdModuleInscription = short.Parse(IdModuleInscription.Text);
                 element.Points = short.Parse(Points.Text);
-                if (EstPresent.SelectedItem == "Présent")
+                if (EstPresent.SelectedItem.ToString() == "Présent")
                 {
                     EstPresent.Text = "True";
                 }
-                if (EstPresent.SelectedItem == "Absent")
+                if (EstPresent.SelectedItem.ToString() == "Absent")
                 {
                     EstPresent.Text = "False";
                 }
@@ -240,11 +240,11 @@ namespace SWOMT.Views
                 element.IdExamen = short.Parse(IdExamens.Text);
                 element.IdModuleInscription = short.Parse(IdModuleInscription.Text); 
                 element.Points = short.Parse(Points.Text);
-                if (EstPresent.SelectedItem == "Présent")
+                if (EstPresent.SelectedItem.ToString() == "Présent")
                 {
                     EstPresent.Text = "True";
                 }
-                if (EstPresent.SelectedItem == "Absent")
+                if (EstPresent.SelectedItem.ToString() == "Absent")
                 {
                     EstPresent.Text = "False";
                 }
